@@ -49,6 +49,7 @@ interface Scene {
   title: string;
   description: string;
   prompt: string;
+  imageSrc?: string;
 }
 
 interface Phase {
@@ -66,19 +67,22 @@ const PHASES: Phase[] = [
         id: '1.1',
         title: 'Prompt 1.1 — Morning Wake-up',
         description: 'Smartphone screen showing autonomous vehicle arrival notification, calm atmosphere, modern apartment.',
-        prompt: 'early morning bedroom scene, soft sunrise light through window, young professional waking up, smartphone screen showing autonomous vehicle arrival notification, calm atmosphere, modern apartment, cozy and minimal'
+        prompt: 'early morning bedroom scene, soft sunrise light through window, young professional waking up, smartphone screen showing autonomous vehicle arrival notification, calm atmosphere, modern apartment, cozy and minimal',
+        imageSrc: '/phase1-1.1.png'
       },
       {
         id: '1.2',
         title: 'Prompt 1.2 — Pick-up at Home',
         description: 'Autonomous electric vehicle waiting in front of a suburban home, person walking out with coffee.',
-        prompt: 'autonomous electric vehicle waiting in front of a suburban home, person walking out slightly sleepy with coffee, quiet neighborhood street, clean futuristic design, friendly and safe feeling'
+        prompt: 'autonomous electric vehicle waiting in front of a suburban home, person walking out slightly sleepy with coffee, quiet neighborhood street, clean futuristic design, friendly and safe feeling',
+        imageSrc: '/phase1-1.2.png'
       },
       {
         id: '1.3',
         title: 'Prompt 1.3 — Stable Traffic Flow',
         description: 'Aerial view of city during morning rush hour, traffic flowing smoothly in coordinated patterns.',
-        prompt: 'aerial view of city during morning rush hour, traffic flowing smoothly in coordinated patterns, multiple autonomous vehicles moving in organized lanes, sense of stability and efficiency'
+        prompt: 'aerial view of city during morning rush hour, traffic flowing smoothly in coordinated patterns, multiple autonomous vehicles moving in organized lanes, sense of stability and efficiency',
+        imageSrc: '/phase1-1.3.png'
       }
     ]
   },
@@ -354,16 +358,27 @@ export default function App() {
                                   : "bg-transparent border-white/10 hover:border-white/30"
                               )}
                             >
-                              <div className="flex justify-between items-center mb-1">
-                                <span className="text-base font-medium">{scene.title}</span>
-                                {selectedScene.id === scene.id && <ChevronRight className="w-4 h-4" />}
+                              <div className="flex items-start gap-3">
+                                {scene.imageSrc && (
+                                  <img
+                                    src={scene.imageSrc}
+                                    alt={`${scene.title} thumbnail`}
+                                    className="w-20 h-14 rounded-lg object-cover flex-shrink-0 border border-black/10"
+                                  />
+                                )}
+                                <div className="min-w-0 flex-1">
+                                  <div className="flex justify-between items-center mb-1 gap-2">
+                                    <span className="text-base font-medium leading-tight">{scene.title}</span>
+                                    {selectedScene.id === scene.id && <ChevronRight className="w-4 h-4 flex-shrink-0" />}
+                                  </div>
+                                  <p className={cn(
+                                    "text-xs line-clamp-2",
+                                    selectedScene.id === scene.id ? "text-black/60" : "text-white/40"
+                                  )}>
+                                    {scene.description}
+                                  </p>
+                                </div>
                               </div>
-                              <p className={cn(
-                                "text-xs line-clamp-1",
-                                selectedScene.id === scene.id ? "text-black/60" : "text-white/40"
-                              )}>
-                                {scene.description}
-                              </p>
                             </button>
                           ))}
                         </div>
