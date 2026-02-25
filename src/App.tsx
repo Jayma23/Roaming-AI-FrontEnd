@@ -165,7 +165,7 @@ const PHASES: Phase[] = [
 // --- Components ---
 
 export default function App() {
-  const [selectedScene, setSelectedScene] = useState<Scene>(PHASES[0].scenes[0]);
+  const [selectedScene, setSelectedScene] = useState<Scene | null>(null);
 
   return (
     <div className="min-h-screen bg-[#050505] text-white font-sans selection:bg-emerald-500/30">
@@ -342,12 +342,18 @@ export default function App() {
               <div className="space-y-12">
                 {PHASES.map((phase, phaseIdx) => {
                   const phaseNumber = phaseIdx + 1;
-                  const isSelectedInPhase = selectedScene.id.startsWith(`${phaseNumber}.`);
+                  const selectedSceneInPhase =
+                    selectedScene && selectedScene.id.startsWith(`${phaseNumber}.`)
+                      ? selectedScene
+                      : null;
 
                   return (
                     <div 
                       key={phaseIdx} 
-                      className="md:grid md:grid-cols-[minmax(0,1.1fr)_minmax(0,1.4fr)] md:gap-10 space-y-4 md:space-y-0"
+                      className={cn(
+                        "space-y-4",
+                        selectedSceneInPhase && "md:grid md:grid-cols-[minmax(0,1.1fr)_minmax(0,1.4fr)] md:gap-10 md:space-y-0"
+                      )}
                     >
                       <div>
                         <div className="flex items-center gap-2 text-white/40 text-sm font-semibold uppercase tracking-widest px-2 mb-3">
@@ -361,7 +367,7 @@ export default function App() {
                               onClick={() => setSelectedScene(scene)}
                               className={cn(
                                 "w-full text-left p-4 rounded-xl border transition-all duration-300",
-                                selectedScene.id === scene.id 
+                                selectedScene?.id === scene.id 
                                   ? "bg-white text-black border-white" 
                                   : "bg-transparent border-white/10 hover:border-white/30"
                               )}
@@ -377,11 +383,11 @@ export default function App() {
                                 <div className="min-w-0 flex-1">
                                   <div className="flex justify-between items-center mb-1 gap-2">
                                     <span className="text-base font-medium leading-tight">{scene.title}</span>
-                                    {selectedScene.id === scene.id && <ChevronRight className="w-4 h-4 flex-shrink-0" />}
+                                    {selectedScene?.id === scene.id && <ChevronRight className="w-4 h-4 flex-shrink-0" />}
                                   </div>
                                   <p className={cn(
                                     "text-xs line-clamp-2",
-                                    selectedScene.id === scene.id ? "text-black/60" : "text-white/40"
+                                    selectedScene?.id === scene.id ? "text-black/60" : "text-white/40"
                                   )}>
                                     {scene.description}
                                   </p>
@@ -392,51 +398,28 @@ export default function App() {
                         </div>
                       </div>
 
-                      <div className="mt-6 md:mt-0 relative">
-                        <div className={cn(
-                          "w-full rounded-3xl bg-white/5 border border-white/10 overflow-hidden flex flex-col relative shadow-2xl",
-                          isSelectedInPhase &&
-                            ['1.1', '1.2', '1.3', '2.1', '2.2', '2.3', '3.1', '3.2', '3.3', '4.1', '4.2'].includes(selectedScene.id)
-                            ? "min-h-0"
-                            : "aspect-video"
-                        )}>
-                          {isSelectedInPhase &&
-                           ['1.1', '1.2', '1.3', '2.1', '2.2', '2.3', '3.1', '3.2', '3.3', '4.1', '4.2'].includes(selectedScene.id) ? (
-                            <>
-                              <div className="w-full aspect-video flex-shrink-0 overflow-hidden rounded-t-3xl">
-                                <img
-                                  src={`/phase${selectedScene.id.split('.')[0]}-${selectedScene.id}.png`}
-                                  alt={selectedScene.title}
-                                  className="w-full h-full object-cover"
-                                />
-                              </div>
-                              <div className="p-5 border-t border-white/10 bg-white/5">
-                                <h3 className="text-xl font-medium text-white mb-2">{selectedScene.title}</h3>
-                                <p className="text-sm text-white/70 mb-2">{selectedScene.description}</p>
-                                <p className="text-sm text-white/50 italic">"{selectedScene.prompt}"</p>
-                              </div>
-                            </>
-                          ) : (
-                            <div className="flex flex-col items-center justify-center gap-6 text-white/20 p-12 text-center flex-1">
-                              <div className="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mb-2">
-                                <Sparkles className="w-10 h-10" />
-                              </div>
-                              <div>
-                                <h3 className="text-2xl font-light text-white/80 mb-2">
-                                  {isSelectedInPhase ? selectedScene.title : `${phase.title} Visual`}
-                                </h3>
-                                <p className="text-sm text-white/40 max-w-sm mx-auto italic">
-                                  {isSelectedInPhase ? `"${selectedScene.prompt}"` : "Select a prompt on the left to visualize this phase."}
-                                </p>
-                              </div>
+                      {selectedSceneInPhase && (
+                        <div className="mt-6 md:mt-0 relative">
+                          <div className="w-full rounded-3xl bg-white/5 border border-white/10 overflow-hidden flex flex-col relative shadow-2xl">
+                            <div className="w-full aspect-video flex-shrink-0 overflow-hidden rounded-t-3xl">
+                              <img
+                                src={selectedSceneInPhase.imageSrc ?? `/phase${selectedSceneInPhase.id.split('.')[0]}-${selectedSceneInPhase.id}.png`}
+                                alt={selectedSceneInPhase.title}
+                                className="w-full h-full object-cover"
+                              />
                             </div>
-                          )}
-                        </div>
+                            <div className="p-5 border-t border-white/10 bg-white/5">
+                              <h3 className="text-xl font-medium text-white mb-2">{selectedSceneInPhase.title}</h3>
+                              <p className="text-sm text-white/70 mb-2">{selectedSceneInPhase.description}</p>
+                              <p className="text-sm text-white/50 italic">"{selectedSceneInPhase.prompt}"</p>
+                            </div>
+                          </div>
 
-                        {/* Decorative Elements */}
-                        <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-emerald-500/20 blur-3xl rounded-full" />
-                        <div className="absolute -top-6 -left-6 w-32 h-32 bg-blue-500/20 blur-3xl rounded-full" />
-                      </div>
+                          {/* Decorative Elements */}
+                          <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-emerald-500/20 blur-3xl rounded-full" />
+                          <div className="absolute -top-6 -left-6 w-32 h-32 bg-blue-500/20 blur-3xl rounded-full" />
+                        </div>
+                      )}
                     </div>
                   );
                 })}
