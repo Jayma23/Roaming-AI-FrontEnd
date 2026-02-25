@@ -94,19 +94,22 @@ const PHASES: Phase[] = [
         id: '2.1',
         title: 'Prompt 2.1 — Distributed Fleet',
         description: 'City map perspective with autonomous vehicles distributed across different neighborhoods.',
-        prompt: 'city map perspective with autonomous vehicles distributed across different neighborhoods, visual sense of dynamic rebalancing, subtle data lines connecting areas, urban mobility network'
+        prompt: 'city map perspective with autonomous vehicles distributed across different neighborhoods, visual sense of dynamic rebalancing, subtle data lines connecting areas, urban mobility network',
+        imageSrc: '/phase2-2.1.png'
       },
       {
         id: '2.2',
         title: 'Prompt 2.2 — Taxi Mode Service',
         description: 'Person requesting ride on smartphone, autonomous vehicle arriving curbside.',
-        prompt: 'person requesting ride on smartphone, autonomous vehicle arriving curbside, casual daytime city environment, relaxed and convenient mobility moment'
+        prompt: 'person requesting ride on smartphone, autonomous vehicle arriving curbside, casual daytime city environment, relaxed and convenient mobility moment',
+        imageSrc: '/phase2-2.2.png'
       },
       {
         id: '2.3',
         title: 'Prompt 2.3 — Charging & Maintenance',
         description: 'Fleet of autonomous vehicles charging at modern charging station, clean infrastructure.',
-        prompt: 'fleet of autonomous vehicles charging at modern charging station, clean infrastructure, technicians or automated systems maintaining vehicles, efficient operations atmosphere'
+        prompt: 'fleet of autonomous vehicles charging at modern charging station, clean infrastructure, technicians or automated systems maintaining vehicles, efficient operations atmosphere',
+        imageSrc: '/phase2-2.3.png'
       }
     ]
   },
