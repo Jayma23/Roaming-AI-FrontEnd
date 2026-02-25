@@ -166,6 +166,8 @@ const PHASES: Phase[] = [
 
 export default function App() {
   const [selectedScene, setSelectedScene] = useState<Scene | null>(null);
+  const resolvePublicPath = (assetPath: string) =>
+    `${import.meta.env.BASE_URL}${assetPath.replace(/^\/+/, '')}`;
 
   return (
     <div className="min-h-screen bg-[#050505] text-white font-sans selection:bg-emerald-500/30">
@@ -174,7 +176,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <a href="#vision" className="flex items-center gap-2">
             <img 
-              src="/site-logo.png"
+              src={resolvePublicPath('/site-logo.png')}
               alt="RoamingOS"
               className="h-8 w-auto object-contain"
             />
@@ -375,7 +377,7 @@ export default function App() {
                               <div className="flex items-start gap-3">
                                 {scene.imageSrc && (
                                   <img
-                                    src={scene.imageSrc}
+                                    src={resolvePublicPath(scene.imageSrc)}
                                     alt={`${scene.title} thumbnail`}
                                     className="w-20 h-14 rounded-lg object-cover flex-shrink-0 border border-black/10"
                                   />
@@ -403,7 +405,10 @@ export default function App() {
                           <div className="w-full rounded-3xl bg-white/5 border border-white/10 overflow-hidden flex flex-col relative shadow-2xl">
                             <div className="w-full aspect-video flex-shrink-0 overflow-hidden rounded-t-3xl">
                               <img
-                                src={selectedSceneInPhase.imageSrc ?? `/phase${selectedSceneInPhase.id.split('.')[0]}-${selectedSceneInPhase.id}.png`}
+                                src={resolvePublicPath(
+                                  selectedSceneInPhase.imageSrc ??
+                                  `/phase${selectedSceneInPhase.id.split('.')[0]}-${selectedSceneInPhase.id}.png`
+                                )}
                                 alt={selectedSceneInPhase.title}
                                 className="w-full h-full object-cover"
                               />
@@ -674,7 +679,7 @@ export default function App() {
                 <div className="flex flex-col items-center gap-3">
                   <div className="h-24 w-32 px-4 py-3 rounded-xl bg-white flex items-center justify-center shadow-lg transform hover:scale-105 transition-transform overflow-hidden">
                     <img 
-                      src="/mit-logo.svg" 
+                      src={resolvePublicPath('/mit-logo.svg')} 
                       alt="MIT" 
                       className="h-full w-auto object-contain"
                     />
@@ -684,7 +689,7 @@ export default function App() {
                 <div className="flex flex-col items-center gap-3">
                   <div className="h-24 w-32 px-4 py-3 rounded-xl bg-white flex items-center justify-center shadow-lg transform hover:scale-105 transition-transform overflow-hidden">
                     <img 
-                      src="/berkeley.png" 
+                      src={resolvePublicPath('/berkeley.png')} 
                       alt="UC Berkeley" 
                       className="h-full w-auto object-contain"
                     />
