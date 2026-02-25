@@ -121,19 +121,22 @@ const PHASES: Phase[] = [
         id: '3.1',
         title: 'Prompt 3.1 — Evening Pick-up',
         description: 'Office district at sunset, tired professional exiting building, autonomous vehicle waiting curbside.',
-        prompt: 'office district at sunset, tired professional exiting building, autonomous vehicle waiting curbside, warm golden hour lighting, calm transition from workday'
+        prompt: 'office district at sunset, tired professional exiting building, autonomous vehicle waiting curbside, warm golden hour lighting, calm transition from workday',
+        imageSrc: '/phase3-3.1.png'
       },
       {
         id: '3.2',
         title: 'Prompt 3.2 — Coordinated Peak Flow',
         description: 'City traffic at evening peak, autonomous vehicles forming structured movement patterns.',
-        prompt: 'city traffic at evening peak, autonomous vehicles forming structured movement patterns, smooth traffic flow, subtle glowing paths indicating coordination'
+        prompt: 'city traffic at evening peak, autonomous vehicles forming structured movement patterns, smooth traffic flow, subtle glowing paths indicating coordination',
+        imageSrc: '/phase3-3.2.png'
       },
       {
         id: '3.3',
         title: 'Prompt 3.3 — Arriving Home',
         description: 'Quiet residential street at night, person stepping out of autonomous vehicle in front of home.',
-        prompt: 'quiet residential street at night, person stepping out of autonomous vehicle in front of home, cozy lights from windows, peaceful mood'
+        prompt: 'quiet residential street at night, person stepping out of autonomous vehicle in front of home, cozy lights from windows, peaceful mood',
+        imageSrc: '/phase3-3.3.png'
       }
     ]
   },
