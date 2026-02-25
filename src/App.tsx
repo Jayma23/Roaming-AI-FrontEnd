@@ -148,13 +148,15 @@ const PHASES: Phase[] = [
         id: '4.1',
         title: 'Prompt 4.1 — Nighttime City',
         description: 'Nighttime city skyline, autonomous vehicles still operating with soft lights.',
-        prompt: 'nighttime city skyline, autonomous vehicles still operating with soft lights, calm and futuristic urban environment, sense of continuous mobility'
+        prompt: 'nighttime city skyline, autonomous vehicles still operating with soft lights, calm and futuristic urban environment, sense of continuous mobility',
+        imageSrc: '/phase4-4.1.png'
       },
       {
         id: '4.2',
         title: 'Prompt 4.2 — System Preparation',
         description: 'Abstract control center visualization, digital dashboard with mobility data flows.',
-        prompt: 'abstract control center visualization, digital dashboard with mobility data flows, city map with moving signals, futuristic system intelligence preparing for next day'
+        prompt: 'abstract control center visualization, digital dashboard with mobility data flows, city map with moving signals, futuristic system intelligence preparing for next day',
+        imageSrc: '/phase4-4.2.png'
       }
     ]
   }
