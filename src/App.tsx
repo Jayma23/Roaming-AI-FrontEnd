@@ -177,7 +177,7 @@ export default function App() {
             <img 
               src={resolvePublicPath('/site-logo.svg')}
               alt="RoamingOS"
-              className="h-8 w-auto object-contain"
+              className="h-12 md:h-14 w-auto object-contain"
             />
           </a>
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-white/60">
@@ -869,7 +869,7 @@ export default function App() {
             <img
               src={resolvePublicPath('/site-logo.svg')}
               alt="RoamingOS"
-              className="h-8 w-auto object-contain"
+              className="h-12 md:h-14 w-auto object-contain"
             />
             <span className="text-lg font-semibold tracking-tight">RoamingOS</span>
           </div>
