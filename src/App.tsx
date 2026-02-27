@@ -645,16 +645,18 @@ export default function App() {
                   {[
                     { phase: "Phase 0", title: "Simulation Validation", status: "Complete" },
                     { phase: "Phase 1", title: "Algorithm Prototype", status: "In Progress" },
-                    { phase: "Phase 2", title: "MVP & Campus Pilot", status: "Q3 2026" },
-                    { phase: "Phase 3", title: "Enterprise Partnerships", status: "2027" },
-                    { phase: "Phase 4", title: "City-Level Orchestration", status: "2028+" }
+                    { phase: "Phase 2", title: "MVP & Campus Pilot", status: "" },
+                    { phase: "Phase 3", title: "Enterprise Partnerships", status: "" },
+                    { phase: "Phase 4", title: "City-Level Orchestration", status: "" }
                   ].map((item, i) => (
                     <div key={i} className="p-4 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between">
                       <div>
                         <span className="text-[10px] uppercase tracking-widest text-emerald-400 font-bold">{item.phase}</span>
                         <h5 className="font-medium text-sm">{item.title}</h5>
                       </div>
-                      <span className="text-xs text-white/20">{item.status}</span>
+                      <span className="min-w-[96px] text-right text-xs text-white/20">
+                        {item.status || "\u00a0"}
+                      </span>
                     </div>
                   ))}
                 </div>
