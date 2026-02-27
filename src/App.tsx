@@ -175,7 +175,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <a href="#vision" className="flex items-center gap-2">
             <img 
-              src={resolvePublicPath('/site-logo.png')}
+              src={resolvePublicPath('/site-logo.svg')}
               alt="RoamingOS"
               className="h-8 w-auto object-contain"
             />
@@ -864,9 +864,11 @@ export default function App() {
       <footer className="py-12 px-6 border-t border-white/5 text-center">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center justify-center gap-2 mb-6">
-            <div className="w-8 h-8 flex items-center justify-center rounded-full bg-emerald-500 text-black">
-              <Car className="w-4 h-4" />
-            </div>
+            <img
+              src={resolvePublicPath('/site-logo.svg')}
+              alt="RoamingOS"
+              className="h-8 w-auto object-contain"
+            />
             <span className="text-lg font-semibold tracking-tight">RoamingOS</span>
           </div>
           <p className="text-white/20 text-sm">
