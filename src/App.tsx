@@ -64,23 +64,23 @@ const PHASES: Phase[] = [
     scenes: [
       {
         id: '1.1',
-        title: 'Prompt 1.1 — Morning Wake-up',
-        description: 'Smartphone screen showing autonomous vehicle arrival notification, calm atmosphere, modern apartment.',
-        prompt: 'early morning bedroom scene, soft sunrise light through window, young professional waking up, smartphone screen showing autonomous vehicle arrival notification, calm atmosphere, modern apartment, cozy and minimal',
+        title: 'Prompt 1.1 — Demand Synchronization & Subscription Activation',
+        description: 'At the start of the day, RoamingOS activates subscription commute schedules and aligns fleet positioning with predicted travel demand.',
+        prompt: 'At the start of the day, RoamingOS activates subscription commute schedules and aligns fleet positioning with predicted travel demand. Vehicles are pre-dispatched to residential clusters to minimize wait times while maintaining system-wide balance.',
         imageSrc: '/phase1-1.1.png'
       },
       {
         id: '1.2',
-        title: 'Prompt 1.2 — Pick-up at Home',
-        description: 'Autonomous electric vehicle waiting in front of a suburban home, person walking out with coffee.',
-        prompt: 'autonomous electric vehicle waiting in front of a suburban home, person walking out slightly sleepy with coffee, quiet neighborhood street, clean futuristic design, friendly and safe feeling',
+        title: 'Prompt 1.2 — AI-Driven Pickup Coordination',
+        description: 'Using real-time demand signals, the system dynamically adjusts pickup sequences and routing paths.',
+        prompt: 'Using real-time demand signals, the system dynamically adjusts pickup sequences and routing paths. The balancing engine ensures high vehicle occupancy and efficient corridor usage, enabling low-cost subscription rides during peak periods.',
         imageSrc: '/phase1-1.2.png'
       },
       {
         id: '1.3',
-        title: 'Prompt 1.3 — Stable Traffic Flow',
-        description: 'Aerial view of city during morning rush hour, traffic flowing smoothly in coordinated patterns.',
-        prompt: 'aerial view of city during morning rush hour, traffic flowing smoothly in coordinated patterns, multiple autonomous vehicles moving in organized lanes, sense of stability and efficiency',
+        title: 'Prompt 1.3 — Flow Stabilization Through Coordinated Movement',
+        description: 'RoamingOS continuously optimizes spacing and speed profiles across vehicles, allowing fleets to move in coordinated patterns that reduce congestion volatility and improve throughput across major routes.',
+        prompt: 'RoamingOS continuously optimizes spacing and speed profiles across vehicles, allowing fleets to move in coordinated patterns that reduce congestion volatility and improve throughput across major routes.',
         imageSrc: '/phase1-1.3.png'
       }
     ]
@@ -91,23 +91,23 @@ const PHASES: Phase[] = [
     scenes: [
       {
         id: '2.1',
-        title: 'Prompt 2.1 — Distributed Fleet',
-        description: 'City map perspective with autonomous vehicles distributed across different neighborhoods.',
-        prompt: 'city map perspective with autonomous vehicles distributed across different neighborhoods, visual sense of dynamic rebalancing, subtle data lines connecting areas, urban mobility network',
+        title: 'Prompt 2.1 — Dynamic Mode Switching',
+        description: 'As peak demand subsides, the system transitions vehicles from scheduled subscription routes to flexible on-demand service.',
+        prompt: 'As peak demand subsides, the system transitions vehicles from scheduled subscription routes to flexible on-demand service. AI balancing ensures fleet supply aligns with real-time mobility needs across the city.',
         imageSrc: '/phase2-2.1.png'
       },
       {
         id: '2.2',
-        title: 'Prompt 2.2 — Taxi Mode Service',
-        description: 'Person requesting ride on smartphone, autonomous vehicle arriving curbside.',
-        prompt: 'person requesting ride on smartphone, autonomous vehicle arriving curbside, casual daytime city environment, relaxed and convenient mobility moment',
+        title: 'Prompt 2.2 — Continuous Demand-Supply Optimization',
+        description: 'RoamingOS monitors trip requests and traffic conditions, redistributing vehicles to maintain coverage while preventing oversupply.',
+        prompt: 'RoamingOS monitors trip requests and traffic conditions, redistributing vehicles to maintain coverage while preventing oversupply. This balancing layer maximizes utilization and keeps operational costs low.',
         imageSrc: '/phase2-2.2.png'
       },
       {
         id: '2.3',
-        title: 'Prompt 2.3 — Charging & Maintenance',
-        description: 'Fleet of autonomous vehicles charging at modern charging station, clean infrastructure.',
-        prompt: 'fleet of autonomous vehicles charging at modern charging station, clean infrastructure, technicians or automated systems maintaining vehicles, efficient operations atmosphere',
+        title: 'Prompt 2.3 — Energy & Maintenance Orchestration',
+        description: 'Charging and servicing are scheduled within low-demand windows through predictive optimization, ensuring readiness without reducing service availability.',
+        prompt: 'Charging and servicing are scheduled within low-demand windows through predictive optimization, ensuring readiness without reducing service availability.',
         imageSrc: '/phase2-2.3.png'
       }
     ]
@@ -118,23 +118,23 @@ const PHASES: Phase[] = [
     scenes: [
       {
         id: '3.1',
-        title: 'Prompt 3.1 — Evening Pick-up',
-        description: 'Office district at sunset, tired professional exiting building, autonomous vehicle waiting curbside.',
-        prompt: 'office district at sunset, tired professional exiting building, autonomous vehicle waiting curbside, warm golden hour lighting, calm transition from workday',
+        title: 'Prompt 3.1 — Subscription Commute Re-Alignment',
+        description: 'The system anticipates evening return patterns and reactivates subscription commute routes, repositioning vehicles near workplaces and transit hubs to support predictable, low-cost return trips.',
+        prompt: 'The system anticipates evening return patterns and reactivates subscription commute routes, repositioning vehicles near workplaces and transit hubs to support predictable, low-cost return trips.',
         imageSrc: '/phase3-3.1.png'
       },
       {
         id: '3.2',
-        title: 'Prompt 3.2 — Coordinated Peak Flow',
-        description: 'City traffic at evening peak, autonomous vehicles forming structured movement patterns.',
-        prompt: 'city traffic at evening peak, autonomous vehicles forming structured movement patterns, smooth traffic flow, subtle glowing paths indicating coordination',
+        title: 'Prompt 3.2 — Coordinated Departure Balancing',
+        description: 'AI scheduling staggers departures and optimizes routing across the network, preventing localized surges while maintaining high fleet efficiency.',
+        prompt: 'AI scheduling staggers departures and optimizes routing across the network, preventing localized surges while maintaining high fleet efficiency.',
         imageSrc: '/phase3-3.2.png'
       },
       {
         id: '3.3',
-        title: 'Prompt 3.3 — Arriving Home',
-        description: 'Quiet residential street at night, person stepping out of autonomous vehicle in front of home.',
-        prompt: 'quiet residential street at night, person stepping out of autonomous vehicle in front of home, cozy lights from windows, peaceful mood',
+        title: 'Prompt 3.3 — Distributed Demand Absorption',
+        description: 'Vehicles disperse across neighborhoods using adaptive routing logic, ensuring smooth drop-off flows and maintaining stable traffic conditions.',
+        prompt: 'Vehicles disperse across neighborhoods using adaptive routing logic, ensuring smooth drop-off flows and maintaining stable traffic conditions.',
         imageSrc: '/phase3-3.3.png'
       }
     ]
@@ -145,16 +145,16 @@ const PHASES: Phase[] = [
     scenes: [
       {
         id: '4.1',
-        title: 'Prompt 4.1 — Nighttime City',
-        description: 'Nighttime city skyline, autonomous vehicles still operating with soft lights.',
-        prompt: 'nighttime city skyline, autonomous vehicles still operating with soft lights, calm and futuristic urban environment, sense of continuous mobility',
+        title: 'Prompt 4.1 — Charging, Maintenance & Fleet Reset',
+        description: 'During off-peak hours, RoamingOS dynamically schedules charging, cleaning, and preventive maintenance across the fleet based on next-day demand forecasts.',
+        prompt: 'During off-peak hours, RoamingOS dynamically schedules charging, cleaning, and preventive maintenance across the fleet based on next-day demand forecasts.\n\nThis ensures vehicles return to peak periods fully prepared while maintaining optimal availability and operational reliability.',
         imageSrc: '/phase4-4.1.png'
       },
       {
         id: '4.2',
-        title: 'Prompt 4.2 — System Preparation',
-        description: 'Abstract control center visualization, digital dashboard with mobility data flows.',
-        prompt: 'abstract control center visualization, digital dashboard with mobility data flows, city map with moving signals, futuristic system intelligence preparing for next day',
+        title: 'Prompt 4.2 — Night Mobility, Airport Transfers & Light Logistics',
+        description: 'A portion of the fleet remains active overnight, supporting reservation-based airport transfers, low-cost urban rides, and small-scale cargo delivery.',
+        prompt: 'A portion of the fleet remains active overnight, supporting reservation-based airport transfers, low-cost urban rides, and small-scale cargo delivery.\n\nThis multi-role deployment maximizes asset utilization, stabilizes fleet economics, and keeps the system continuously responsive.',
         imageSrc: '/phase4-4.2.png'
       }
     ]
@@ -415,7 +415,7 @@ export default function App() {
                             <div className="p-5 border-t border-white/10 bg-white/5">
                               <h3 className="text-xl font-medium text-white mb-2">{selectedSceneInPhase.title}</h3>
                               <p className="text-sm text-white/70 mb-2">{selectedSceneInPhase.description}</p>
-                              <p className="text-sm text-white/50 italic">"{selectedSceneInPhase.prompt}"</p>
+                              <p className="text-sm text-white/50 italic whitespace-pre-line">"{selectedSceneInPhase.prompt}"</p>
                             </div>
                           </div>
 
