@@ -5,7 +5,8 @@ import {defineConfig, loadEnv} from 'vite';
 
 export default defineConfig(({mode}) => {
   const env = loadEnv(mode, '.', '');
-  const basePath = process.env.VITE_BASE_PATH || env.VITE_BASE_PATH || '/';
+  const defaultBasePath = mode === 'production' ? '/Roaming-AI-FrontEnd/' : '/';
+  const basePath = process.env.VITE_BASE_PATH || env.VITE_BASE_PATH || defaultBasePath;
 
   return {
     base: basePath,
