@@ -42,6 +42,17 @@ function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+function getDedupedPromptText(scene: Scene) {
+  if (scene.prompt.startsWith(scene.description)) {
+    const dedupedPrompt = scene.prompt.slice(scene.description.length).trim();
+    if (dedupedPrompt.length > 0) {
+      return dedupedPrompt;
+    }
+  }
+
+  return scene.prompt;
+}
+
 // --- Types ---
 interface Scene {
   id: string;
@@ -415,7 +426,7 @@ export default function App() {
                             <div className="p-5 border-t border-white/10 bg-white/5">
                               <h3 className="text-xl font-medium text-white mb-2">{selectedSceneInPhase.title}</h3>
                               <p className="text-sm text-white/70 mb-2">{selectedSceneInPhase.description}</p>
-                              <p className="text-sm text-white/50 italic whitespace-pre-line">"{selectedSceneInPhase.prompt}"</p>
+                              <p className="text-sm text-white/50 italic whitespace-pre-line">"{getDedupedPromptText(selectedSceneInPhase)}"</p>
                             </div>
                           </div>
 
@@ -643,20 +654,17 @@ export default function App() {
                 </h2>
                 <div className="grid grid-cols-1 gap-4">
                   {[
-                    { phase: "Phase 0", title: "Simulation Validation", status: "Complete" },
-                    { phase: "Phase 1", title: "Algorithm Prototype", status: "In Progress" },
-                    { phase: "Phase 2", title: "MVP & Campus Pilot", status: "" },
-                    { phase: "Phase 3", title: "Enterprise Partnerships", status: "" },
-                    { phase: "Phase 4", title: "City-Level Orchestration", status: "" }
+                    { phase: "Phase 0", title: "Simulation Validation" },
+                    { phase: "Phase 1", title: "Algorithm Prototype" },
+                    { phase: "Phase 2", title: "MVP & Campus Pilot" },
+                    { phase: "Phase 3", title: "Enterprise Partnerships" },
+                    { phase: "Phase 4", title: "City-Level Orchestration" }
                   ].map((item, i) => (
-                    <div key={i} className="p-4 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between">
+                    <div key={i} className="p-4 rounded-xl bg-white/5 border border-white/10">
                       <div>
                         <span className="text-[10px] uppercase tracking-widest text-emerald-400 font-bold">{item.phase}</span>
                         <h5 className="font-medium text-sm">{item.title}</h5>
                       </div>
-                      <span className="min-w-[96px] text-right text-xs text-white/20">
-                        {item.status || "\u00a0"}
-                      </span>
                     </div>
                   ))}
                 </div>
