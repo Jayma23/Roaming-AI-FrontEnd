@@ -1,5 +1,5 @@
 {
-  "name": "RoamingOS - Autonomous Coordination",
-  "description": "The coordination layer for autonomous urban mobility. Scaling the future without congestion.",
+  "name": "RoamingOS - UC Davis Mobility Research",
+  "description": "A weekly route-coded survey prototype for collecting UC Davis student movement patterns and previewing early pricing bundles.",
   "requestFramePermissions": []
 }
