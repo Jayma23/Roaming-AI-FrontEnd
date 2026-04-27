@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
 import {
   AlertCircle,
@@ -16,6 +16,14 @@ import {
   Users as UsersIcon,
   Zap,
 } from 'lucide-react';
+import { getTravelTime, getBlockDuration, getCellBlockFraction } from './lib/mockTravelTimes';
+import {
+  type Booking,
+  type SlotAvailability,
+  getSlotAvailability,
+  createBooking,
+  cancelBooking,
+} from './lib/fleet';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -66,6 +74,7 @@ interface PersistedSurvey {
   entries?: EntryMap;
   respondent?: Partial<RespondentProfile>;
   submittedAt?: string | null;
+  bookings?: Booking[];
 }
 
 const STORAGE_KEY = 'roamingos-ucd-commercial-research-v1';
@@ -379,6 +388,14 @@ export default function App() {
   const [draft, setDraft] = useState<TripDraft>(getEmptyDraft());
   const [storageReady, setStorageReady] = useState(false);
   const [copyState, setCopyState] = useState<'idle' | 'copied' | 'failed'>('idle');
+  const [bookings, setBookings] = useState<Booking[]>([]);
+
+  // Drag state — refs hold values without causing extra re-renders
+  const isDraggingRef = useRef(false);
+  const dragSlotIdRef = useRef<string | null>(null);
+  const hasDraggedRef = useRef(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragSlotId, setDragSlotId] = useState<string | null>(null);
 
   useEffect(() => {
     try {
@@ -392,6 +409,7 @@ export default function App() {
           ...parsed.respondent,
         });
         setSubmittedAt(parsed.submittedAt ?? null);
+        setBookings(parsed.bookings ?? []);
       }
     } catch {
       // Ignore malformed local drafts and continue with the default survey shell.
@@ -411,9 +429,10 @@ export default function App() {
         entries,
         respondent,
         submittedAt,
+        bookings,
       }),
     );
-  }, [entries, respondent, storageReady, submittedAt]);
+  }, [bookings, entries, respondent, storageReady, submittedAt]);
 
   const activeEntry = entries[activeCell];
 
@@ -429,6 +448,22 @@ export default function App() {
     const timeout = window.setTimeout(() => setCopyState('idle'), 2200);
     return () => window.clearTimeout(timeout);
   }, [copyState]);
+
+  // Commit drag on mouse-up anywhere in the window
+  useEffect(() => {
+    function onMouseUp() {
+      if (isDraggingRef.current && hasDraggedRef.current && dragSlotIdRef.current) {
+        setActiveCell(buildCellKey(activeDay.id, dragSlotIdRef.current));
+      }
+      isDraggingRef.current = false;
+      hasDraggedRef.current = false;
+      dragSlotIdRef.current = null;
+      setIsDragging(false);
+      setDragSlotId(null);
+    }
+    window.addEventListener('mouseup', onMouseUp);
+    return () => window.removeEventListener('mouseup', onMouseUp);
+  }, [activeDay.id]);
 
   const sortedRows = sortRows(entries);
   const totalTrips = sortedRows.length;
@@ -453,6 +488,46 @@ export default function App() {
   const activeDay = DAYS.find((day) => day.id === parseCellKey(activeCell).dayId) ?? DAYS[0];
   const activeSlot =
     TIME_SLOTS.find((slot) => slot.id === parseCellKey(activeCell).slotId) ?? TIME_SLOTS[0];
+
+  // ── Scheduling derived state ──────────────────────────────────────────────
+  const hasRoute = !!(draft.from && draft.to);
+  const travelMins = hasRoute ? getTravelTime(draft.from, draft.to) : 0;
+  const blockDuration = hasRoute ? getBlockDuration(travelMins) : 0;
+
+  // The "display slot" tracks drag position for live grid preview;
+  // falls back to the real active slot when not dragging.
+  const displaySlotId = isDragging && dragSlotId ? dragSlotId : activeSlot.id;
+  const displaySlotIndex = TIME_SLOTS.findIndex((s) => s.id === displaySlotId);
+  const displaySlotStartMins = parseInt(displaySlotId.split(':')[0], 10) * 60;
+
+  // Keep the sidebar & booking handlers on the real committed slot.
+  const activeSlotStartMins = parseInt(activeSlot.id.split(':')[0], 10) * 60;
+  const activeSlotAvailability: SlotAvailability | null = hasRoute
+    ? getSlotAvailability(bookings, activeDay.id, activeSlotStartMins, blockDuration)
+    : null;
+  const activeCellBooking = hasRoute
+    ? bookings.find(
+        (b) =>
+          b.dayId === activeDay.id &&
+          b.startMinutes === activeSlotStartMins &&
+          b.fromCode === draft.from &&
+          b.toCode === draft.to &&
+          b.durationMinutes === blockDuration,
+      )
+    : undefined;
+
+  // Green slots for the active day when current slot is yellow/red
+  const suggestedSlots =
+    hasRoute && activeSlotAvailability && activeSlotAvailability.status !== 'available'
+      ? TIME_SLOTS.filter((slot) => {
+          const start = parseInt(slot.id.split(':')[0], 10) * 60;
+          return (
+            slot.id !== activeSlot.id &&
+            getSlotAvailability(bookings, activeDay.id, start, blockDuration).status === 'available'
+          );
+        }).slice(0, 3)
+      : [];
+  // ─────────────────────────────────────────────────────────────────────────
 
   const topRouteLabel = topRouteKey
     ? (() => {
@@ -513,6 +588,25 @@ export default function App() {
     setSubmittedAt(null);
   }
 
+  function handleConfirmBooking() {
+    if (!hasRoute) return;
+    const result = createBooking(
+      bookings,
+      activeDay.id,
+      activeSlotStartMins,
+      blockDuration,
+      draft.from,
+      draft.to,
+    );
+    if (!result) return;
+    setBookings(result.updatedBookings);
+    saveActiveSlot();
+  }
+
+  function handleCancelBooking(bookingId: string) {
+    setBookings(cancelBooking(bookings, bookingId));
+  }
+
   function markSurveyReady() {
     setSubmittedAt(new Date().toISOString());
   }
@@ -527,7 +621,7 @@ export default function App() {
   }
 
   return (
-    <div className="relative min-h-screen overflow-hidden text-[#1b332c]">
+    <div className="relative min-h-screen overflow-x-hidden text-[#1b332c]">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute left-[-8%] top-0 h-[30rem] w-[30rem] rounded-full bg-[radial-gradient(circle,_rgba(154,193,175,0.55)_0%,_rgba(154,193,175,0)_70%)]" />
         <div className="absolute bottom-[-8rem] right-[-4rem] h-[28rem] w-[28rem] rounded-full bg-[radial-gradient(circle,_rgba(236,187,103,0.38)_0%,_rgba(236,187,103,0)_70%)]" />
@@ -958,7 +1052,172 @@ export default function App() {
                       ? `${getLocationName(draft.from)} to ${getLocationName(draft.to)}`
                       : 'This hour is still empty and will not count toward pricing yet.'}
                   </p>
+                  {hasRoute && (
+                    <div className="mt-3 flex items-center gap-3 border-t border-white/10 pt-3">
+                      <Clock className="h-3.5 w-3.5 flex-none text-[#b6d0c4]" />
+                      <p className="text-xs text-[#d7e2dc]">
+                        ~{travelMins} min travel · {blockDuration} min block
+                      </p>
+                    </div>
+                  )}
                 </div>
+
+                {/* ── Scheduling card ── */}
+                {hasRoute && isDragging && (
+                  <div className="mt-4 rounded-[1.4rem] border border-white/10 bg-white/7 px-4 py-4">
+                    <div className="flex items-center gap-2">
+                      <div
+                        className={cn(
+                          'h-2.5 w-2.5 animate-pulse rounded-full',
+                          getSlotAvailability(bookings, activeDay.id, displaySlotStartMins, blockDuration).status === 'available'
+                            ? 'bg-[#4ade80]'
+                            : getSlotAvailability(bookings, activeDay.id, displaySlotStartMins, blockDuration).status === 'waitlist'
+                              ? 'bg-[#fbbf24]'
+                              : 'bg-[#f87171]',
+                        )}
+                      />
+                      <p className="text-sm text-[#d7e2dc]">
+                        {TIME_SLOTS.find((s) => s.id === displaySlotId)?.compact ?? ''} —{' '}
+                        {(() => {
+                          const s = getSlotAvailability(bookings, activeDay.id, displaySlotStartMins, blockDuration).status;
+                          return s === 'available' ? 'Available' : s === 'waitlist' ? 'Waitlist only' : 'Fully booked';
+                        })()}
+                      </p>
+                    </div>
+                    <p className="mt-2 text-xs text-[#b6d0c4]">Release to confirm position</p>
+                  </div>
+                )}
+                {hasRoute && !isDragging && (
+                  <div className="mt-4 rounded-[1.4rem] border border-white/10 bg-white/7 px-4 py-4">
+                    <p className="text-xs uppercase tracking-[0.18em] text-[#b6d0c4]">
+                      Availability
+                    </p>
+
+                    {/* Block visual */}
+                    <div className="mt-3 flex items-center gap-2">
+                      <div className="relative h-5 w-full overflow-hidden rounded-full bg-white/10">
+                        <div
+                          className={cn(
+                            'absolute left-0 top-0 h-full rounded-full transition-all',
+                            activeSlotAvailability?.status === 'available'
+                              ? 'bg-[#4ade80]'
+                              : activeSlotAvailability?.status === 'waitlist'
+                                ? 'bg-[#fbbf24]'
+                                : 'bg-[#f87171]',
+                          )}
+                          style={{ width: `${Math.min(100, (blockDuration / 60) * 100)}%` }}
+                        />
+                      </div>
+                      <span className="shrink-0 text-xs text-[#b6d0c4]">{blockDuration}m</span>
+                    </div>
+
+                    {/* Status */}
+                    {activeCellBooking ? (
+                      <div className="mt-3 space-y-2">
+                        <div className="flex items-center gap-2">
+                          <span
+                            className={cn(
+                              'h-2.5 w-2.5 rounded-full',
+                              activeCellBooking.status === 'confirmed'
+                                ? 'bg-[#4ade80]'
+                                : 'bg-[#fbbf24]',
+                            )}
+                          />
+                          <p className="text-sm font-semibold text-[#f7f1e4]">
+                            {activeCellBooking.status === 'confirmed'
+                              ? `Confirmed — Vehicle ${activeCellBooking.vehicleId}`
+                              : 'On waitlist'}
+                          </p>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => handleCancelBooking(activeCellBooking.id)}
+                          className="text-xs text-[#f87171] underline underline-offset-2 transition hover:text-[#fca5a5]"
+                        >
+                          Cancel booking
+                        </button>
+                      </div>
+                    ) : activeSlotAvailability?.status === 'available' ? (
+                      <div className="mt-3 space-y-3">
+                        <div className="flex items-center gap-2">
+                          <span className="h-2.5 w-2.5 rounded-full bg-[#4ade80]" />
+                          <p className="text-sm text-[#d7e2dc]">
+                            {activeSlotAvailability.vehiclesFree} of 8 vehicles free
+                          </p>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={handleConfirmBooking}
+                          className="w-full rounded-2xl bg-[#4ade80] px-4 py-2.5 text-sm font-semibold text-[#0f2d1f] transition hover:bg-[#22c55e]"
+                        >
+                          Confirm booking
+                        </button>
+                      </div>
+                    ) : activeSlotAvailability?.status === 'waitlist' ? (
+                      <div className="mt-3 space-y-3">
+                        <div className="flex items-center gap-2">
+                          <span className="h-2.5 w-2.5 rounded-full bg-[#fbbf24]" />
+                          <p className="text-sm text-[#d7e2dc]">
+                            All vehicles booked · {activeSlotAvailability.waitlistCount}/2 waiting
+                          </p>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={handleConfirmBooking}
+                          className="w-full rounded-2xl bg-[#fbbf24] px-4 py-2.5 text-sm font-semibold text-[#2d1a00] transition hover:bg-[#f59e0b]"
+                        >
+                          Join waitlist
+                        </button>
+                        {suggestedSlots.length > 0 && (
+                          <div>
+                            <p className="text-xs text-[#b6d0c4]">Available windows today:</p>
+                            <div className="mt-1.5 flex flex-wrap gap-1.5">
+                              {suggestedSlots.map((slot) => (
+                                <button
+                                  key={slot.id}
+                                  type="button"
+                                  onClick={() => setActiveCell(buildCellKey(activeDay.id, slot.id))}
+                                  className="rounded-full bg-[#4ade80]/20 px-3 py-1 text-xs font-medium text-[#4ade80] transition hover:bg-[#4ade80]/30"
+                                >
+                                  {slot.compact}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="mt-3 space-y-3">
+                        <div className="flex items-center gap-2">
+                          <span className="h-2.5 w-2.5 rounded-full bg-[#f87171]" />
+                          <p className="text-sm text-[#d7e2dc]">
+                            Fully booked · waitlist full
+                          </p>
+                        </div>
+                        <p className="text-xs text-[#b6d0c4]">
+                          This window cannot accept more rides.
+                        </p>
+                        {suggestedSlots.length > 0 && (
+                          <div>
+                            <p className="text-xs text-[#b6d0c4]">Try these times instead:</p>
+                            <div className="mt-1.5 flex flex-wrap gap-1.5">
+                              {suggestedSlots.map((slot) => (
+                                <button
+                                  key={slot.id}
+                                  type="button"
+                                  onClick={() => setActiveCell(buildCellKey(activeDay.id, slot.id))}
+                                  className="rounded-full bg-[#4ade80]/20 px-3 py-1 text-xs font-medium text-[#4ade80] transition hover:bg-[#4ade80]/30"
+                                >
+                                  {slot.compact}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                )}
 
                 <div className="mt-6 flex flex-wrap gap-3">
                   <button
@@ -1209,21 +1468,36 @@ export default function App() {
                     One hour at a time, one route at a time
                   </h2>
                 </div>
-                <div className="rounded-full border border-[#ded1b6] bg-[#fff5df] px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#8a5c1a]">
-                  Tap any cell to edit
+                <div className="flex flex-wrap items-center gap-3">
+                  {hasRoute && (
+                    <div className="flex items-center gap-3 rounded-2xl border border-[#d8d1c4] bg-[#faf7f0] px-4 py-2">
+                      <span className="flex items-center gap-1.5 text-xs text-[#5d7169]">
+                        <span className="h-2 w-2 rounded-full bg-[#4ade80]" /> Available
+                      </span>
+                      <span className="flex items-center gap-1.5 text-xs text-[#5d7169]">
+                        <span className="h-2 w-2 rounded-full bg-[#fbbf24]" /> Waitlist
+                      </span>
+                      <span className="flex items-center gap-1.5 text-xs text-[#5d7169]">
+                        <span className="h-2 w-2 rounded-full bg-[#f87171]" /> Full
+                      </span>
+                    </div>
+                  )}
+                  <div className="rounded-full border border-[#ded1b6] bg-[#fff5df] px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#8a5c1a]">
+                    Tap any cell to edit
+                  </div>
                 </div>
               </div>
 
-              <div className="planner-scroll overflow-x-auto">
+              <div className={cn('planner-scroll max-h-[72vh] overflow-auto overscroll-contain rounded-[1.6rem] border border-[#e1d7c7] bg-[#fcf7ee]', isDragging && 'cursor-grabbing select-none')}>
                 <div className="min-w-[980px]">
                   <div className="grid grid-cols-[130px_repeat(7,minmax(110px,1fr))]">
-                    <div className="sticky left-0 z-20 border-b border-[#e1d7c7] bg-[#fcf7ee] px-4 py-4 text-left text-xs font-semibold uppercase tracking-[0.2em] text-[#74867f]">
+                    <div className="sticky left-0 top-0 z-30 border-b border-[#e1d7c7] bg-[#fcf7ee] px-4 py-4 text-left text-xs font-semibold uppercase tracking-[0.2em] text-[#74867f]">
                       Time
                     </div>
                     {DAYS.map((day) => (
                       <div
                         key={day.id}
-                        className="border-b border-[#e1d7c7] bg-[#fcf7ee] px-3 py-4 text-center"
+                        className="sticky top-0 z-20 border-b border-[#e1d7c7] bg-[#fcf7ee] px-3 py-4 text-center"
                       >
                         <p className="text-xs uppercase tracking-[0.2em] text-[#74867f]">
                           {day.short}
@@ -1232,7 +1506,7 @@ export default function App() {
                       </div>
                     ))}
 
-                    {TIME_SLOTS.map((slot) => (
+                    {TIME_SLOTS.map((slot, slotIndex) => (
                       <React.Fragment key={slot.id}>
                         <div className="sticky left-0 z-10 border-b border-[#ece3d6] bg-[#faf6ee] px-4 py-4">
                           <p className="text-sm font-semibold text-[#17362f]">{slot.compact}</p>
@@ -1244,18 +1518,121 @@ export default function App() {
                           const entry = entries[cellKey];
                           const isActive = cellKey === activeCell;
 
+                          // ── Scheduling overlay logic ──
+                          const isSchedulingDay = hasRoute && day.id === activeDay.id;
+                          // Use displaySlotIndex so the block follows the drag position live.
+                          const blockFraction = isSchedulingDay
+                            ? getCellBlockFraction(slotIndex, displaySlotIndex, blockDuration)
+                            : 0;
+                          const isInBlock = blockFraction > 0;
+                          const cellSlotStartMins = parseInt(slot.id.split(':')[0], 10) * 60;
+                          // Availability for this slot if the block were to start here.
+                          const cellAvail: SlotAvailability | null =
+                            isSchedulingDay && !isInBlock
+                              ? getSlotAvailability(
+                                  bookings,
+                                  day.id,
+                                  cellSlotStartMins,
+                                  blockDuration,
+                                )
+                              : null;
+                          // Colour the block based on the drag-target slot's availability.
+                          const dragAvail: SlotAvailability | null =
+                            isSchedulingDay && isInBlock
+                              ? getSlotAvailability(
+                                  bookings,
+                                  day.id,
+                                  displaySlotStartMins,
+                                  blockDuration,
+                                )
+                              : null;
+                          const blockColor =
+                            dragAvail?.status === 'available'
+                              ? 'green'
+                              : dragAvail?.status === 'waitlist'
+                                ? 'amber'
+                                : 'red';
+                          // ─────────────────────────────
+
                           return (
                             <button
                               key={cellKey}
                               type="button"
-                              onClick={() => setActiveCell(cellKey)}
+                              onClick={() => {
+                                // Ignore click if the mouse just finished a real drag.
+                                if (hasDraggedRef.current) return;
+                                setActiveCell(cellKey);
+                              }}
+                              onMouseDown={(e) => {
+                                if (!isSchedulingDay) return;
+                                e.preventDefault();
+                                isDraggingRef.current = true;
+                                dragSlotIdRef.current = slot.id;
+                                hasDraggedRef.current = false;
+                                setIsDragging(true);
+                                setDragSlotId(slot.id);
+                              }}
+                              onMouseEnter={() => {
+                                if (!isDraggingRef.current || !isSchedulingDay) return;
+                                if (dragSlotIdRef.current !== slot.id) {
+                                  hasDraggedRef.current = true;
+                                }
+                                dragSlotIdRef.current = slot.id;
+                                setDragSlotId(slot.id);
+                              }}
                               className={cn(
-                                'group min-h-[88px] border-b border-l border-[#ece3d6] px-3 py-3 text-left transition',
+                                'group relative min-h-[88px] overflow-hidden border-b border-l border-[#ece3d6] px-3 py-3 text-left transition',
                                 isActive
                                   ? 'bg-[#edf4ef] shadow-[inset_0_0_0_2px_rgba(43,95,80,0.16)]'
                                   : 'bg-[#fffdf9] hover:bg-[#f7f1e6]',
+                                isSchedulingDay && isInBlock && !isDragging && 'cursor-grab',
+                                isSchedulingDay && isDragging && 'cursor-grabbing select-none',
                               )}
                             >
+                              {/* Block overlay — height is proportional to trip duration in the hour */}
+                              {isInBlock && (
+                                <div
+                                  className={cn(
+                                    'pointer-events-none absolute left-0 top-0 w-full transition-[height] duration-75',
+                                    blockColor === 'green' && 'bg-[#4ade80]/25',
+                                    blockColor === 'amber' && 'bg-[#fbbf24]/25',
+                                    blockColor === 'red' && 'bg-[#f87171]/25',
+                                  )}
+                                  style={{ height: `${blockFraction * 100}%` }}
+                                />
+                              )}
+                              {/* Left border stripe */}
+                              {isInBlock && (
+                                <div
+                                  className={cn(
+                                    'pointer-events-none absolute left-0 top-0 h-full w-[3px] transition-colors duration-75',
+                                    blockColor === 'green' && 'bg-[#4ade80]',
+                                    blockColor === 'amber' && 'bg-[#fbbf24]',
+                                    blockColor === 'red' && 'bg-[#f87171]',
+                                  )}
+                                />
+                              )}
+                              {/* Grab hint — two vertical dots on block cells */}
+                              {isInBlock && !isDragging && (
+                                <div className="pointer-events-none absolute right-2 top-2 flex flex-col gap-[3px] opacity-30">
+                                  <span className="h-[3px] w-3 rounded-full bg-[#1d342d]" />
+                                  <span className="h-[3px] w-3 rounded-full bg-[#1d342d]" />
+                                </div>
+                              )}
+                              {/* Availability dot for non-block cells in the scheduling day */}
+                              {cellAvail && (
+                                <div
+                                  className={cn(
+                                    'pointer-events-none absolute right-2 top-2 h-2 w-2 rounded-full',
+                                    cellAvail.status === 'available'
+                                      ? 'bg-[#4ade80]'
+                                      : cellAvail.status === 'waitlist'
+                                        ? 'bg-[#fbbf24]'
+                                        : 'bg-[#f87171]',
+                                  )}
+                                />
+                              )}
+
                               <p
                                 className={cn(
                                   'text-sm font-semibold',
