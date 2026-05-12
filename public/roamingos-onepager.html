@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>RoamingOS</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,200;0,300;0,400;0,500;1,300&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',-apple-system,'Helvetica Neue',sans-serif;background:#f8f9fb;color:#111;-webkit-font-smoothing:antialiased;}
+
+.page{max-width:900px;margin:0 auto;padding:0 48px 80px;position:relative;z-index:1;}
+.page::before{content:'';position:fixed;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#2f9e44 20%,#3b5bdb 50%,#2f9e44 80%,transparent);opacity:.3;z-index:100;}
+
+/* ── CARD UTILITY ── */
+.card{background:#fff;border-radius:16px;box-shadow:0 1px 3px rgba(0,0,0,.06),0 4px 16px rgba(0,0,0,.04);}
+
+/* HERO */
+.hero{
+  background:#fff;
+  border-radius:0 0 24px 24px;
+  box-shadow:0 2px 20px rgba(0,0,0,.05);
+  padding:68px 48px 60px;
+  margin:0 -48px 0;
+  display:flex;justify-content:space-between;align-items:flex-start;
+}
+.logo{font-size:11px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:#2f9e44;margin-bottom:28px;display:flex;align-items:center;gap:7px;}
+.logo-dot{width:5px;height:5px;border-radius:50%;background:#2f9e44;animation:pulse 3s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
+.hero-head{font-size:50px;font-weight:200;letter-spacing:-2px;line-height:1.07;color:#111;margin-bottom:20px;}
+.hero-head strong{font-weight:500;}
+.hero-sub{font-size:16px;font-weight:300;color:#999;line-height:1.7;max-width:480px;}
+.hero-right{flex-shrink:0;text-align:right;padding-top:4px;}
+.hero-tag{font-size:10px;font-weight:300;color:#ccc;line-height:2.2;letter-spacing:.3px;}
+
+/* SECTION */
+.section{padding:44px 0;}
+.sec-label{font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:#bbb;margin-bottom:22px;display:flex;align-items:center;gap:8px;}
+.sec-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,#e8e8e8,transparent);}
+
+/* ── CONVERSATION ── */
+.convo-wrap{display:flex;gap:52px;align-items:center;}
+.phone-mini{
+  width:240px;flex-shrink:0;
+  background:#fff;border-radius:24px;
+  box-shadow:0 8px 32px rgba(59,91,219,.10),0 2px 8px rgba(0,0,0,.05),0 0 0 1px rgba(59,91,219,.07);
+}
+.pm-bar{height:38px;border-bottom:.5px solid #f0f2f8;display:flex;align-items:center;gap:7px;padding:0 12px;}
+.pm-av{width:22px;height:22px;border-radius:50%;background:#f0faf4;display:flex;align-items:center;justify-content:center;font-size:10px;}
+.pm-name{font-size:11px;font-weight:500;color:#111;}
+.pm-dot{width:4px;height:4px;border-radius:50%;background:#2f9e44;margin-left:auto;}
+.msgs{padding:10px 10px 14px;display:flex;flex-direction:column;gap:7px;}
+.b{font-size:11px;line-height:1.5;padding:7px 10px;border-radius:10px;max-width:88%;}
+.b.ai{background:#f2f3fa;color:#2a3555;border-radius:10px 10px 10px 3px;align-self:flex-start;}
+.b.u{background:#3b5bdb;color:#fff;border-radius:10px 10px 3px 10px;align-self:flex-end;}
+.b.ck{background:#f0faf4;color:#2f9e44;font-weight:500;border-radius:8px;align-self:flex-start;display:flex;align-items:center;gap:5px;font-size:10.5px;}
+.time-chip{align-self:center;font-size:9px;color:#ccc;padding:2px 8px;background:#f8f8f8;border-radius:8px;}
+.convo-right{flex:1;}
+.convo-head{font-size:24px;font-weight:200;color:#333;letter-spacing:-.5px;line-height:1.45;margin-bottom:12px;}
+.convo-head strong{font-weight:500;color:#111;}
+.convo-sub{font-size:13px;font-weight:300;color:#aaa;line-height:1.7;}
+
+/* SHIFT */
+.shift-wrap{background:#fff;border-radius:16px;box-shadow:0 1px 3px rgba(0,0,0,.05),0 4px 16px rgba(0,0,0,.03);padding:32px 36px;margin-bottom:20px;}
+.shift{display:flex;align-items:flex-start;gap:0;}
+.shift-col{flex:1;}
+.shift-tag{font-size:10px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:#ccc;margin-bottom:12px;}
+.shift-text{font-size:21px;font-weight:200;letter-spacing:-.4px;line-height:1.5;}
+.shift-text.dim{color:#ccc;}
+.shift-arrow{width:64px;text-align:center;padding-top:8px;font-size:18px;font-weight:200;color:#ddd;flex-shrink:0;}
+.outcomes{display:flex;gap:8px;margin-top:18px;}
+.opill{padding:5px 13px;border-radius:20px;font-size:11px;font-weight:500;}
+.opill.g{background:#f0faf4;color:#2f9e44;}
+.opill.b{background:#eef2ff;color:#3b5bdb;}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+.stat{
+  background:#fff;border-radius:14px;padding:24px 22px;
+  box-shadow:0 1px 3px rgba(0,0,0,.05),0 4px 14px rgba(0,0,0,.04);
+  position:relative;overflow:hidden;
+}
+/* left accent stripe */
+.stat::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:3px 0 0 3px;}
+.stat:nth-child(1)::before{background:linear-gradient(180deg,#2f9e44,#74c69d);}
+.stat:nth-child(2)::before{background:linear-gradient(180deg,#3b5bdb,#748ffc);}
+.stat:nth-child(3)::before{background:linear-gradient(180deg,#555,#aaa);}
+.stat-n{font-size:40px;font-weight:200;letter-spacing:-1.5px;line-height:1;margin-bottom:10px;}
+.stat-n.g{color:#2f9e44;}
+.stat-n.b{color:#3b5bdb;}
+.stat-n.k{color:#333;}
+.stat-track{height:2px;background:#f0f0f0;border-radius:1px;margin-bottom:9px;overflow:hidden;}
+.stat-fill{height:100%;border-radius:1px;}
+.stat-label{font-size:11.5px;font-weight:300;color:#aaa;line-height:1.55;}
+.stat-src{font-size:9px;color:#ccc;margin-top:6px;letter-spacing:.2px;}
+
+/* MODELS */
+.models{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.model{
+  background:#fff;border-radius:14px;padding:24px 26px;
+  box-shadow:0 1px 3px rgba(0,0,0,.05),0 4px 14px rgba(0,0,0,.04);
+  position:relative;overflow:hidden;
+}
+.model::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.model:nth-child(1)::before{background:linear-gradient(90deg,#2f9e44,#74c69d);}
+.model:nth-child(2)::before{background:linear-gradient(90deg,#3b5bdb,#748ffc);}
+.model:nth-child(3)::before{background:linear-gradient(90deg,#f08c00,#ffd43b);}
+.model:nth-child(4)::before{background:linear-gradient(90deg,#ae3ec9,#e599f7);}
+.model-name{font-size:14px;font-weight:500;color:#111;margin-bottom:4px;}
+.model-arch{font-size:10px;color:#3b5bdb;margin-bottom:10px;font-family:'SF Mono','Fira Code',monospace;letter-spacing:.2px;}
+.model-desc{font-size:12px;font-weight:300;color:#999;line-height:1.65;}
+
+/* BIZ */
+.biz{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.biz-card{
+  background:#fff;border-radius:14px;padding:28px;
+  box-shadow:0 1px 3px rgba(0,0,0,.05),0 4px 14px rgba(0,0,0,.04);
+}
+.biz-phase{font-size:10px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:#ccc;margin-bottom:10px;}
+.biz-head{font-size:21px;font-weight:200;color:#111;letter-spacing:-.5px;margin-bottom:16px;line-height:1.2;}
+.biz-head strong{font-weight:500;}
+.biz-nums{display:flex;gap:14px;align-items:flex-end;margin-bottom:14px;}
+.bn-group{}
+.bn-label{font-size:9.5px;color:#ccc;margin-bottom:4px;}
+.bn-num{font-size:32px;font-weight:200;letter-spacing:-1.5px;line-height:1;}
+.bn-num.r{color:#c92a2a;}
+.bn-num.g{color:#2f9e44;}
+.bn-unit{font-size:9.5px;color:#ccc;margin-top:2px;}
+.bn-arrow{font-size:20px;font-weight:200;color:#ddd;padding-bottom:5px;}
+.biz-note{font-size:11.5px;font-weight:300;color:#bbb;line-height:1.65;}
+.biz-lines{margin-top:14px;display:flex;flex-direction:column;gap:8px;}
+.biz-line{font-size:12px;font-weight:300;color:#999;display:flex;align-items:center;gap:8px;}
+.biz-line::before{content:'';display:block;width:14px;height:1px;background:#e0e0e0;flex-shrink:0;}
+
+/* TEAM */
+.team-hdr{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+.pill{padding:3px 10px;border-radius:6px;background:#f0f0f0;font-size:9.5px;font-weight:500;color:#666;}
+.team-line{font-size:10.5px;font-weight:300;color:#ccc;}
+.team{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+.member{
+  background:#fff;border-radius:14px;padding:22px;
+  box-shadow:0 1px 3px rgba(0,0,0,.05),0 4px 14px rgba(0,0,0,.04);
+}
+.member-name{font-size:14px;font-weight:500;color:#111;margin-bottom:2px;}
+.member-role{font-size:10.5px;color:#3b5bdb;font-weight:400;letter-spacing:.2px;margin-bottom:11px;}
+.member-detail{list-style:none;}
+.member-detail li{font-size:10.5px;font-weight:300;color:#aaa;line-height:1.8;display:flex;align-items:flex-start;gap:6px;}
+.member-detail li::before{content:'';display:block;width:10px;height:1px;background:#e0e0e0;flex-shrink:0;margin-top:9px;}
+
+/* FOOTER */
+.footer{margin-top:48px;padding-top:24px;border-top:1px solid #eee;display:flex;justify-content:space-between;align-items:center;}
+.footer-logo{font-size:13px;color:#999;}
+.footer-logo strong{color:#111;font-weight:500;}
+.footer-logo span{color:#2f9e44;font-weight:500;}
+.footer-right{display:flex;align-items:center;gap:12px;}
+.footer-tag{font-size:10px;font-weight:300;color:#ccc;}
+.footer-sep{width:3px;height:3px;border-radius:50%;background:#e0e0e0;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div>
+      <div class="logo"><div class="logo-dot"></div>RoamingOS</div>
+      <div class="hero-head">Operating System<br>for <strong>Agentic Mobility.</strong></div>
+      <div class="hero-sub">Mobility that knows what you need — and gets ready before you ask for it. The intelligence layer between humans and autonomous vehicle fleets.</div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-tag">San Francisco<br>MIT · UC Berkeley<br>2026</div>
+    </div>
+  </div>
+
+  <!-- CONVERSATION -->
+  <div class="section">
+    <div class="sec-label">How it feels</div>
+    <div class="convo-wrap">
+      <div class="phone-mini">
+        <div class="pm-bar">
+          <div class="pm-av">🚗</div>
+          <div class="pm-name">RoamingOS</div>
+          <div class="pm-dot"></div>
+        </div>
+        <div class="msgs">
+          <div class="time-chip">Tuesday · 5:58 PM</div>
+          <div class="b ai">Heading out for dinner? You usually do around this time on Tuesdays.</div>
+          <div class="b u">yeah, tired tonight</div>
+          <div class="b ai">Mensho Tokyo — ramen, 8 min away, not crowded. Back by 8 if you leave now. Book a table?</div>
+          <div class="b u">yes please</div>
+          <div class="b ck">✓ Table booked · 6:30 PM</div>
+          <div class="b ai" style="padding:0;background:transparent;max-width:96%;width:96%">
+            <div style="display:flex;flex-direction:column;gap:3px;">
+              <div style="padding:6px 9px;border-radius:7px;background:#3b5bdb;color:#fff;font-size:10.5px;font-weight:500;display:flex;justify-content:space-between"><span>🚗 Roam</span><span>$7 · 8 min</span></div>
+              <div style="padding:6px 9px;border-radius:7px;background:#f5f5f5;color:#bbb;font-size:10.5px;display:flex;justify-content:space-between"><span>Uber</span><span>~$11 · 6 min</span></div>
+            </div>
+          </div>
+          <div class="b u">Roam</div>
+          <div class="b ck">✓ Car arriving in 2 min</div>
+        </div>
+      </div>
+      <div class="convo-right">
+        <div class="convo-head">You said <strong>"tired."</strong><br>We heard <strong>everything.</strong></div>
+        <div class="convo-sub">One sentence. Table reserved. Car booked. Options compared.<br><br>We knew you'd want ramen — your Tuesday pattern told us. We knew you needed to be back by 8. We checked Uber live so you didn't have to.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SHIFT + STATS -->
+  <div class="section">
+    <div class="sec-label">The shift</div>
+    <div class="shift-wrap">
+      <div class="shift">
+        <div class="shift-col">
+          <div class="shift-tag">Today</div>
+          <div class="shift-text dim">Plan yourself.<br>Open app. Request.<br>Car dispatched.</div>
+        </div>
+        <div class="shift-arrow">→</div>
+        <div class="shift-col">
+          <div class="shift-tag">With RoamingOS</div>
+          <div class="shift-text">Agent predicts.<br>AV pre-positioned.<br>You just confirm.</div>
+          <div class="outcomes">
+            <div class="opill g">Convenient</div>
+            <div class="opill b">Cheap</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-n g">90%+</div>
+        <div class="stat-track"><div class="stat-fill" style="width:90%;background:#2f9e44;opacity:.35;"></div></div>
+        <div class="stat-label">Vehicle utilization<br>vs 52% reactive dispatch</div>
+        <div class="stat-src">VSP-TW + ALNS · simulated on real network data</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n b">−25%</div>
+        <div class="stat-track"><div class="stat-fill" style="width:25%;background:#3b5bdb;opacity:.35;"></div></div>
+        <div class="stat-label">Cheaper for users<br>same route, no surge pricing</div>
+        <div class="stat-src">Uber Q4 2025 earnings · CPUC Dec 2024</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n k">+49%</div>
+        <div class="stat-track"><div class="stat-fill" style="width:49%;background:#555;opacity:.2;"></div></div>
+        <div class="stat-label">More revenue for AV fleets<br>per vehicle per day</div>
+        <div class="stat-src">$576 → $708 / car / day</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODELS -->
+  <div class="section">
+    <div class="sec-label">Intelligence engine</div>
+    <div class="models">
+      <div class="model">
+        <div class="model-name">Fleet Orchestration</div>
+        <div class="model-arch">VSP-TW + ALNS + Multi-Agent RL</div>
+        <div class="model-desc">Chains trips end-to-end with charging and maintenance as hard constraints. Turns idle cars into a synchronized machine.</div>
+      </div>
+      <div class="model">
+        <div class="model-name">Demand Forecasting</div>
+        <div class="model-arch">Temporal Fusion Transformer</div>
+        <div class="model-desc">Predicts where demand will appear before users open the app. Trained on conversational signals no competitor can access.</div>
+      </div>
+      <div class="model">
+        <div class="model-name">Recommendation RL</div>
+        <div class="model-arch">Contextual Bandit → Actor-Critic RL</div>
+        <div class="model-desc">Every yes/no is a training signal. Learns what "a good Tuesday night" means for you — from emotional context no other platform collects.</div>
+      </div>
+      <div class="model">
+        <div class="model-name">Proactive Trigger</div>
+        <div class="model-arch">LightGBM → Sequence Transformer</div>
+        <div class="model-desc">Decides when to reach out before you realize you need a ride. Only trainable with conversational history.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BIZ -->
+  <div class="section">
+    <div class="sec-label">Business model</div>
+    <div class="biz">
+      <div class="biz-card">
+        <div class="biz-phase">Phase 1</div>
+        <div class="biz-head">Earn from <strong>Efficiency</strong></div>
+        <div class="biz-nums">
+          <div class="bn-group">
+            <div class="bn-label">Reactive dispatch</div>
+            <div class="bn-num r">$432</div>
+            <div class="bn-unit">/ car / day</div>
+          </div>
+          <div class="bn-arrow">→</div>
+          <div class="bn-group">
+            <div class="bn-label">With RoamingOS</div>
+            <div class="bn-num g">$708</div>
+            <div class="bn-unit">/ car / day</div>
+          </div>
+        </div>
+        <div class="biz-note">Nobody pays more. Everyone earns more. We take a cut of the efficiency gain.</div>
+      </div>
+      <div class="biz-card">
+        <div class="biz-phase">Phase 2</div>
+        <div class="biz-head">Earn from <strong>Intelligence</strong></div>
+        <div class="biz-note">We know who wants what, where, and when — the most valuable demand signal in the physical world.</div>
+        <div class="biz-lines">
+          <div class="biz-line">Referral commissions</div>
+          <div class="biz-line">Intent-based advertising</div>
+          <div class="biz-line">Mobility data licensing</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TEAM -->
+  <div class="section">
+    <div class="sec-label">Team</div>
+    <div class="team-hdr">
+      <span class="pill">MIT</span>
+      <span class="pill">UC Berkeley</span>
+      <span class="team-line">· Transportation systems · AI · Company building</span>
+    </div>
+    <div class="team">
+      <div class="member">
+        <div class="member-name">Cheng Ma</div>
+        <div class="member-role">Founder</div>
+        <ul class="member-detail">
+          <li>UC Berkeley MS — CS, Transportation, ML</li>
+          <li>AV Risk Computation Research @ Berkeley</li>
+          <li>Ex-Analyst @ MiraclePlus (YC China)</li>
+        </ul>
+      </div>
+      <div class="member">
+        <div class="member-name">Yuhan Tang</div>
+        <div class="member-role">Co-Founder</div>
+        <ul class="member-detail">
+          <li>MIT PhD — Optimization, Urban Mobility, Deep RL</li>
+          <li>JTL Urban Mobility Lab @ MIT</li>
+          <li>LLM + RL research @ Google Cloud</li>
+        </ul>
+      </div>
+      <div class="member">
+        <div class="member-name">James Ma</div>
+        <div class="member-role">Co-Founder</div>
+        <ul class="member-detail">
+          <li>UC Berkeley EECS — AI Systems, Software Eng.</li>
+          <li>Ex-CTO @ Taji Technology</li>
+          <li>Ex-CTO @ Soul Hitter — AI matching systems</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-logo"><strong>Roaming</strong><span>OS</span></div>
+    <div class="footer-right">
+      <div class="footer-tag">San Francisco</div>
+      <div class="footer-sep"></div>
+      <div class="footer-tag">2026</div>
+      <div class="footer-sep"></div>
+      <div class="footer-tag">Operating System for Agentic Mobility</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
