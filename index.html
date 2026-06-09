@@ -776,7 +776,7 @@ footer{
     <h1 class="hero-title">Roaming<span class="brand-os">OS</span></h1>
     <div class="hero-lead">
       <span class="l1">Building an Infrastructure for Hierarchically Calibrated Prediction.</span>
-      <span class="l2"><span class="lead-in">Our first instrument:</span> The personal operating system for privately-owned autonomous vehicles.</span>
+      <span class="l2"><span class="lead-in">Our first instrument:</span> The owner-accessibility layer for AV OEMs</span>
     </div>
   </div>
 </section>
@@ -1437,27 +1437,28 @@ footer{
   <div class="plan-grid">
     <div class="plan-card">
       <span class="plan-when">Month 0–3</span>
-      <div class="plan-title">Prove the ceiling</div>
-      <div class="plan-body">Settle the core empirical question first: is individual availability predictable beyond a population prior? Reliability and pinball benchmarks frozen and pre-registered; tech report out; access-guarantee API designed.</div>
-      <div class="plan-foot"><b>Team ~5</b><br><span class="gate">Gate:</span> predictability proven · report out</div>
+      <div class="plan-title">Pretrain & calibrate</div>
+      <div class="plan-body">Ship the pretrained population model and the full baseline ladder on public mobility data, and deliver the per-owner calibration layer together with its uncertainty-reduction result. Benchmarks frozen and pre-registered; technical report out; the access-guarantee API designed.</div>
+      <div class="plan-foot"><b>Team ~5</b><br><span class="gate">Gate:</span> pretrained model + calibration layer shipped · report out</div>
     </div>
     <div class="plan-card">
       <span class="plan-when">Month 3–6</span>
       <div class="plan-title">Engine v1</div>
-      <div class="plan-body">Selective memory beats the cheap baselines on calibration in the sparse regime; the roaming-envelope decision layer built; the reliability–earning frontier demonstrated in simulation against an owner's own history.</div>
-      <div class="plan-foot"><b>Team ~6</b><br><span class="gate">Gate:</span> calibration edge + frontier shown</div>
+      <div class="plan-body">A per-owner, group-conditional calibration engine that holds its calibration edge over the cheap baselines in the sparse regime; the roaming-envelope decision layer built — a car takes a trip only when its duration plus return buffer fits inside the calibrated window; the reliability–earning frontier demonstrated against an owner's own history in simulation.</div>
+      <div class="plan-foot"><b>Team ~6</b><br><span class="gate">Gate:</span> calibration edge + frontier demonstrated</div>
     </div>
     <div class="plan-card">
       <span class="plan-when">Month 6–12</span>
       <div class="plan-title">Design partners</div>
-      <div class="plan-body">Open conversations with the programs putting cars in private hands — Tensor- and Lucid-type makers; integrate a partner's data in replay; demonstrate guaranteed access at target reliability on their traces. Real needs begin flowing back.</div>
-      <div class="plan-foot"><b>Team ~8</b><br><span class="gate">Gate:</span> first design-partner LOI</div>
+      <div class="plan-body">Open conversations with the programs putting cars in private hands — Tensor- and Lucid-type makers. Take their system-integration specifications — telemetry ingestion, owner permissions and preferences, the outbound dispatchability API — and build the access-guarantee system telemetry-ready against their architecture. Guaranteed access at target reliability demonstrated on our own proxy and volunteer data.</div>
+      <div class="plan-foot"><b>Team ~7</b><br><span class="gate">Gate:</span> first design-partner LOI — integration boundary, evaluation criteria, commercial fork</div>
     </div>
     <div class="plan-card last">
       <span class="plan-when">Month 12–18</span>
       <div class="plan-title">Pilot-ready</div>
-      <div class="plan-body">A live or replay pilot with a partner program; SOC 2 groundwork; the access-guarantee system productized and ready to deploy the moment private fleets reach scale. We enter the Series A with the bet proven, not pitched.</div>
-      <div class="plan-foot"><b>Team ~10</b><br><span class="gate">Gate:</span> pilot + Series A ready</div>
+      <div class="plan-body">High-fidelity simulation & pilot-ready
+A high-fidelity simulation of the system in operation — driving the validated calibration engine with commercial mobility data (car-mode economics, demand shape) to model, as close to reality as the data allows, the reliability–earning behavior at scale. SOC 2 groundwork; the access-guarantee system productized and telemetry-ready against partner integration specs, to deploy the moment private fleets reach scale. We enter the Series A with the engine built, the economics modeled on real commercial data, and design partners signed.</div>
+      <div class="plan-foot"><b>Team ~7</b><br><span class="gate">Gate:</span> pilot + Series A ready</div>
     </div>
   </div>
 </section>
@@ -1573,7 +1574,7 @@ footer{
   <div class="closing-bar"></div>
   <div class="closing-wrap">
     <div class="closing-main">Loyalty is to the owner.</div>
-    <div class="closing-sub">RoamingOS — a spatio-temporal selective memory model, delivered first as the personal operating system for privately-owned autonomous vehicles.</div>
+    <div class="closing-sub">RoamingOS — an infrastructure for hierarchically calibrated prediction, delivered first as the owner-accessibility layer for AV OEMs.</div>
   </div>
 </section>
 
