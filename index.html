@@ -1231,6 +1231,253 @@ footer{
 </div>
 </section>
 
+<!-- ══ VALIDATION ═════════════════════════════════ -->
+<style>
+/* ════ VALIDATION · figures from team research ════ */
+.s-valid{max-width:1180px;margin:0 auto;padding-left:60px;padding-right:60px;}
+.s-valid .sv-head{max-width:760px;}
+.sv-figs{margin-top:64px;display:flex;flex-direction:column;gap:72px;}
+.sv-fig{position:relative;}
+.sv-fig-frame{border:1px solid var(--rule);background:rgba(255,255,255,0.012);border-radius:3px;padding:30px 30px 24px;}
+.sv-fig-tag{font-family:var(--sans);font-size:9.5px;font-weight:500;letter-spacing:.20em;text-transform:uppercase;color:var(--accent);margin-bottom:18px;display:block;}
+.sv-cap{font-family:var(--sans);font-size:13px;line-height:1.62;color:var(--dim);margin-top:22px;max-width:780px;}
+.sv-cap b{color:var(--text);font-weight:500;}
+.sv-data{margin-top:64px;padding-top:40px;border-top:1px solid var(--rule);}
+.sv-data-lead{font-size:clamp(17px,2vw,22px);font-style:italic;color:var(--text);margin-bottom:30px;max-width:800px;line-height:1.45;}
+.sv-data-lead .s-green{color:var(--accent);font-style:italic;}
+.sv-data-steps{display:flex;align-items:stretch;gap:14px;}
+.sv-data-step{flex:1;border:1px solid var(--rule);background:rgba(255,255,255,0.015);border-radius:3px;padding:18px 20px;}
+.sv-data-step.green{border-color:rgba(68,192,106,0.32);background:rgba(68,192,106,0.045);}
+.sv-data-n{font-family:var(--sans);font-size:13px;font-weight:500;letter-spacing:.03em;color:var(--text);display:block;margin-bottom:6px;}
+.sv-data-step.green .sv-data-n{color:var(--accent);}
+.sv-data-d{font-family:var(--sans);font-size:11.5px;line-height:1.5;color:var(--dim);}
+.sv-data-arrow{display:flex;align-items:center;color:var(--dimmer);font-size:17px;}
+@media(max-width:900px){
+  .s-valid{padding-left:28px;padding-right:28px;}
+  .sv-fig-frame{padding:18px 14px 14px;}
+}
+@media(max-width:720px){
+  .sv-data-steps{flex-direction:column;}
+  .sv-data-arrow{justify-content:center;transform:rotate(90deg);}
+}
+</style>
+<section class="s-valid section-pad" id="validation">
+  <div class="sv-head">
+    <span class="s-label">Validation</span>
+    <h2 class="s-heading">Fast enough to simulate the city &mdash; and it maximizes owner profit.</h2>
+  </div>
+
+  <div class="sv-figs">
+
+    <div class="sv-fig">
+      <div class="sv-fig-frame">
+        <span class="sv-fig-tag">Simulation throughput</span>
+        <svg style="width:100%;height:auto;display:block" viewBox="0 0 1060 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Simulation Time Comparison: LPSim 2.4 minutes versus microscopic SUMO 123500 minutes" font-family="'Inter',-apple-system,sans-serif">
+<defs><linearGradient id="bargrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2A8A48"/><stop offset="1" stop-color="#44C06A"/></linearGradient></defs>
+<g stroke-width="1">
+<line x1="352.1" y1="80" x2="352.1" y2="442" stroke="rgba(255,255,255,0.10)"/>
+<line x1="395.2" y1="80" x2="395.2" y2="442" stroke="rgba(255,255,255,0.035)" stroke-dasharray="2 4"/>
+<line x1="420.4" y1="80" x2="420.4" y2="442" stroke="rgba(255,255,255,0.035)" stroke-dasharray="2 4"/>
+<line x1="438.3" y1="80" x2="438.3" y2="442" stroke="rgba(255,255,255,0.035)" stroke-dasharray="2 4"/>
+<line x1="452.2" y1="80" x2="452.2" y2="442" stroke="rgba(255,255,255,0.035)" stroke-dasharray="2 4"/>
+<line x1="463.5" y1="80" x2="463.5" y2="442" stroke="rgba(255,255,255,0.035)" stroke-dasharray="2 4"/>
+<line x1="473.1" y1="80" x2="473.1" y2="442" stroke="rgba(255,255,255,0.035)" stroke-dasharray="2 4"/>
+<line x1="481.4" y1="80" x2="481.4" y2="442" stroke="rgba(255,255,255,0.035)" stroke-dasharray="2 4"/>
+<line x1="488.7" y1="80" x2="488.7" y2="442" stroke="rgba(255,255,255,0.035)" stroke-dasharray="2 4"/>
+<line x1="495.3" y1="80" x2="495.3" y2="442" stroke="rgba(255,255,255,0.10)"/>
+<line x1="538.4" y1="80" x2="538.4" y2="442" stroke="rgba(255,255,255,0.035)" stroke-dasharray="2 4"/>
+<line x1="563.6" y1="80" x2="563.6" y2="442" stroke="rgba(255,255,255,0.035)" stroke-dasharray="2 4"/>
+<line x1="581.5" y1="80" x2="581.5" y2="442" stroke="rgba(255,255,255,0.035)" stroke-dasharray="2 4"/>
+<line x1="595.4" y1="80" x2="595.4" y2="442" stroke="rgba(255,255,255,0.035)" stroke-dasharray="2 4"/>
+<line x1="606.7" y1="80" x2="606.7" y2="442" stroke="rgba(255,255,255,0.035)" stroke-dasharray="2 4"/>
+<line x1="616.3" y1="80" x2="616.3" y2="442" stroke="rgba(255,255,255,0.035)" stroke-dasharray="2 4"/>
+<line x1="624.6" y1="80" x2="624.6" y2="442" stroke="rgba(255,255,255,0.035)" stroke-dasharray="2 4"/>
+<line x1="631.9" y1="80" x2="631.9" y2="442" stroke="rgba(255,255,255,0.035)" stroke-dasharray="2 4"/>
+<line x1="638.5" y1="80" x2="638.5" y2="442" stroke="rgba(255,255,255,0.10)"/>
+<line x1="681.6" y1="80" x2="681.6" y2="442" stroke="rgba(255,255,255,0.035)" stroke-dasharray="2 4"/>
+<line x1="706.8" y1="80" x2="706.8" y2="442" stroke="rgba(255,255,255,0.035)" stroke-dasharray="2 4"/>
+<line x1="724.7" y1="80" x2="724.7" y2="442" stroke="rgba(255,255,255,0.035)" stroke-dasharray="2 4"/>
+<line x1="738.6" y1="80" x2="738.6" y2="442" stroke="rgba(255,255,255,0.035)" stroke-dasharray="2 4"/>
+<line x1="749.9" y1="80" x2="749.9" y2="442" stroke="rgba(255,255,255,0.035)" stroke-dasharray="2 4"/>
+<line x1="759.5" y1="80" x2="759.5" y2="442" stroke="rgba(255,255,255,0.035)" stroke-dasharray="2 4"/>
+<line x1="767.8" y1="80" x2="767.8" y2="442" stroke="rgba(255,255,255,0.035)" stroke-dasharray="2 4"/>
+<line x1="775.1" y1="80" x2="775.1" y2="442" stroke="rgba(255,255,255,0.035)" stroke-dasharray="2 4"/>
+<line x1="781.7" y1="80" x2="781.7" y2="442" stroke="rgba(255,255,255,0.10)"/>
+<line x1="824.8" y1="80" x2="824.8" y2="442" stroke="rgba(255,255,255,0.035)" stroke-dasharray="2 4"/>
+<line x1="850.0" y1="80" x2="850.0" y2="442" stroke="rgba(255,255,255,0.035)" stroke-dasharray="2 4"/>
+<line x1="867.9" y1="80" x2="867.9" y2="442" stroke="rgba(255,255,255,0.035)" stroke-dasharray="2 4"/>
+<line x1="881.8" y1="80" x2="881.8" y2="442" stroke="rgba(255,255,255,0.035)" stroke-dasharray="2 4"/>
+<line x1="893.1" y1="80" x2="893.1" y2="442" stroke="rgba(255,255,255,0.035)" stroke-dasharray="2 4"/>
+<line x1="902.7" y1="80" x2="902.7" y2="442" stroke="rgba(255,255,255,0.035)" stroke-dasharray="2 4"/>
+<line x1="911.0" y1="80" x2="911.0" y2="442" stroke="rgba(255,255,255,0.035)" stroke-dasharray="2 4"/>
+<line x1="918.3" y1="80" x2="918.3" y2="442" stroke="rgba(255,255,255,0.035)" stroke-dasharray="2 4"/>
+<line x1="924.9" y1="80" x2="924.9" y2="442" stroke="rgba(255,255,255,0.10)"/>
+<line x1="968.0" y1="80" x2="968.0" y2="442" stroke="rgba(255,255,255,0.035)" stroke-dasharray="2 4"/>
+</g>
+<line x1="252" y1="80" x2="252" y2="442" stroke="rgba(255,255,255,0.22)" stroke-width="1"/>
+<line x1="252" y1="442" x2="968" y2="442" stroke="rgba(255,255,255,0.22)" stroke-width="1"/>
+<rect x="252.0" y="93.3" width="11.3" height="33.8" rx="2.5" fill="url(#bargrad)" stroke="#44C06A" stroke-width="1"/>
+<text x="238.0" y="110.2" text-anchor="end" dominant-baseline="middle" font-size="13" font-weight="500" fill="#d4d1c8">LPSim</text>
+<text x="272.3" y="110.2" text-anchor="start" dominant-baseline="middle" font-size="12.5" font-weight="600" fill="#44C06A">2.4</text>
+<rect x="252.0" y="153.6" width="51.8" height="33.8" rx="2.5" fill="rgba(212,209,200,0.10)" stroke="rgba(212,209,200,0.26)" stroke-width="1"/>
+<text x="238.0" y="170.5" text-anchor="end" dominant-baseline="middle" font-size="13" font-weight="400" fill="#969289">MANTA</text>
+<text x="312.8" y="170.5" text-anchor="start" dominant-baseline="middle" font-size="12.5" font-weight="400" fill="#969289">4.6</text>
+<rect x="252.0" y="213.9" width="416.5" height="33.8" rx="2.5" fill="rgba(212,209,200,0.10)" stroke="rgba(212,209,200,0.26)" stroke-width="1"/>
+<text x="238.0" y="230.8" text-anchor="end" dominant-baseline="middle" font-size="13" font-weight="400" fill="#969289">SUMO meso simplified (MeS)</text>
+<text x="677.5" y="230.8" text-anchor="start" dominant-baseline="middle" font-size="12.5" font-weight="400" fill="#969289">1620.0</text>
+<rect x="252.0" y="274.3" width="681.5" height="33.8" rx="2.5" fill="rgba(212,209,200,0.10)" stroke="rgba(212,209,200,0.26)" stroke-width="1"/>
+<text x="238.0" y="291.2" text-anchor="end" dominant-baseline="middle" font-size="13" font-weight="400" fill="#969289">SUMO micro simplified (MiS)</text>
+<text x="942.5" y="291.2" text-anchor="start" dominant-baseline="middle" font-size="12.5" font-weight="400" fill="#969289">114858.0</text>
+<rect x="252.0" y="334.6" width="420.9" height="33.8" rx="2.5" fill="rgba(212,209,200,0.10)" stroke="rgba(212,209,200,0.26)" stroke-width="1"/>
+<text x="238.0" y="351.5" text-anchor="end" dominant-baseline="middle" font-size="13" font-weight="400" fill="#969289">SUMO meso advanced (MeA)</text>
+<text x="681.9" y="351.5" text-anchor="start" dominant-baseline="middle" font-size="12.5" font-weight="400" fill="#969289">1740.0</text>
+<rect x="252.0" y="394.9" width="686.0" height="33.8" rx="2.5" fill="rgba(212,209,200,0.10)" stroke="rgba(212,209,200,0.26)" stroke-width="1"/>
+<text x="238.0" y="411.8" text-anchor="end" dominant-baseline="middle" font-size="13" font-weight="400" fill="#969289">SUMO micro advanced (MiA)</text>
+<text x="947.0" y="411.8" text-anchor="start" dominant-baseline="middle" font-size="12.5" font-weight="400" fill="#969289">123500.0</text>
+<text x="352.1" y="464.0" text-anchor="middle" font-size="11.5" fill="#969289">10¹</text>
+<text x="495.3" y="464.0" text-anchor="middle" font-size="11.5" fill="#969289">10²</text>
+<text x="638.5" y="464.0" text-anchor="middle" font-size="11.5" fill="#969289">10³</text>
+<text x="781.7" y="464.0" text-anchor="middle" font-size="11.5" fill="#969289">10⁴</text>
+<text x="924.9" y="464.0" text-anchor="middle" font-size="11.5" fill="#969289">10⁵</text>
+<text x="610.0" y="496.0" text-anchor="middle" font-size="13" fill="#969289">Time (minutes, log scale)</text>
+<text x="30" y="261.0" text-anchor="middle" font-size="13" fill="#969289" transform="rotate(-90 30 261.0)">Simulator</text>
+<text x="610.0" y="46.0" text-anchor="middle" font-family="'EB Garamond',Georgia,serif" font-size="23" fill="#d4d1c8" letter-spacing="0.01em">Simulation Time Comparison</text>
+</svg>
+      </div>
+      <p class="sv-cap"><b>LPSim simulates a full metro network in 2.4 minutes</b> &mdash; roughly 50,000&times; faster than microscopic SUMO. Fast enough to run the millions of rollouts the calibration engine needs.</p>
+    </div>
+
+    <div class="sv-fig">
+      <div class="sv-fig-frame">
+        <span class="sv-fig-tag">Regime-aware orchestration engine</span>
+        <svg style="width:100%;height:auto;display:block" viewBox="0 0 1140 632" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="RAST-MoE-RL learner architecture: environment, channel embedding, fusion projection, transformer encoder, global average pooling, router, mixture-of-experts, and actor-critic heads" font-family="'Inter',-apple-system,sans-serif">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L9,5 L0,10 z" fill="rgba(212,209,200,0.55)"/></marker><marker id="arg" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L9,5 L0,10 z" fill="rgba(68,192,106,0.7)"/></marker></defs>
+<polyline points="1112,70 1112,14 26,14 26,78 72,78" fill="none" stroke="rgba(212,209,200,0.30)" stroke-width="1.2" marker-end="url(#ar)"/>
+<text x="46" y="235" font-size="10.5" font-weight="500" fill="#6c6960" text-anchor="middle" letter-spacing="0">Action</text>
+<text x="46" y="250" font-size="10.5" font-weight="500" fill="#6c6960" text-anchor="middle" letter-spacing="0">Execution</text>
+<rect x="72" y="36" width="232" height="84" rx="7" fill="rgba(212,165,116,0.055)" stroke="rgba(212,165,116,0.55)" stroke-width="1.2"/>
+<text x="188" y="60" font-size="14.5" font-weight="600" fill="#dcb78e" text-anchor="middle" letter-spacing="0">Environment</text>
+<rect x="85.6" y="75.6" width="4.8" height="4.8" transform="rotate(45 88 78)" fill="#dcb78e" opacity="0.85"/>
+<text x="98" y="82" font-size="12.5" font-weight="400" fill="#d4d1c8" text-anchor="start" letter-spacing="0"><tspan dy="0.0" font-size="12.5">state s</tspan><tspan dy="3.8" font-size="9.0">t</tspan><tspan dy="-3.8" font-size="12.5">: zone features</tspan></text>
+<rect x="85.6" y="95.6" width="4.8" height="4.8" transform="rotate(45 88 98)" fill="#dcb78e" opacity="0.85"/>
+<text x="98" y="102" font-size="12.5" font-weight="400" fill="#d4d1c8" text-anchor="start" letter-spacing="0"><tspan dy="0.0" font-size="12.5">MFD OD τ</tspan><tspan dy="3.8" font-size="9.0">r</tspan><tspan dy="-9.6" font-size="9.0">(h)</tspan><tspan dy="5.8" font-size="12.5"> lookup</tspan></text>
+<rect x="72" y="158" width="232" height="186" rx="7" fill="rgba(212,165,116,0.055)" stroke="rgba(212,165,116,0.55)" stroke-width="1.2"/>
+<text x="188" y="182" font-size="14.5" font-weight="600" fill="#dcb78e" text-anchor="middle" letter-spacing="0">Channel Embedding</text>
+<rect x="85.6" y="199.6" width="4.8" height="4.8" transform="rotate(45 88 202)" fill="#dcb78e" opacity="0.85"/>
+<text x="98" y="206" font-size="12.5" font-weight="400" fill="#d4d1c8" text-anchor="start" letter-spacing="0"><tspan dy="0.0" font-size="12.5">Per-cell features f</tspan><tspan dy="3.8" font-size="9.0">i</tspan><tspan dy="-3.8" font-size="12.5"> ∈ ℝ</tspan><tspan dy="-5.8" font-size="9.0">C</tspan></text>
+<rect x="85.6" y="218.6" width="4.8" height="4.8" transform="rotate(45 88 221)" fill="#dcb78e" opacity="0.85"/>
+<text x="98" y="225" font-size="12.5" font-weight="400" fill="#d4d1c8" text-anchor="start" letter-spacing="0"><tspan dy="0.0" font-size="12.5">[n</tspan><tspan dy="3.8" font-size="9.0">p</tspan><tspan dy="-3.8" font-size="12.5">, n</tspan><tspan dy="3.8" font-size="9.0">d</tspan><tspan dy="-3.8" font-size="12.5">, λ, μ, τ</tspan><tspan dy="3.8" font-size="9.0">t</tspan><tspan dy="-3.8" font-size="12.5">, ρ</tspan><tspan dy="3.8" font-size="9.0">t</tspan><tspan dy="-3.8" font-size="12.5">, c</tspan><tspan dy="3.8" font-size="9.0">t</tspan><tspan dy="-3.8" font-size="12.5">]</tspan></text>
+<rect x="85.6" y="237.6" width="4.8" height="4.8" transform="rotate(45 88 240)" fill="#dcb78e" opacity="0.85"/>
+<text x="98" y="244" font-size="12.5" font-weight="400" fill="#d4d1c8" text-anchor="start" letter-spacing="0"><tspan dy="0.0" font-size="12.5">Per-channel φ</tspan><tspan dy="3.8" font-size="9.0">c</tspan></text>
+<rect x="85.6" y="256.6" width="4.8" height="4.8" transform="rotate(45 88 259)" fill="#dcb78e" opacity="0.85"/>
+<text x="98" y="263" font-size="12.5" font-weight="400" fill="#d4d1c8" text-anchor="start" letter-spacing="0"><tspan dy="0.0" font-size="12.5">MLP or 1×1 Conv;</tspan></text>
+<rect x="85.6" y="275.6" width="4.8" height="4.8" transform="rotate(45 88 278)" fill="#dcb78e" opacity="0.85"/>
+<text x="98" y="282" font-size="12.5" font-weight="400" fill="#d4d1c8" text-anchor="start" letter-spacing="0"><tspan dy="0.0" font-size="12.5">categorical→embedding</tspan></text>
+<rect x="85.6" y="294.6" width="4.8" height="4.8" transform="rotate(45 88 297)" fill="#dcb78e" opacity="0.85"/>
+<text x="98" y="301" font-size="12.5" font-weight="400" fill="#d4d1c8" text-anchor="start" letter-spacing="0"><tspan dy="0.0" font-size="12.5">Concat across channels</tspan></text>
+<rect x="85.6" y="313.6" width="4.8" height="4.8" transform="rotate(45 88 316)" fill="#dcb78e" opacity="0.85"/>
+<text x="98" y="320" font-size="12.5" fill="#d4d1c8">e<tspan dy="3.8" font-size="9">i</tspan><tspan dy="-3.8" font-size="12.5"> ∈ ℝ</tspan><tspan dy="-5.8" font-size="9">C·d</tspan><tspan dy="2.6" font-size="7.2">c</tspan></text>
+<rect x="72" y="378" width="232" height="144" rx="7" fill="rgba(212,165,116,0.055)" stroke="rgba(212,165,116,0.55)" stroke-width="1.2"/>
+<text x="188" y="402" font-size="14.5" font-weight="600" fill="#dcb78e" text-anchor="middle">Fusion Projection W<tspan dy="3.8" font-size="10">f</tspan></text>
+<rect x="85.6" y="419.6" width="4.8" height="4.8" transform="rotate(45 88 422)" fill="#dcb78e" opacity="0.85"/>
+<text x="98" y="426" font-size="12.5" fill="#d4d1c8">Linear fusion ℝ<tspan dy="-5.8" font-size="9">c·d</tspan><tspan dy="2.6" font-size="7.2">c</tspan><tspan dy="3.2" font-size="12.5"> → ℝ</tspan><tspan dy="-5.8" font-size="9">d</tspan></text>
+<rect x="85.6" y="439.6" width="4.8" height="4.8" transform="rotate(45 88 442)" fill="#dcb78e" opacity="0.85"/>
+<text x="98" y="446" font-size="12.5" font-weight="400" fill="#d4d1c8" text-anchor="start" letter-spacing="0"><tspan dy="0.0" font-size="12.5">Tokens: x</tspan><tspan dy="3.8" font-size="9.0">i</tspan><tspan dy="-3.8" font-size="12.5"> = W</tspan><tspan dy="3.8" font-size="9.0">f</tspan><tspan dy="-3.8" font-size="12.5"> e</tspan><tspan dy="3.8" font-size="9.0">i</tspan></text>
+<rect x="85.6" y="459.6" width="4.8" height="4.8" transform="rotate(45 88 462)" fill="#dcb78e" opacity="0.85"/>
+<text x="98" y="466" font-size="12.5" font-weight="400" fill="#d4d1c8" text-anchor="start" letter-spacing="0"><tspan dy="0.0" font-size="12.5">Positional encoding: add</tspan></text>
+<rect x="85.6" y="479.6" width="4.8" height="4.8" transform="rotate(45 88 482)" fill="#dcb78e" opacity="0.85"/>
+<text x="98" y="486" font-size="12.5" font-weight="400" fill="#d4d1c8" text-anchor="start" letter-spacing="0"><tspan dy="0.0" font-size="12.5">2D sinusoidal + learnable table</tspan></text>
+<line x1="188" y1="120" x2="188" y2="158" stroke="rgba(212,209,200,0.42)" stroke-width="1.2" marker-end="url(#ar)"/>
+<text x="200" y="143" font-size="10.5" font-weight="500" fill="#6c6960" text-anchor="start" letter-spacing="0">Observation</text>
+<line x1="188" y1="344" x2="188" y2="378" stroke="rgba(212,209,200,0.42)" stroke-width="1.2" marker-end="url(#ar)"/>
+<text x="190" y="362" font-size="10.5" font-weight="500" fill="#6c6960" text-anchor="start" letter-spacing="0"><tspan dy="0.0" font-size="10.5">Concat Channel Embedding e</tspan><tspan dy="3.1" font-size="7.6">i</tspan><tspan dy="-3.1" font-size="10.5"> ∈ ℝ</tspan><tspan dy="-4.8" font-size="7.6">C·d_c</tspan></text>
+<polyline points="304,450 486,450 486,55 540,55" fill="none" stroke="rgba(212,209,200,0.42)" stroke-width="1.2" marker-end="url(#ar)"/>
+<text x="330" y="26" font-size="10.5" font-weight="500" fill="#6c6960" text-anchor="start" letter-spacing="0"><tspan dy="0.0" font-size="10.5">Projected token embedding x</tspan><tspan dy="3.1" font-size="7.6">i</tspan><tspan dy="-3.1" font-size="10.5">(ℝ</tspan><tspan dy="-4.8" font-size="7.6">d</tspan><tspan dy="4.8" font-size="10.5">)</tspan></text>
+<rect x="540" y="30" width="566" height="86" rx="7" fill="rgba(120,150,210,0.06)" stroke="rgba(120,150,210,0.55)" stroke-width="1.2"/>
+<text x="823.0" y="54" font-size="14.5" font-weight="600" fill="#a3b6e2" text-anchor="middle" letter-spacing="0">Transformer Encoder</text>
+<rect x="555.6" y="74.6" width="4.8" height="4.8" transform="rotate(45 558 77)" fill="#a3b6e2" opacity="0.85"/>
+<text x="570" y="81" font-size="12.5" font-weight="400" fill="#d4d1c8" text-anchor="start" letter-spacing="0">MHA + FFN, Add&amp;Norm</text>
+<rect x="555.6" y="95.6" width="4.8" height="4.8" transform="rotate(45 558 98)" fill="#a3b6e2" opacity="0.85"/>
+<text x="570" y="102" font-size="12.5" font-weight="400" fill="#d4d1c8" text-anchor="start" letter-spacing="0"><tspan dy="0.0" font-size="12.5">input: X ∈ ℝ</tspan><tspan dy="-5.8" font-size="9.0">N×d</tspan><tspan dy="5.8" font-size="12.5">, output: H ∈ ℝ</tspan><tspan dy="-5.8" font-size="9.0">N×d</tspan></text>
+<text x="823.0" y="131" font-size="11" font-weight="400" fill="#9b978d" text-anchor="middle" letter-spacing="0"><tspan dy="0.0" font-size="11">Contextualized Tokens H</tspan></text>
+<line x1="823.0" y1="135" x2="823.0" y2="150" stroke="rgba(212,209,200,0.42)" stroke-width="1.2" marker-end="url(#ar)"/>
+<rect x="540" y="150" width="566" height="42" rx="7" fill="rgba(120,150,210,0.06)" stroke="rgba(120,150,210,0.55)" stroke-width="1.2"/>
+<text x="823.0" y="176" font-size="14" font-weight="600" fill="#a3b6e2" text-anchor="middle" letter-spacing="0">Global Avg Pooling / [CLS]</text>
+<text x="823.0" y="207" font-size="11" font-weight="400" fill="#9b978d" text-anchor="middle" letter-spacing="0"><tspan dy="0.0" font-size="11">Global Token h ∈ ℝ</tspan><tspan dy="-5.1" font-size="7.9">d</tspan></text>
+<line x1="823.0" y1="211" x2="823.0" y2="226" stroke="rgba(212,209,200,0.42)" stroke-width="1.2" marker-end="url(#ar)"/>
+<rect x="690" y="226" width="266" height="44" rx="7" fill="rgba(68,192,106,0.07)" stroke="rgba(68,192,106,0.6)" stroke-width="1.2"/>
+<text x="823.0" y="253" font-size="14" font-weight="600" fill="#5fc77f" text-anchor="middle" letter-spacing="0"><tspan dy="0.0" font-size="14">Router g(h) ∈ ℝ</tspan><tspan dy="-6.4" font-size="10.1">E</tspan></text>
+<text x="823.0" y="285" font-size="11" font-weight="400" fill="#9b978d" text-anchor="middle" letter-spacing="0">Top k on r</text>
+<line x1="823.0" y1="289" x2="823.0" y2="304" stroke="rgba(68,192,106,0.5)" stroke-width="1.2" marker-end="url(#arg)"/>
+<rect x="540" y="304" width="566" height="92" rx="7" fill="rgba(176,150,214,0.05)" stroke="rgba(176,150,214,0.5)" stroke-width="1.2"/>
+<text x="558" y="324" font-size="13.5" font-weight="600" fill="#bda6e0" text-anchor="start" letter-spacing="0">MoE</text>
+<rect x="599.0" y="340" width="52" height="34" rx="4" fill="rgba(255,255,255,0.02)" stroke="rgba(212,209,200,0.28)" stroke-width="1.1"/>
+<text x="625.0" y="362.0" font-size="13" fill="#9b978d" text-anchor="middle"><tspan dy="0.0" font-size="13">E</tspan><tspan dy="3.9" font-size="9.4">1</tspan></text>
+<rect x="665.0" y="340" width="52" height="34" rx="4" fill="rgba(68,192,106,0.16)" stroke="rgba(68,192,106,0.75)" stroke-width="1.2"/>
+<text x="691.0" y="362.0" font-size="13" fill="#7fd69a" text-anchor="middle"><tspan dy="0.0" font-size="13">E</tspan><tspan dy="3.9" font-size="9.4">2</tspan></text>
+<rect x="731.0" y="340" width="52" height="34" rx="4" fill="rgba(255,255,255,0.02)" stroke="rgba(212,209,200,0.28)" stroke-width="1.1"/>
+<text x="757.0" y="362.0" font-size="13" fill="#9b978d" text-anchor="middle"><tspan dy="0.0" font-size="13">E</tspan><tspan dy="3.9" font-size="9.4">3</tspan></text>
+<rect x="797.0" y="340" width="52" height="34" rx="4" fill="rgba(68,192,106,0.16)" stroke="rgba(68,192,106,0.75)" stroke-width="1.2"/>
+<text x="823.0" y="362.0" font-size="13" fill="#7fd69a" text-anchor="middle"><tspan dy="0.0" font-size="13">E</tspan><tspan dy="3.9" font-size="9.4">4</tspan></text>
+<text x="889.0" y="362.0" font-size="13" fill="#6c6960" text-anchor="middle">······</text>
+<rect x="929.0" y="340" width="52" height="34" rx="4" fill="rgba(68,192,106,0.16)" stroke="rgba(68,192,106,0.75)" stroke-width="1.2"/>
+<text x="955.0" y="362.0" font-size="13" fill="#7fd69a" text-anchor="middle"><tspan dy="0.0" font-size="13">E</tspan><tspan dy="3.9" font-size="9.4">r-1</tspan></text>
+<rect x="995.0" y="340" width="52" height="34" rx="4" fill="rgba(255,255,255,0.02)" stroke="rgba(212,209,200,0.28)" stroke-width="1.1"/>
+<text x="1021.0" y="362.0" font-size="13" fill="#9b978d" text-anchor="middle"><tspan dy="0.0" font-size="13">E</tspan><tspan dy="3.9" font-size="9.4">r</tspan></text>
+<text x="823.0" y="412" font-size="11.5" font-weight="500" fill="#6fce8c" text-anchor="middle" letter-spacing="0"><tspan dy="0.0" font-size="11.5">MoE output z ∈ ℝ</tspan><tspan dy="-5.3" font-size="8.3">d</tspan></text>
+<text x="823.0" y="426" font-size="10.5" font-weight="400" fill="#6c6960" text-anchor="middle" letter-spacing="0">Shared</text>
+<polyline points="823.0,432 823.0,440 635.0,440 635.0,446" fill="none" stroke="rgba(212,209,200,0.42)" stroke-width="1.2" marker-end="url(#ar)"/>
+<polyline points="823.0,440 1011.0,440 1011.0,446" fill="none" stroke="rgba(212,209,200,0.42)" stroke-width="1.2" marker-end="url(#ar)"/>
+<rect x="540" y="446" width="190" height="90" rx="7" fill="rgba(214,128,128,0.055)" stroke="rgba(214,128,128,0.55)" stroke-width="1.2"/>
+<text x="635.0" y="470" font-size="13.5" font-weight="600" fill="#d89595" text-anchor="middle">Action<tspan dy="3.6" font-size="9.5">learn</tspan><tspan dy="-3.6" font-size="13.5"> heads</tspan></text>
+<text x="635.0" y="492" font-size="12" font-weight="400" fill="#d4d1c8" text-anchor="middle" letter-spacing="0">Policy</text>
+<text x="635.0" y="512" font-size="13.5" fill="#d4d1c8" text-anchor="middle">π<tspan dy="3.8" font-size="9.5">0</tspan><tspan dy="-3.8" font-size="13.5">(a</tspan><tspan dy="3.8" font-size="9.5">t</tspan><tspan dy="-3.8" font-size="13.5">|s</tspan><tspan dy="3.8" font-size="9.5">t</tspan><tspan dy="-3.8" font-size="13.5">)</tspan></text>
+<rect x="916" y="446" width="190" height="90" rx="7" fill="rgba(214,128,128,0.055)" stroke="rgba(214,128,128,0.55)" stroke-width="1.2"/>
+<text x="1011.0" y="470" font-size="13.5" font-weight="600" fill="#d89595" text-anchor="middle" letter-spacing="0">Critic heads</text>
+<text x="1011.0" y="492" font-size="12" font-weight="400" fill="#d4d1c8" text-anchor="middle" letter-spacing="0">Value function</text>
+<text x="1011.0" y="512" font-size="13.5" fill="#d4d1c8" text-anchor="middle">V<tspan dy="3.8" font-size="9.5">φ</tspan><tspan dy="-3.8" font-size="13.5">(s</tspan><tspan dy="3.8" font-size="9.5">t</tspan><tspan dy="-3.8" font-size="13.5">)</tspan></text>
+<line x1="916" y1="486" x2="730" y2="486" stroke="rgba(212,209,200,0.42)" stroke-width="1.2" marker-end="url(#ar)"/>
+<text x="823.0" y="480" font-size="10.5" fill="#6c6960" text-anchor="middle">TD error Â<tspan dy="3.4" font-size="8">t</tspan></text>
+<path d="M514,524 C500,508 504,484 538,470" fill="none" stroke="rgba(212,209,200,0.42)" stroke-width="1.2" marker-end="url(#ar)"/>
+<text x="505" y="500" font-size="10.5" font-weight="500" fill="#6c6960" text-anchor="end" letter-spacing="0">Update</text>
+<line x1="635.0" y1="536" x2="635.0" y2="560" stroke="rgba(212,209,200,0.42)" stroke-width="1.2" marker-end="url(#ar)"/>
+<text x="645.0" y="548" font-size="10.5" font-weight="500" fill="#6c6960" text-anchor="start" letter-spacing="0">Copy</text>
+<rect x="540" y="560" width="190" height="72" rx="7" fill="rgba(214,128,128,0.055)" stroke="rgba(214,128,128,0.55)" stroke-width="1.2"/>
+<text x="635.0" y="584" font-size="13.5" font-weight="600" fill="#d89595" text-anchor="middle">Action<tspan dy="3.6" font-size="9.5">choose</tspan><tspan dy="-3.6" font-size="13.5"> heads</tspan></text>
+<text x="635.0" y="606" font-size="12" font-weight="400" fill="#d4d1c8" text-anchor="middle" letter-spacing="0">Old policy</text>
+<text x="635.0" y="625" font-size="13.5" fill="#d4d1c8" text-anchor="middle">π<tspan dy="3.8" font-size="9.5">0old</tspan><tspan dy="-3.8" font-size="13.5">(a</tspan><tspan dy="3.8" font-size="9.5">t</tspan><tspan dy="-3.8" font-size="13.5">|s</tspan><tspan dy="3.8" font-size="9.5">t</tspan><tspan dy="-3.8" font-size="13.5">)</tspan></text>
+<path d="M1011.0,580 C1011.0,562 1011.0,548 1011.0,536" fill="none" stroke="rgba(212,209,200,0.42)" stroke-width="1.2" marker-end="url(#ar)"/>
+<text x="1011.0" y="596" font-size="10.5" font-weight="500" fill="#6c6960" text-anchor="middle" letter-spacing="0">Update</text>
+<line x1="1124" y1="486" x2="1106" y2="486" stroke="rgba(212,209,200,0.42)" stroke-width="1.2" marker-end="url(#ar)"/>
+<text x="1118" y="476" font-size="10.5" font-weight="500" fill="#6c6960" text-anchor="end" letter-spacing="0">Reward</text>
+</svg>
+      </div>
+      <p class="sv-cap"><b>A compact spatio-temporal mixture-of-experts policy.</b> Set to the owner-profit objective, it maximizes earnings while holding each owner&rsquo;s hard availability constraint &mdash; with stable training and no reward hacking.</p>
+    </div>
+
+  </div>
+
+  <div class="sv-data">
+    <p class="sv-data-lead">The data path moves from modeled demand to the owner&rsquo;s <span class="s-green">own signal</span>.</p>
+    <div class="sv-data-steps">
+      <div class="sv-data-step">
+        <span class="sv-data-n">SFCTA</span>
+        <span class="sv-data-d">modeled travel demand &mdash; bootstrap the simulation</span>
+      </div>
+      <div class="sv-data-arrow">&rarr;</div>
+      <div class="sv-data-step">
+        <span class="sv-data-n">CPUC</span>
+        <span class="sv-data-d">real ride-hailing trip records</span>
+      </div>
+      <div class="sv-data-arrow">&rarr;</div>
+      <div class="sv-data-step green">
+        <span class="sv-data-n">Volunteers</span>
+        <span class="sv-data-d">proprietary owner-availability data we collect</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ══ BUSINESS MODEL ════════════════════════════════════════════════ -->
 <style>
 /* ════ BUSINESS MODEL · full-width ════ */
@@ -1450,32 +1697,32 @@ footer{
 <section class="s-plan" id="plan">
   <span class="s-label">The 18-Month Plan</span>
   <h2 class="s-heading">Inside Stage 1: prove the bet, build the system, line up the partners.</h2>
-  <p class="plan-top">Anchored in <span class="s-accent">San Francisco</span> — where the AV programs are — validating on public individual-mobility datasets, because privately-owned AVs are only beginning to ship. Starting point today: the architecture, baselines, and falsifiable success criteria are defined; a 3-person founding team; a <span class="s-accent">$5M seed</span> closing. <span class="s-accent">Hiring stays milestone-gated</span> — a small, senior team that grows only against validated results and partner pull, never to cash on hand.</p>
+  <p class="plan-top">Anchored in <span class="s-accent">San Francisco</span> — where the AV programs are — validating on public individual-mobility datasets, because privately-owned AVs are only beginning to ship. Starting point today: the architecture, baselines, and falsifiable success criteria are defined, and the Bay Area demo data is already cleaned; an <span class="s-accent">$8–10M seed</span>. <span class="s-accent">Hiring stays milestone-gated</span> — a senior team that scales to ~12 against validated results and partner pull, never to cash on hand.</p>
 
   <div class="plan-grid">
     <div class="plan-card">
       <span class="plan-when">Month 0–3</span>
-      <div class="plan-title">Prove the ceiling</div>
-      <div class="plan-body">Settle the core empirical question first: is individual availability predictable beyond a population prior? Reliability and pinball benchmarks frozen and pre-registered; tech report out; access-guarantee API designed.</div>
-      <div class="plan-foot"><b>Team ~5</b><br><span class="gate">Gate:</span> predictability proven · report out</div>
+      <div class="plan-title">Max profit on a declared window</div>
+      <div class="plan-body">Given the owner's declared availability window, the engine maximizes owner profit under the hard return constraint. Bay Area demo live — data obtained and cleaned, our RL engine ported to the scenario with the objective set to max owner benefit, the simulator deployed to a cloud GPU cluster.</div>
+      <div class="plan-foot"><b>Team ~6</b><br><span class="gate">Gate:</span> profit-max results on the Bay Area demo</div>
     </div>
     <div class="plan-card">
       <span class="plan-when">Month 3–6</span>
-      <div class="plan-title">Engine v1</div>
-      <div class="plan-body">Selective memory beats the cheap baselines on calibration in the sparse regime; the roaming-envelope decision layer built; the reliability–earning frontier demonstrated in simulation against an owner's own history.</div>
-      <div class="plan-foot"><b>Team ~6</b><br><span class="gate">Gate:</span> calibration edge + frontier shown</div>
+      <div class="plan-title">Predict the window</div>
+      <div class="plan-body">Drop the declared window — predict it. Location-based behavioral models forecast each owner's next trip from open mobility data and prior research collaborations; we collect or acquire where coverage is thin, chosen for span and transferability.</div>
+      <div class="plan-foot"><b>Team ~9</b><br><span class="gate">Gate:</span> window prediction beats the population prior</div>
     </div>
     <div class="plan-card">
       <span class="plan-when">Month 6–12</span>
-      <div class="plan-title">Design partners</div>
-      <div class="plan-body">Open conversations with the programs putting cars in private hands — Tensor- and Lucid-type makers; integrate a partner's data in replay; demonstrate guaranteed access at target reliability on their traces. Real needs begin flowing back.</div>
-      <div class="plan-foot"><b>Team ~8</b><br><span class="gate">Gate:</span> first design-partner LOI</div>
+      <div class="plan-title">Validate on real data</div>
+      <div class="plan-body">Test prediction accuracy and calibrate against real GPS traces — acquiring the data needed to prove the engine holds on real owner behavior, not just modeled demand.</div>
+      <div class="plan-foot"><b>Team ~11</b><br><span class="gate">Gate:</span> calibrated accuracy on real GPS</div>
     </div>
     <div class="plan-card last">
       <span class="plan-when">Month 12–18</span>
-      <div class="plan-title">Pilot-ready</div>
-      <div class="plan-body">A live or replay pilot with a partner program; SOC 2 groundwork; the access-guarantee system productized and ready to deploy the moment private fleets reach scale. We enter the Series A with the bet proven, not pitched.</div>
-      <div class="plan-foot"><b>Team ~10</b><br><span class="gate">Gate:</span> pilot + Series A ready</div>
+      <div class="plan-title">Line up the OEMs</div>
+      <div class="plan-body">Take the technical results and the team — engineering depth plus in-industry relationships — into conversations with the makers putting autonomy in private hands. Build the relationships that convert to design-partner intent, and enter the Series A with the bet proven, not pitched.</div>
+      <div class="plan-foot"><b>Team ~12</b><br><span class="gate">Gate:</span> first design-partner LOI</div>
     </div>
   </div>
 </section>
@@ -1483,63 +1730,58 @@ footer{
 <!-- ══ THE RAISE / USE OF FUNDS ══════════════════════════════════════ -->
 <section class="s-raise" id="raise">
   <span class="s-label">The Raise</span>
-  <h2 class="s-heading">A $8M seed, eighteen to twenty-four months.</h2>
+  <h2 class="s-heading">An $8–10M seed, eighteen to twenty-four months.</h2>
   <p class="raise-purpose">What exists today is design, not deployment — the architecture, the baselines, and the falsifiable success criteria are defined and pre-committed. <span class="s-accent">This seed is sized to do one thing well: prove the core bet on real mobility data and embed with the first carmakers putting autonomy in private hands.</span> The scale round comes after — a Series A raised against a <em>proven</em> thesis and signed design partners, as the ownership wave inflects, not before.</p>
 
   <div class="ask-cards">
     <div class="ask-card primary">
       <span class="ask-tag">Base</span>
       <div class="ask-amt">$8M</div>
-      <div class="ask-desc">~18 months and a team to roughly eight: prove predictability and calibration in the sparse regime, ship engine v1, and land the first design-partner LOI with a Tensor- or Lucid-type program.</div>
+      <div class="ask-desc">The full 18-month plan: a senior team to ~12 across prediction, RL/orchestration, conformal calibration, and simulation infrastructure — prove window prediction, validate on real GPS, and land the first design-partner LOI with a Tensor- or Lucid-type program.</div>
     </div>
     <div class="ask-card">
       <span class="ask-tag">Extended</span>
       <div class="ask-amt">$10M</div>
-      <div class="ask-desc">With strategic participation: a second design partner, earlier data acquisition, and a 24-month buffer to reach a live or replay pilot — and a stronger hand into the Series A.</div>
+      <div class="ask-desc">With strategic participation: premium data acquisition, on-demand compute headroom, and ~9 months of additional runway to a live or replay pilot — a stronger hand into the Series A.</div>
     </div>
   </div>
 
   <div class="uof-list">
     <div class="uof-row">
-      <div class="uof-cat">Team &amp; talent<span>Research, ML, optimization, infra, and early product — kept lean and milestone-gated</span></div>
-      <div class="uof-bar"><div class="uof-bar-fill" style="width:55%"></div></div>
-      <div class="uof-pct">55%</div>
+      <div class="uof-cat">Team &amp; talent<span>4 senior MLEs, platform/HPC, data &amp; ML engineers, juniors — senior and milestone-gated</span></div>
+      <div class="uof-bar"><div class="uof-bar-fill" style="width:51%"></div></div>
+      <div class="uof-pct">51%</div>
     </div>
     <div class="uof-row">
-      <div class="uof-cat">Data &amp; partner integration<span>Real human-mobility traces, commercial datasets, and design-partner data in replay</span></div>
+      <div class="uof-cat">Compute &amp; infrastructure<span>Training/simulation cluster, on-demand burst for parallel experiments, storage, engineering tokens — bounded, not foundation-scale</span></div>
+      <div class="uof-bar"><div class="uof-bar-fill" style="width:17%"></div></div>
+      <div class="uof-pct">17%</div>
+    </div>
+    <div class="uof-row">
+      <div class="uof-cat">Data &amp; partner integration<span>Premium GPS / mobility panels, collection, data agreements, and design-partner data in replay</span></div>
+      <div class="uof-bar"><div class="uof-bar-fill" style="width:11%"></div></div>
+      <div class="uof-pct">11%</div>
+    </div>
+    <div class="uof-row">
+      <div class="uof-cat">Reserve<span>Contingency held against gated hiring and data acquisition</span></div>
       <div class="uof-bar"><div class="uof-bar-fill" style="width:13%"></div></div>
       <div class="uof-pct">13%</div>
     </div>
     <div class="uof-row">
-      <div class="uof-cat">Compute &amp; infrastructure<span>Training, ablation, simulation replay, inference benchmarking — bounded, not foundation-scale</span></div>
-      <div class="uof-bar"><div class="uof-bar-fill" style="width:12%"></div></div>
-      <div class="uof-pct">12%</div>
+      <div class="uof-cat">Security / legal / G&amp;A<span>Data governance, privacy, incorporation &amp; ops, SaaS</span></div>
+      <div class="uof-bar"><div class="uof-bar-fill" style="width:5%"></div></div>
+      <div class="uof-pct">5%</div>
     </div>
     <div class="uof-row">
-      <div class="uof-cat">Productization<span>The access-guarantee API, replay &amp; simulation tooling, model monitoring</span></div>
-      <div class="uof-bar"><div class="uof-bar-fill" style="width:8%"></div></div>
-      <div class="uof-pct">8%</div>
-    </div>
-    <div class="uof-row">
-      <div class="uof-cat">Security / legal / G&amp;A<span>SOC 2 groundwork, privacy &amp; data governance, incorporation &amp; ops</span></div>
-      <div class="uof-bar"><div class="uof-bar-fill" style="width:7%"></div></div>
-      <div class="uof-pct">7%</div>
-    </div>
-    <div class="uof-row">
-      <div class="uof-cat">University research collaboration<span>Benchmark rigor, technical depth, talent pipeline</span></div>
+      <div class="uof-cat">Recruiting<span>Sourcing ~9 senior hires into a competitive ML market</span></div>
       <div class="uof-bar"><div class="uof-bar-fill" style="width:3%"></div></div>
       <div class="uof-pct">3%</div>
-    </div>
-    <div class="uof-row">
-      <div class="uof-cat">Reserve<span>Contingency held against gated hiring</span></div>
-      <div class="uof-bar"><div class="uof-bar-fill" style="width:2%"></div></div>
-      <div class="uof-pct">2%</div>
     </div>
   </div>
 
   <div class="raise-foot">
-    Compute is meaningful but bounded — <span class="s-accent">we do not spend like a foundation-model company.</span> Model size is constrained by what deployment demands: low latency, calibration, reliability. The capital goes mostly to a small, senior team and to the data and partner integration the proof depends on.
-    <div class="raise-principle">This is deliberately not an A. A $8M seed de-risks the one empirical claim the whole company rests on and gets us embedded with the first programs — and hiring stays milestone-gated, tied to validated results, signed design partners, and customer pull, not to cash on hand. The scale round is raised against proof.</div>
+    Compute is meaningful but bounded — <span class="s-accent">we do not spend like a foundation-model company.</span> Model size is constrained by what deployment demands: low latency, calibration, reliability. The capital goes mostly to a senior team and to the data and partner integration the proof depends on.
+    <div class="raise-principle">This is deliberately not an A. An $8–10M seed de-risks the one empirical claim the whole company rests on and gets us embedded with the first programs — and hiring stays milestone-gated, tied to validated results, signed design partners, and customer pull, not to cash on hand. The scale round is raised against proof.</div>
     <div class="raise-line">This round turns a falsifiable thesis into a proven one — and embeds us with the makers putting autonomy in private hands.</div>
   </div>
 </section>
