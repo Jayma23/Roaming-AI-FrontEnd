@@ -1852,6 +1852,34 @@ footer{
   <div class="f-logo">Roaming<span class="brand-os">OS</span></div>
   <div class="f-copy">© 2026 RoamingOS, Inc. · San Francisco</div>
 </footer>
+
+<style>
+/* Large-screen guardrails: keep edge-anchored layers inside a centered stage. */
+@media (min-width:1921px){
+  :root{
+    --wide-stage:1480px;
+    --wide-edge:max(96px, calc((100vw - var(--wide-stage)) / 2 + 72px));
+  }
+  nav{
+    padding-left:var(--wide-edge);
+    padding-right:var(--wide-edge);
+  }
+  .s-hero__text{
+    max-width:none;
+    width:100%;
+    padding-left:var(--wide-edge);
+    padding-right:var(--wide-edge);
+  }
+  .s-map__caption,
+  .s-map__numbers{
+    left:var(--wide-edge);
+  }
+  .s-map__legend{
+    right:var(--wide-edge);
+  }
+}
+
+</style>
 <!-- ════════════════════ VIZ 1: PARTICLE FLOW ════════════════════ -->
 <script>
 (function(){
