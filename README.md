@@ -1,20 +1,32 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# RoamingOS — Investor Deck
 
-# Run and deploy your AI Studio app
+A single self-contained investor pitch deck: [`index.html`](index.html).
 
-This contains everything you need to run your app locally.
+Everything is inlined — styles, scripts, fonts, and images (base64) — so the
+file needs **no build step and no dependencies**. Open it in a browser and it runs.
 
-View your app in AI Studio: https://ai.studio/apps/ec30167a-e599-428e-8ae8-283639dcdadb
+## View locally
 
-## Run Locally
+Just open the file:
 
-**Prerequisites:**  Node.js
+```
+open index.html
+```
 
+Or serve it (needed if you want the correct routing / to mimic Pages):
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+```
+node .claude/serve.mjs   # serves on http://localhost:4599
+```
+
+## Deploy
+
+Pushing to `main` publishes `index.html` to GitHub Pages via
+[`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml).
+The workflow just copies `index.html` into the Pages artifact — no build.
+
+## Editing
+
+All content lives in `index.html`, organized as `<section>` blocks
+(hero, vision/evidence, pain, solution, business model, market, roadmap,
+raise, team, closing). Search for `<section` to jump between slides.
