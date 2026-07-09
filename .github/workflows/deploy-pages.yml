@@ -26,12 +26,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # index.html is fully self-contained (no build step needed).
-      # Stage it into a clean directory and publish that.
+      # Static deck: no build step. Stage the HTML plus demo media assets.
       - name: Stage site
         run: |
           mkdir -p _site
           cp index.html _site/index.html
+          if [ -d demo-assets ]; then
+            cp -R demo-assets _site/demo-assets
+          fi
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
