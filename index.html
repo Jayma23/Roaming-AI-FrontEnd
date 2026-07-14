@@ -307,64 +307,6 @@ h2.s-heading{
 /* ── ROADMAP ── */
 .s-roadmap-wrap{padding:120px 40px;}
 .s-roadmap-wrap > .s-label,.s-roadmap-wrap > h2.s-heading{max-width:880px;margin-left:auto;margin-right:auto;padding:0 20px;}
-.roadmap-timeline{
-  max-width:880px;margin:52px auto 0;padding:0 20px;
-  display:flex;align-items:center;
-}
-.rt-node{
-  width:16px;height:16px;border-radius:50%;flex-shrink:0;
-  border:1.5px solid rgba(212,209,200,0.25);
-  display:flex;align-items:center;justify-content:center;
-}
-.rt-node.active{ border-color:var(--accent); }
-.rt-node.dim{ border-color:rgba(212,209,200,0.12); }
-.rt-node-inner{ width:6px;height:6px;border-radius:50%; }
-.rt-node.active .rt-node-inner{ background:var(--accent); }
-.rt-node .rt-node-inner{ background:rgba(212,209,200,0.25); }
-.rt-node.dim .rt-node-inner{ background:rgba(212,209,200,0.10); }
-.rt-line{
-  flex:1;height:1px;background:rgba(212,209,200,0.10);position:relative;overflow:hidden;
-}
-.rt-line-fill{
-  position:absolute;left:0;top:0;bottom:0;width:40%;
-  background:linear-gradient(to right,var(--accent),rgba(68,192,106,0.2));
-}
-.roadmap-phases{max-width:960px;margin:0 auto;
-  display:grid;grid-template-columns:repeat(3,1fr);
-  gap:0;margin-top:52px;
-}
-.phase{
-  padding:32px;border:1px solid var(--rule);
-  border-right:none;position:relative;overflow:hidden;
-}
-.phase-num{
-  position:absolute;top:-10px;right:16px;
-  font-family:var(--serif);font-size:88px;font-weight:400;
-  line-height:1;color:rgba(255,255,255,0.028);
-  pointer-events:none;letter-spacing:-.03em;
-  user-select:none;
-}
-.phase:last-child{border-right:1px solid var(--rule);}
-.phase-tag{
-  font-family:var(--sans);font-size:9.5px;font-weight:500;
-  letter-spacing:.18em;text-transform:uppercase;
-  color:var(--dim);margin-bottom:14px;display:block;
-}
-.phase-title{
-  font-size:22px;color:var(--text);margin-bottom:20px;
-  font-weight:400;line-height:1.2;
-}
-.phase.p2 .phase-title,.phase.p2 .phase-tag{color:var(--text);}
-.phase.p3 .phase-title,.phase.p3 .phase-tag{color:var(--accent);}
-.phase-body{
-  font-family:var(--sans);font-size:12.5px;color:var(--dim);
-  line-height:1.72;margin-bottom:20px;
-}
-.phase-metric{
-  font-family:var(--sans);font-size:10.5px;font-weight:500;
-  color:var(--dimmer);line-height:1.65;
-}
-.phase.p3 .phase-metric{color:var(--accent2);}
 
 /* ── TEAM ── */
 .team-institutions{
@@ -613,9 +555,6 @@ footer{
   .k-inputs{grid-template-columns:repeat(2,1fr);}
   .k-intel{grid-template-columns:1fr;}
   .k-joint-row{grid-template-columns:repeat(2,1fr);}
-  .roadmap-phases{grid-template-columns:1fr;}
-  .phase{border-right:1px solid var(--rule);border-bottom:none;}
-  .phase:last-child{border-bottom:1px solid var(--rule);}
   .s-map__numbers{flex-direction:column;gap:28px;bottom:36px;left:28px;}
   .s-map__caption{top:36px;left:28px;right:28px;max-width:none;}
   footer{padding:28px;flex-direction:column;gap:12px;text-align:center;}
@@ -625,7 +564,6 @@ footer{
 }
 
 /* ── WHO WE SERVE + BUSINESS MODEL ── */
-.s-model-sub{font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin:64px 0 22px;display:block;}
 .cust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:40px;}
 .cust-card{padding:28px 24px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);}
 .cust-card.live{background:rgba(68,192,106,0.04);border-color:rgba(68,192,106,0.18);}
@@ -779,7 +717,6 @@ footer{
     <a href="#kallos"   class="nav-lk">Engine</a>
     <a href="#demo"    class="nav-lk">Demo</a>
     <a href="#moat"     class="nav-lk">Moat</a>
-    <a href="#model"    class="nav-lk">Model</a>
     <a href="#market"   class="nav-lk">Market</a>
     <a href="#roadmap"  class="nav-lk">Roadmap</a>
     <a href="#raise"    class="nav-lk">Raise</a>
@@ -1775,122 +1712,17 @@ document.querySelectorAll('.sd-deck[data-deck]').forEach(function(deck){
 
 
 
-<!-- ══ BUSINESS MODEL ════════════════════════════════════════════════ -->
+
+<!-- ══ MARKET ════════════════════════════════════════════════════ -->
 <style>
-/* ════ BUSINESS MODEL · full-width ════ */
-.s-model{max-width:1180px;margin:0 auto;padding-left:60px;padding-right:60px;}
-.s-model .s-heading{max-width:1000px;}
-.bm-parties{display:flex;align-items:center;justify-content:center;gap:22px;margin:4px 0 26px;}
-.bm-party{font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:.1em;color:var(--text);text-transform:uppercase;}
-.bm-party__sym{font-size:24px;color:var(--accent);line-height:1;}
-.bm-exchange{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
-.bm-side{border:1px solid rgba(255,255,255,0.07);border-radius:13px;padding:28px 30px;}
-.bm-side--in{background:rgba(74,110,191,0.05);border-color:rgba(74,110,191,0.16);}
-.bm-side--out{background:rgba(68,192,106,0.05);border-color:rgba(68,192,106,0.17);}
-.bm-side__head{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;margin-bottom:20px;}
-.bm-side--in .bm-side__head{color:#8aa0db;}
-.bm-side--out .bm-side__head{color:var(--accent);}
-.bm-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:15px;}
-.bm-list li{display:flex;gap:14px;align-items:flex-start;font-family:var(--sans);font-size:13.5px;line-height:1.55;color:var(--dim);}
-.bm-list li b{color:var(--text);font-weight:600;}
-.bm-num{flex:none;width:21px;height:21px;border-radius:50%;border:1px solid rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;font-size:10.5px;color:var(--dim);margin-top:1px;}
-.bm-side--in .bm-num{border-color:rgba(138,160,219,0.4);color:#8aa0db;}
-.bm-side--out .bm-num{border-color:rgba(68,192,106,0.4);color:var(--accent);}
-.bm-arr{color:var(--dimmer);padding:0 3px;}
-.bm-price{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
-.bm-price-card{border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:26px 28px;background:rgba(255,255,255,0.02);}
-.bm-price-card.primary{background:rgba(68,192,106,0.05);border-color:rgba(68,192,106,0.22);}
-.bm-price-tag{font-family:var(--sans);font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);display:block;margin-bottom:12px;}
-.bm-price-card.primary .bm-price-tag{color:var(--accent);}
-.bm-price-h{font-family:var(--serif);font-size:clamp(23px,2.3vw,31px);color:var(--text);line-height:1.1;margin-bottom:10px;}
-.bm-price-card.primary .bm-price-h{color:var(--accent);}
-.bm-price-s{font-family:var(--sans);font-size:13px;line-height:1.6;color:var(--dim);}
-.bm-price-note{font-family:var(--sans);font-size:12.5px;line-height:1.7;color:var(--dimmer);margin:20px 0 0;max-width:920px;}
-.bm-price-note b{color:var(--dim);font-weight:600;}
-.bm-phases{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
-.bm-phase{border-left:2px solid rgba(68,192,106,0.4);padding:3px 0 3px 18px;}
-.bm-phase-k{font-family:var(--sans);font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:9px;}
-.bm-phase-t{font-family:var(--sans);font-size:13.5px;line-height:1.6;color:var(--dim);}
-@media(max-width:900px){
-  .s-model{padding-left:28px;padding-right:28px;}
-  .bm-exchange,.bm-price,.bm-phases{grid-template-columns:1fr;}
-}
-</style>
-<section class="s-model section-pad" id="model">
-  <span class="s-label">Business Model</span>
-  <h2 class="s-heading">We power OEMs with the operating system that enables their autonomous vehicles generate value for their owners &mdash; and we share in the value we create.</h2>
-  
-
-  <span class="s-model-sub">The partnership</span>
-  <div class="bm-parties">
-    <span class="bm-party">OEM</span>
-    <span class="bm-party__sym">&#8644;</span>
-    <span class="bm-party">RoamingOS</span>
-  </div>
-  <div class="bm-exchange">
-    <div class="bm-side bm-side--in">
-      <div class="bm-side__head">What the OEM brings us</div>
-      <ul class="bm-list">
-        <li><span class="bm-num">1</span><div>Brand endorsement <span class="bm-arr">&rarr;</span> owner trust <span class="bm-arr">&rarr;</span> the owner's <b>Authorization of Operation</b></div></li>
-        <li><span class="bm-num">2</span><div>The car's onboard <b>compute and storage</b></div></li>
-        <li><span class="bm-num">3</span><div>Resource integration</div></li>
-      </ul>
-    </div>
-    <div class="bm-side bm-side--out">
-      <div class="bm-side__head">What we bring the OEM</div>
-      <ul class="bm-list">
-        <li><span class="bm-num">1</span><div>A lift in <b>vehicle sales</b></div></li>
-        <li><span class="bm-num">2</span><div>More uptime <span class="bm-arr">&rarr;</span> more driving data <span class="bm-arr">&rarr;</span> faster <b>self-driving iteration</b></div></li>
-        <li><span class="bm-num">3</span><div>Resource integration</div></li>
-        <li><span class="bm-num">4</span><div>Revenue from the service</div></li>
-      </ul>
-    </div>
-  </div>
-
-  <span class="s-model-sub">Pricing &middot; consumer side</span>
-  <div class="bm-price">
-    <div class="bm-price-card">
-      <span class="bm-price-tag">Up to $200 / month</span>
-      <div class="bm-price-h">5% service fee</div>
-      <div class="bm-price-s">On the owner's idle-time earning, up to the first $200 a month.</div>
-    </div>
-    <div class="bm-price-card primary">
-      <span class="bm-price-tag">Above $200 / month</span>
-      <div class="bm-price-h">15% of the upside</div>
-      <div class="bm-price-s">On earning beyond $200 — shared with OEM.</div>
-    </div>
-  </div>
-  <p class="bm-price-note">Benchmarked against Tesla Robotaxi's <b>~25%</b> take. Today the service rides on Lyft and Uber's demand and supply, so we deliberately take less; as an autonomous market matures, it can operate independent of Uber.</p>
-
-  
-</section>
-
-<!-- ══ MARKET ════════════════════════════════════════════════════════ -->
-<style>
-/* ════ MARKET · full-width sizing ════ */
 .s-market{max-width:1180px;margin:0 auto;padding-left:60px;padding-right:60px;}
-.s-market .s-body{max-width:840px;}
-.ms-table{width:100%;border-collapse:collapse;margin-top:2px;}
-.ms-table th{font-family:var(--sans);font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);text-align:left;padding:0 18px 14px 0;border-bottom:1px solid var(--rule);}
-.ms-table th.ms-r,.ms-table td.ms-r{text-align:right;padding-right:0;}
-.ms-table td{font-family:var(--sans);font-size:14px;color:var(--text);padding:15px 18px 15px 0;border-bottom:1px solid rgba(255,255,255,0.05);vertical-align:top;}
-.ms-table td.ms-dim{color:var(--dim);}
-.ms-table tr.ms-hl td{color:var(--accent);font-weight:600;}
-.ms-table td.ms-strong{font-weight:600;color:var(--text);}
-.ms-sub{font-family:var(--sans);font-size:13px;line-height:1.65;color:var(--dim);margin:0 0 16px;max-width:920px;}
-.ms-sub b{color:var(--text);font-weight:500;}
-.ms-foot{font-family:var(--sans);font-size:13.5px;line-height:1.6;color:var(--text);margin:20px 0 0;}
-.ms-foot b{color:var(--accent);font-weight:600;}
 @media(max-width:900px){
   .s-market{padding-left:28px;padding-right:28px;}
-  .ms-table th,.ms-table td{font-size:12px;padding-right:10px;}
 }
 </style>
 <section class="s-market section-pad" id="market">
   <span class="s-label">Market</span>
   <h2 class="s-heading">The privately-owned AV economy is coalescing &mdash; it arrives in 2028.</h2>
-
-  
 
 <div class="mc-wrap">
 <svg class="mc-svg" viewBox="0 0 960 470" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Vehicle counts over time on a non-linear axis: 2026 to 2029 — the entry window, when consumer AV supply arrives — is stretched wide; 2029 to 2035 is compressed into a small dashed-axis block where privately-owned AVs overtake commercial robotaxis.">
@@ -1960,87 +1792,168 @@ document.querySelectorAll('.sd-deck[data-deck]').forEach(function(deck){
 }
 @keyframes mcDraw{to{stroke-dashoffset:0;}}
 </style>
-  
 
-  <span class="s-model-sub">1 &middot; TAM — we sit above the operating GMV, at a ~12% take</span>
-  <table class="ms-table">
-    <thead><tr><th>Year</th><th>Stage</th><th class="ms-r">Enrolled private vehicles</th><th class="ms-r">Operating GMV</th><th class="ms-r">RoamingOS revenue TAM</th></tr></thead>
-    <tbody>
-      <tr><td>2030</td><td class="ms-dim">Technology matures, product launches</td><td class="ms-r">200k</td><td class="ms-r">$4.4B</td><td class="ms-r ms-strong">$0.5B</td></tr>
-      <tr><td>2032</td><td class="ms-dim">Industry takes off</td><td class="ms-r">1.5M</td><td class="ms-r">$37.5B</td><td class="ms-r ms-strong">$4.5B</td></tr>
-      <tr style="opacity:.45;"><td>2035</td><td class="ms-dim">At scale</td><td class="ms-r">6.0M</td><td class="ms-r">$168B</td><td class="ms-r ms-strong">$20.2B</td></tr>
-    </tbody>
-  </table>
-
-  <span class="s-model-sub">2 &middot; Unit economics — where the 12% take comes from (per enrolled vehicle / year)</span>
-  <p class="ms-sub">We capture the supply side — <b>matching + dispatch + network operations + payer-of-record</b> — a layer worth 25–30% of the gross fare in traditional ride-hailing.</p>
-  <table class="ms-table">
-    <thead><tr><th>Split</th><th class="ms-r">$</th><th class="ms-r">% of gross</th></tr></thead>
-    <tbody>
-      <tr><td>Gross fare <span style="color:var(--dimmer)">· passenger pays Uber</span></td><td class="ms-r">$25,000</td><td class="ms-r ms-dim">100%</td></tr>
-      <tr><td class="ms-dim">Uber · demand + passenger-side payment</td><td class="ms-r ms-dim">$5,000</td><td class="ms-r ms-dim">20%</td></tr>
-      <tr><td class="ms-dim">Stripe · payment &amp; compliance (our COGS)</td><td class="ms-r ms-dim">$375</td><td class="ms-r ms-dim">1.5%</td></tr>
-      <tr><td class="ms-dim">Owner rebate</td><td class="ms-r ms-dim">$15,000</td><td class="ms-r ms-dim">60%</td></tr>
-      <tr><td class="ms-dim">OEM · hardware &amp; brand</td><td class="ms-r ms-dim">$1,625</td><td class="ms-r ms-dim">6.5%</td></tr>
-      <tr class="ms-hl"><td>RoamingOS</td><td class="ms-r">$3,000</td><td class="ms-r">12%</td></tr>
-    </tbody>
-  </table>
-
-  
 </section>
 
-<!-- ══ ROADMAP ═══════════════════════════════════════════════════════ -->
+<!-- ══ ROADMAP ═════════════════════════════════════════════════ -->
 <section class="s-roadmap-wrap section-pad" id="roadmap">
   <span class="s-label">Roadmap</span>
-  <h2 class="s-heading">Three stages</h2>
-  
+  <h2 class="s-heading">Each stage funds &mdash; and trains &mdash; the next.</h2>
 
-  <div class="roadmap-timeline">
-    <div class="rt-node active"><div class="rt-node-inner"></div></div>
-    <div class="rt-line"><div class="rt-line-fill"></div></div>
-    <div class="rt-node"><div class="rt-node-inner"></div></div>
-    <div class="rt-line"></div>
-    <div class="rt-node dim"><div class="rt-node-inner"></div></div>
+  <div class="rm2-stage">
+<svg viewBox="0 36 960 474" role="img" aria-label="Three-horizon roadmap: Operate feeds Generalize, which feeds The OS." xmlns="http://www.w3.org/2000/svg" font-family="'Inter', sans-serif">
+  <defs>
+    <linearGradient id="ascent-a-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#46C46C" stop-opacity="0.15"/>
+      <stop offset="1" stop-color="#46C46C" stop-opacity="0"/>
+    </linearGradient>
+    <marker id="ascent-a-arrow-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M0,0 L9,5 L0,10 z" fill="#44C06A"/>
+    </marker>
+    <marker id="ascent-a-arrow-beige" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M0,0 L9,5 L0,10 z" fill="rgba(212,209,200,0.6)"/>
+    </marker>
+  </defs>
+  <style>
+    @media (prefers-reduced-motion: no-preference) {
+      .ascent-a-flow { animation: ascent-a-march 3s linear infinite; }
+      @keyframes ascent-a-march { to { stroke-dashoffset: -10; } }
+    }
+  </style>
+
+  <path d="M60,440 L340,440 L400,310 L680,310 L740,180 L900,180 L900,490 L60,490 Z" fill="url(#ascent-a-grad)"/>
+  <path d="M60,440 L340,440 L400,310 L680,310 L740,180 L900,180" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/>
+  <line x1="60" y1="440" x2="340" y2="440" stroke="#44C06A" stroke-width="2"/>
+  <line x1="60" y1="490" x2="900" y2="490" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+
+  <g>
+    <text x="84" y="324" font-size="10.5" font-weight="700" letter-spacing="1.5" fill="#44C06A">H1 · FIRST</text>
+    <g transform="translate(84,338)" fill="none" stroke="rgba(208,206,198,1)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="10.5" cy="20" r="3.3"/>
+      <circle cx="29.5" cy="20" r="3.3"/>
+      <path d="M13.9,20 L26.1,20"/>
+      <path d="M7.1,20 L4,20 L4,15 L11,12.6 L16,7 L27,7 L32.8,12.6 L36,13.6 L36,20 L32.9,20"/>
+      <path d="M21.5,7 L21.5,12.6"/>
+    </g>
+    <text x="84" y="396" font-family="'EB Garamond', Georgia, serif" font-size="31" font-weight="400" fill="#d4d1c8">Operate</text>
+    <text x="84" y="417" font-size="10.5" font-weight="500" fill="#969289">asset-yield engine</text>
+    <text x="84" y="433" font-size="10.5" font-weight="500" fill="#969289">for human-driven fleets</text>
+    <text x="84" y="464" font-size="10" font-weight="600" letter-spacing="1.2" fill="rgba(70,196,108,0.8)">REVENUE + BEHAVIORAL DATA</text>
+  </g>
+
+  <path class="ascent-a-flow" d="M296,422 L330,422 L392,292 L414,292" fill="none" stroke="rgba(70,196,108,0.5)" stroke-width="1.6" stroke-dasharray="4 6" marker-end="url(#ascent-a-arrow-green)"/>
+  <g>
+    <rect x="254" y="332" width="96" height="20" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.22)" stroke-width="1"/>
+    <text x="302" y="345.5" text-anchor="middle" font-size="10" font-weight="600" letter-spacing="1.2" fill="#969289">USAGE DATA</text>
+    <rect x="240" y="360" width="104" height="20" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.22)" stroke-width="1"/>
+    <text x="292" y="373.5" text-anchor="middle" font-size="10" font-weight="600" letter-spacing="1.2" fill="#969289">WORLD MODEL</text>
+  </g>
+
+  <g>
+    <text x="424" y="194" font-size="10.5" font-weight="700" letter-spacing="1.5" fill="#969289">H2 · NEXT</text>
+    <g transform="translate(424,205)" fill="none" stroke="rgba(208,206,198,1)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20,1.5 L37,9 L20,16.5 L3,9 Z"/>
+      <path d="M3,15 L20,22.5 L37,15"/>
+      <path d="M3,21 L20,28.5 L37,21"/>
+    </g>
+    <text x="424" y="266" font-family="'EB Garamond', Georgia, serif" font-size="31" font-weight="400" fill="#d4d1c8">Generalize</text>
+    <text x="424" y="296" font-size="10" font-weight="600" letter-spacing="1.2" fill="#969289">THE VALUATION LAYER</text>
+  </g>
+
+  <path d="M598,292 L668,292 L730,166 L750,166" fill="none" stroke="rgba(212,209,200,0.4)" stroke-width="1.6" stroke-dasharray="4 6" marker-end="url(#ascent-a-arrow-beige)"/>
+  <g>
+    <rect x="610" y="188" width="64" height="20" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.22)" stroke-width="1"/>
+    <text x="642" y="201.5" text-anchor="middle" font-size="10" font-weight="600" letter-spacing="1.2" fill="#969289">TRUST</text>
+    <rect x="580" y="216" width="110" height="20" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.22)" stroke-width="1"/>
+    <text x="635" y="229.5" text-anchor="middle" font-size="10" font-weight="600" letter-spacing="1.2" fill="#969289">TRACK RECORD</text>
+  </g>
+
+  <g opacity="0.45">
+    <text x="760" y="64" font-size="10.5" font-weight="700" letter-spacing="1.5" fill="#969289">H3 · AT AUTONOMY</text>
+    <g transform="translate(760,76)" fill="none" stroke="rgba(208,206,198,1)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M7,21 L19,5 M19,5 L35,15 M35,15 L23,25 M23,25 L7,21 M19,5 L23,25"/>
+      <circle cx="7" cy="21" r="3" fill="#0c0c0c"/>
+      <circle cx="19" cy="5" r="3" fill="#0c0c0c"/>
+      <circle cx="35" cy="15" r="3" fill="#0c0c0c"/>
+      <circle cx="23" cy="25" r="3" fill="#0c0c0c"/>
+    </g>
+    <text x="760" y="136" font-family="'EB Garamond', Georgia, serif" font-size="31" font-weight="400" fill="#d4d1c8">The OS</text>
+    <text x="760" y="166" font-size="10" font-weight="600" letter-spacing="1.2" fill="#969289">PRIVATELY-OWNED AUTONOMY</text>
+  </g>
+</svg>
   </div>
 
-  <div class="roadmap-phases">
-    <div class="phase p1">
-      <div class="phase-num">01</div>
-      <span class="phase-tag">Stage 1 · Today's world</span>
-      <div class="phase-title">Maximize the passenger-AV owner's benefit</div>
-      <div class="rm-icon rm-car"><svg viewBox="0 0 196 102" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Passenger autonomous vehicle"><g transform="translate(8,4)"><path d="M 14 72 L 14 56 C 15 48 22 44 34 42 L 70 40 C 80 39 86 31 96 25 L 132 24 C 150 25 160 34 168 44 L 168 72 L 150 72 A 16 16 0 0 1 118 72 L 64 72 A 16 16 0 0 1 32 72 Z" fill="none" stroke="rgba(180,178,170,1)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><line x1="44" y1="41" x2="150" y2="42" stroke="rgba(180,178,170,1)" stroke-width="1.8" stroke-linecap="round" vector-effect="non-scaling-stroke"/><line x1="98" y1="25" x2="96" y2="41" stroke="rgba(180,178,170,1)" stroke-width="1.8" stroke-linecap="round" vector-effect="non-scaling-stroke"/><circle cx="48" cy="72" r="14" fill="none" stroke="rgba(180,178,170,1)" stroke-width="2.2" vector-effect="non-scaling-stroke"/><circle cx="48" cy="72" r="5.5" fill="none" stroke="rgba(180,178,170,1)" stroke-width="1.8" vector-effect="non-scaling-stroke"/><circle cx="134" cy="72" r="14" fill="none" stroke="rgba(180,178,170,1)" stroke-width="2.2" vector-effect="non-scaling-stroke"/><circle cx="134" cy="72" r="5.5" fill="none" stroke="rgba(180,178,170,1)" stroke-width="1.8" vector-effect="non-scaling-stroke"/><path d="M 86 24 L 86 16 Q 86 13 90 13 L 102 13 Q 106 13 106 16 L 106 24" fill="none" stroke="rgba(180,178,170,1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><path d="M 91.1 10 A 7 7 0 0 1 100.9 2" fill="none" stroke="rgba(180,178,170,0.8)" stroke-width="1.8" stroke-linecap="round" vector-effect="non-scaling-stroke" transform="translate(0,-2)"/><path d="M 87.6 5 A 12 12 0 0 1 104.4 -3" fill="none" stroke="rgba(180,178,170,0.6200000000000001)" stroke-width="1.8" stroke-linecap="round" vector-effect="non-scaling-stroke" transform="translate(0,-2)"/><path d="M 84.1 0 A 17 17 0 0 1 107.9 -8" fill="none" stroke="rgba(180,178,170,0.44000000000000006)" stroke-width="1.8" stroke-linecap="round" vector-effect="non-scaling-stroke" transform="translate(0,-2)"/></g></svg></div>
-      
-      
-    </div>
-    <div class="phase p2">
-      <div class="phase-num">02</div>
-      <span class="phase-tag">Stage 2 · Today's world</span>
-      <div class="phase-title">Maximize every AV owner's benefit</div>
-      <div class="rm-icon rm-fleet"><svg viewBox="0 0 372 212" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Many autonomous vehicle types: passenger car, delivery van, shuttle bus, truck"><g transform="translate(6,8)"><path d="M 14 72 L 14 56 C 15 48 22 44 34 42 L 70 40 C 80 39 86 31 96 25 L 132 24 C 150 25 160 34 168 44 L 168 72 L 150 72 A 16 16 0 0 1 118 72 L 64 72 A 16 16 0 0 1 32 72 Z" fill="none" stroke="rgba(208,206,198,1)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><line x1="44" y1="41" x2="150" y2="42" stroke="rgba(208,206,198,1)" stroke-width="1.8" stroke-linecap="round" vector-effect="non-scaling-stroke"/><line x1="98" y1="25" x2="96" y2="41" stroke="rgba(208,206,198,1)" stroke-width="1.8" stroke-linecap="round" vector-effect="non-scaling-stroke"/><circle cx="48" cy="72" r="14" fill="none" stroke="rgba(208,206,198,1)" stroke-width="2.2" vector-effect="non-scaling-stroke"/><circle cx="48" cy="72" r="5.5" fill="none" stroke="rgba(208,206,198,1)" stroke-width="1.8" vector-effect="non-scaling-stroke"/><circle cx="134" cy="72" r="14" fill="none" stroke="rgba(208,206,198,1)" stroke-width="2.2" vector-effect="non-scaling-stroke"/><circle cx="134" cy="72" r="5.5" fill="none" stroke="rgba(208,206,198,1)" stroke-width="1.8" vector-effect="non-scaling-stroke"/><path d="M 86 24 L 86 16 Q 86 13 90 13 L 102 13 Q 106 13 106 16 L 106 24" fill="none" stroke="rgba(208,206,198,1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g><g transform="translate(196,16)"><g transform="translate(0,0)"><path d="M 10 70 L 10 26 Q 10 20 18 20 L 104 20 Q 112 20 118 27 L 150 46 L 150 70 L 134 70 A 15 15 0 0 1 104 70 L 60 70 A 15 15 0 0 1 30 70 Z" fill="none" stroke="rgba(208,206,198,1)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><line x1="108" y1="24" x2="124" y2="42" stroke="rgba(208,206,198,1)" stroke-width="1.8" stroke-linecap="round" vector-effect="non-scaling-stroke"/><line x1="124" y1="42" x2="124" y2="70" stroke="rgba(208,206,198,1)" stroke-width="1.8" stroke-linecap="round" vector-effect="non-scaling-stroke"/><path d="M 18 30 L 100 30" fill="none" stroke="rgba(208,206,198,1)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><circle cx="45" cy="70" r="14" fill="none" stroke="rgba(208,206,198,1)" stroke-width="2.2" vector-effect="non-scaling-stroke"/><circle cx="45" cy="70" r="5.5" fill="none" stroke="rgba(208,206,198,1)" stroke-width="1.8" vector-effect="non-scaling-stroke"/><circle cx="119" cy="70" r="14" fill="none" stroke="rgba(208,206,198,1)" stroke-width="2.2" vector-effect="non-scaling-stroke"/><circle cx="119" cy="70" r="5.5" fill="none" stroke="rgba(208,206,198,1)" stroke-width="1.8" vector-effect="non-scaling-stroke"/></g></g><g transform="translate(2,120)"><g transform="translate(0,0)"><path d="M 10 70 L 10 24 Q 10 16 20 16 L 150 16 Q 160 16 160 24 L 160 70 L 142 70 A 15 15 0 0 1 112 70 L 58 70 A 15 15 0 0 1 28 70 Z" fill="none" stroke="rgba(208,206,198,1)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><line x1="14" y1="34" x2="156" y2="34" stroke="rgba(208,206,198,1)" stroke-width="1.8" stroke-linecap="round" vector-effect="non-scaling-stroke"/><line x1="40" y1="18" x2="40" y2="34" stroke="rgba(208,206,198,1)" stroke-width="1.6" stroke-linecap="round" vector-effect="non-scaling-stroke"/><line x1="68" y1="18" x2="68" y2="34" stroke="rgba(208,206,198,1)" stroke-width="1.6" stroke-linecap="round" vector-effect="non-scaling-stroke"/><line x1="96" y1="18" x2="96" y2="34" stroke="rgba(208,206,198,1)" stroke-width="1.6" stroke-linecap="round" vector-effect="non-scaling-stroke"/><line x1="124" y1="18" x2="124" y2="34" stroke="rgba(208,206,198,1)" stroke-width="1.6" stroke-linecap="round" vector-effect="non-scaling-stroke"/><circle cx="43" cy="70" r="14" fill="none" stroke="rgba(208,206,198,1)" stroke-width="2.2" vector-effect="non-scaling-stroke"/><circle cx="43" cy="70" r="5.5" fill="none" stroke="rgba(208,206,198,1)" stroke-width="1.8" vector-effect="non-scaling-stroke"/><circle cx="127" cy="70" r="14" fill="none" stroke="rgba(208,206,198,1)" stroke-width="2.2" vector-effect="non-scaling-stroke"/><circle cx="127" cy="70" r="5.5" fill="none" stroke="rgba(208,206,198,1)" stroke-width="1.8" vector-effect="non-scaling-stroke"/></g></g><g transform="translate(196,120)"><g transform="translate(0,0)"><path d="M 10 70 L 10 34 Q 10 28 17 28 L 40 28 L 52 14 Q 54 11 60 11 L 150 11 L 150 70 L 134 70 A 15 15 0 0 1 104 70 L 56 70 A 15 15 0 0 1 26 70 Z" fill="none" stroke="rgba(208,206,198,1)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><line x1="52" y1="14" x2="52" y2="70" stroke="rgba(208,206,198,1)" stroke-width="1.8" stroke-linecap="round" vector-effect="non-scaling-stroke"/><line x1="52" y1="40" x2="150" y2="40" stroke="rgba(208,206,198,1)" stroke-width="1.6" stroke-linecap="round" vector-effect="non-scaling-stroke"/><path d="M 16 34 L 40 34 L 40 46 L 16 46" fill="none" stroke="rgba(208,206,198,1)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><circle cx="41" cy="70" r="14" fill="none" stroke="rgba(208,206,198,1)" stroke-width="2.2" vector-effect="non-scaling-stroke"/><circle cx="41" cy="70" r="5.5" fill="none" stroke="rgba(208,206,198,1)" stroke-width="1.8" vector-effect="non-scaling-stroke"/><circle cx="119" cy="70" r="14" fill="none" stroke="rgba(208,206,198,1)" stroke-width="2.2" vector-effect="non-scaling-stroke"/><circle cx="119" cy="70" r="5.5" fill="none" stroke="rgba(208,206,198,1)" stroke-width="1.8" vector-effect="non-scaling-stroke"/></g></g></svg></div>
-      
-      
-    </div>
-    <div class="phase p3">
-      <div class="phase-num">03</div>
-      <span class="phase-tag">Stage 3 · A new world</span>
-      <div class="phase-title">The trusted operating layer for privately owned autonomous capital.</div>
-      <div class="rm-icon rm-net"><svg viewBox="0 0 190 124" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A decentralized network of privately owned autonomous vehicles"><line x1="39.3" y1="39.6" x2="95.0" y2="23.9" stroke="rgba(70,196,108,0.39)" stroke-width="1"/><line x1="95.0" y1="23.9" x2="150.7" y2="37.4" stroke="rgba(70,196,108,0.39)" stroke-width="1"/><line x1="39.3" y1="39.6" x2="60.2" y2="75.4" stroke="rgba(70,196,108,0.39)" stroke-width="1"/><line x1="95.0" y1="23.9" x2="122.8" y2="73.2" stroke="rgba(70,196,108,0.39)" stroke-width="1"/><line x1="150.7" y1="37.4" x2="122.8" y2="73.2" stroke="rgba(70,196,108,0.39)" stroke-width="1"/><line x1="60.2" y1="75.4" x2="122.8" y2="73.2" stroke="rgba(70,196,108,0.39)" stroke-width="1"/><line x1="60.2" y1="75.4" x2="32.4" y2="97.8" stroke="rgba(70,196,108,0.39)" stroke-width="1"/><line x1="122.8" y1="73.2" x2="95.0" y2="102.3" stroke="rgba(70,196,108,0.39)" stroke-width="1"/><line x1="95.0" y1="102.3" x2="32.4" y2="97.8" stroke="rgba(70,196,108,0.39)" stroke-width="1"/><line x1="150.7" y1="37.4" x2="161.1" y2="88.9" stroke="rgba(70,196,108,0.39)" stroke-width="1"/><line x1="122.8" y1="73.2" x2="161.1" y2="88.9" stroke="rgba(70,196,108,0.39)" stroke-width="1"/><line x1="95.0" y1="102.3" x2="161.1" y2="88.9" stroke="rgba(70,196,108,0.39)" stroke-width="1"/><circle cx="39.3" cy="39.6" r="4.0" fill="rgba(70,196,108,0.72)"/><circle class="rn-hub" cx="95.0" cy="23.9" r="6" fill="rgba(70,196,108,0.92)"/><circle cx="150.7" cy="37.4" r="4.0" fill="rgba(70,196,108,0.72)"/><circle cx="60.2" cy="75.4" r="4.0" fill="rgba(70,196,108,0.72)"/><circle class="rn-hub" cx="122.8" cy="73.2" r="6" fill="rgba(70,196,108,0.92)"/><circle cx="95.0" cy="102.3" r="4.0" fill="rgba(70,196,108,0.72)"/><circle cx="32.4" cy="97.8" r="4.0" fill="rgba(70,196,108,0.72)"/><circle cx="161.1" cy="88.9" r="4.0" fill="rgba(70,196,108,0.72)"/></svg></div>
-      
-      
-    </div>
+  <div class="rm2-fly">
+    <span class="rm2-fly-label">The flywheel underneath</span>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 620" role="img" aria-label="Data flywheel: deploy, earn and learn, train, decide, powered by the RoamingSim world model.">
+  <style>
+    @media (prefers-reduced-motion: no-preference) {
+      .orbit-b-spin { animation: orbit-b-rot 48s linear infinite; transform-origin: 360px 300px; transform-box: view-box; }
+      @keyframes orbit-b-rot { to { transform: rotate(360deg); } }
+    }
+  </style>
+  <defs>
+    <marker id="orbit-b-mg" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L9,5 L0,10 z" fill="#44C06A"/></marker>
+    <marker id="orbit-b-mb" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L9,5 L0,10 z" fill="rgba(212,209,200,0.75)"/></marker>
+  </defs>
+
+  <circle class="orbit-b-spin" cx="360" cy="300" r="92" fill="none" stroke="rgba(70,196,108,0.30)" stroke-width="1.2" stroke-dasharray="2 7"/>
+
+  <path d="M385.1 121.8 A180 180 0 0 1 531.2 244.4" fill="none" stroke="rgba(212,209,200,0.55)" stroke-width="1.8" stroke-linecap="round" marker-end="url(#orbit-b-mb)"/>
+  <path d="M538.2 325.1 A180 180 0 0 1 385.1 478.2" fill="none" stroke="#44C06A" stroke-width="2.2" stroke-linecap="round" marker-end="url(#orbit-b-mg)"/>
+  <path d="M334.9 478.2 A180 180 0 0 1 181.8 325.1" fill="none" stroke="#44C06A" stroke-width="2.2" stroke-linecap="round" marker-end="url(#orbit-b-mg)"/>
+  <path d="M181.8 274.9 A180 180 0 0 1 334.9 121.8" fill="none" stroke="rgba(212,209,200,0.55)" stroke-width="1.8" stroke-linecap="round" marker-end="url(#orbit-b-mb)"/>
+
+  <line x1="491.5" y1="168.5" x2="525.5" y2="134.5" stroke="rgba(212,209,200,0.6)" stroke-width="1.6" stroke-linecap="round" marker-end="url(#orbit-b-mb)"/>
+  <circle cx="537" cy="123" r="5.5" fill="none" stroke="rgba(212,209,200,0.8)" stroke-width="1.8"/>
+  <circle cx="537" cy="123" r="1.8" fill="rgba(212,209,200,0.8)"/>
+
+  <circle cx="360" cy="120" r="6.5" fill="none" stroke="rgba(212,209,200,0.9)" stroke-width="1.8"/>
+  <circle cx="360" cy="120" r="2" fill="rgba(212,209,200,0.9)"/>
+  <circle cx="540" cy="300" r="6.5" fill="none" stroke="#44C06A" stroke-width="1.8"/>
+  <circle cx="540" cy="300" r="2" fill="#44C06A"/>
+  <circle cx="360" cy="480" r="6.5" fill="none" stroke="#44C06A" stroke-width="1.8"/>
+  <circle cx="360" cy="480" r="2" fill="#44C06A"/>
+  <circle cx="180" cy="300" r="6.5" fill="none" stroke="#44C06A" stroke-width="1.8"/>
+  <circle cx="180" cy="300" r="2" fill="#44C06A"/>
+
+  <text x="360" y="88" text-anchor="middle" font-family="'Inter', sans-serif" font-size="12" font-weight="700" letter-spacing="2" fill="#d4d1c8">DEPLOY</text>
+  <text x="360" y="105" text-anchor="middle" font-family="'Inter', sans-serif" font-size="11" font-weight="600" letter-spacing="1.2" fill="#969289">FLEETS ONBOARD</text>
+
+  <text x="556" y="119" font-family="'Inter', sans-serif" font-size="12" font-weight="700" letter-spacing="2" fill="#d4d1c8">EARN</text>
+  <text x="556" y="136" font-family="'Inter', sans-serif" font-size="11" font-weight="600" letter-spacing="1.2" fill="#969289">SERVICE REVENUE</text>
+
+  <text x="558" y="297" font-family="'Inter', sans-serif" font-size="12" font-weight="700" letter-spacing="2" fill="#d4d1c8">LEARN</text>
+  <text x="558" y="314" font-family="'Inter', sans-serif" font-size="11" font-weight="600" letter-spacing="1.2" fill="#969289">USAGE + OUTCOMES</text>
+
+  <text x="360" y="511" text-anchor="middle" font-family="'Inter', sans-serif" font-size="12" font-weight="700" letter-spacing="2" fill="#d4d1c8">TRAIN</text>
+  <text x="360" y="528" text-anchor="middle" font-family="'Inter', sans-serif" font-size="11" font-weight="600" letter-spacing="1.2" fill="#969289">MODEL SHARPENS</text>
+
+  <text x="162" y="290" text-anchor="end" font-family="'Inter', sans-serif" font-size="12" font-weight="700" letter-spacing="2" fill="#d4d1c8">DECIDE</text>
+  <text x="162" y="307" text-anchor="end" font-family="'Inter', sans-serif" font-size="11" font-weight="600" letter-spacing="1.2" fill="#969289">YIELD PER</text>
+  <text x="162" y="322" text-anchor="end" font-family="'Inter', sans-serif" font-size="11" font-weight="600" letter-spacing="1.2" fill="#969289">VEHICLE-HOUR</text>
+
+  <text x="360" y="306" text-anchor="middle" font-family="'EB Garamond', Georgia, serif" font-size="31" font-weight="400" fill="#d4d1c8">RoamingSim</text>
+  <text x="360" y="331" text-anchor="middle" font-family="'Inter', sans-serif" font-size="11" font-weight="700" letter-spacing="2.2" fill="#44C06A">WORLD MODEL</text>
+
+  <text x="360" y="580" text-anchor="middle" font-family="'EB Garamond', Georgia, serif" font-size="17" font-style="italic" fill="#969289">Every mile compounds.</text>
+</svg>
+    <p class="rm2-fly-note">Operating fleets first is how the world model learns what a vehicle-hour is worth &mdash; the asset the autonomy economy will run on.</p>
   </div>
 
-  
 <style>
-.rm-icon{margin-top:26px;}
-.rm-icon svg{display:block;height:auto;}
-.rm-car svg{width:100%;max-width:182px;}
-.rm-fleet svg{width:100%;max-width:252px;}
-.rm-net svg{width:100%;max-width:150px;}
-@media (prefers-reduced-motion: no-preference){
-.rm-net .rn-hub{animation:rnPulse 3s ease-in-out infinite;transform-origin:center;}
+.rm2-stage{max-width:1080px;margin:40px auto 0;}
+.rm2-stage svg{display:block;width:100%;height:auto;}
+.rm2-fly{max-width:620px;margin:96px auto 0;text-align:center;}
+.rm2-fly-label{font-family:var(--sans);font-size:10px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:var(--dim);display:block;margin-bottom:6px;}
+.rm2-fly svg{display:block;width:100%;height:auto;}
+.rm2-fly-note{font-family:var(--sans);font-size:12.5px;line-height:1.65;color:var(--dimmer);max-width:460px;margin:10px auto 0;}
+@media(max-width:720px){
+  .rm2-stage{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .rm2-stage svg{min-width:680px;}
+  .rm2-fly{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .rm2-fly svg{min-width:480px;}
 }
-@keyframes rnPulse{0%,100%{opacity:.55;}50%{opacity:1;}}
 </style>
 </section>
 
