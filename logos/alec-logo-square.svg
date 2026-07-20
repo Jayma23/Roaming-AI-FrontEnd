@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="alec">
+  <rect x="0" y="0" width="512" height="512" fill="#ffffff"/>
+  <g transform="translate(256,256) scale(0.9570093457943925) translate(-220,-75.5)">
+    <rect x="42" y="32" width="96" height="96" rx="32" fill="none" stroke="#1b1b1b" stroke-width="21" transform="rotate(40 90 80)"/>
+    <text x="198" y="120" font-family="'Inter','Helvetica Neue',Arial,sans-serif" font-weight="800" font-size="120" letter-spacing="-4.8" fill="#1b1b1b">alec</text>
+  </g>
+</svg>

@@ -1,7 +1,7 @@
 # RoamingOS — Investor Deck
 
 A static investor pitch deck: [`index.html`](index.html), with optional demo media in
-[`demo-assets/`](demo-assets/).
+[`demo-assets/`](demo-assets/) and brand assets in [`logos/`](logos/).
 
 Most presentation assets are inlined, and the demo media folder is published beside
 the HTML. The site needs **no build step and no dependencies**.
@@ -24,7 +24,8 @@ node .claude/serve.mjs   # serves on http://localhost:4599
 
 Pushing to `main` publishes `index.html` to GitHub Pages via
 [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml).
-The workflow copies `index.html` and `demo-assets/` into the Pages artifact — no build.
+The workflow copies `index.html`, `demo-assets/`, and `logos/` into the Pages artifact
+with no build step.
 
 ## Editing
 
