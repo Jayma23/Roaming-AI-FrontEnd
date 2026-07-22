@@ -991,7 +991,7 @@ footer{
 </style>
 <section class="s-roadmap-wrap section-pad" id="solution">
   <span class="s-label">The Solution</span>
-  <h2 class="s-heading">Each stage buys the data the next one needs.</h2>
+  <h2 class="s-heading">We build the engine that answers: <em class="s-green">what should my car do, for me?</em></h2>
 
   <div class="rmap2col">
 
@@ -1179,7 +1179,7 @@ footer{
         <!-- ROOT · the product is us — also the trigger for the Stage 3 deep-dive below -->
         <div class="rmt-root">
           <span class="rmt-k">The product</span>
-          <span class="rmt-v"><em>RoamingOS</em></span>
+          <span class="rmt-v"><em>Earning Decision Engine</em></span>
         </div>
 
         <div class="rmt-conn" aria-hidden="true"><span class="rmt-arw">→</span></div>
@@ -1499,6 +1499,8 @@ footer{
     </details>
     </div>
     <div class="stage-embed" id="s3-embed">
+    <details class="st-fold" open>
+    <summary class="st-fold-sum"><span class="st-fold-arrow">&#9656;</span><span><b>The Earning Decision Engine</b> &mdash; Stage 1 + Stage 2, stacked and running</span><span class="st-fold-hint">tap to collapse</span></summary>
 <!-- ══ MAP · CALIBRATED ACCESS (visual interstitial) ═════════════════ -->
 <section class="s-map">
   <canvas id="vis-map"></canvas>
@@ -1733,18 +1735,19 @@ document.querySelectorAll('.sd-deck[data-deck]').forEach(function(deck){
   show(0);arm();
 });
 </script>
+    </details>
     </div>
   </div><!-- /.rmap2col -->
 
   <style>
   /* roadmap grid — each horizon is a ROW: [stage card | its tree], both vertically CENTERED on a shared midline */
   .rmap2col{display:grid;grid-template-columns:minmax(300px,0.82fr) 1.18fr;column-gap:48px;row-gap:54px;max-width:1180px;margin:52px auto 0;align-items:center;}
-  .rmv-stage--now{grid-column:1;grid-row:1;}
+  .rmv-stage--now{grid-column:1;grid-row:5;}
   .rmv-stage--next{grid-column:1;grid-row:3;}
-  .rmv-stage--future{grid-column:1;grid-row:5;}
-  .rmap-tree:not(.rmap-tree--h2):not(.rmap-tree--h3){grid-column:2;grid-row:1;}
+  .rmv-stage--future{grid-column:1;grid-row:1;}
+  .rmap-tree:not(.rmap-tree--h2):not(.rmap-tree--h3){grid-column:2;grid-row:5;}
   .rmap-tree--h2{grid-column:2;grid-row:3;}
-  .rmap-tree--h3{grid-column:2;grid-row:5;}
+  .rmap-tree--h3{grid-column:2;grid-row:1;}
   .stage-embed{grid-column:1/-1;align-self:start;margin-top:2px;}
   .st-fold{width:100%;}
   .st-fold-sum{cursor:pointer;list-style:none;display:flex;align-items:center;gap:12px;padding:14px 20px;border:1px dashed rgba(70,196,108,0.30);border-radius:10px;background:rgba(70,196,108,0.04);font-family:var(--sans);font-size:12px;color:var(--dim);transition:background .2s,border-color .2s;}
@@ -1755,7 +1758,7 @@ document.querySelectorAll('.sd-deck[data-deck]').forEach(function(deck){
   .st-fold[open] .st-fold-arrow{transform:rotate(90deg);}
   .st-fold-hint{margin-left:auto;font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);opacity:.7;white-space:nowrap;}
   .st-fold[open] .st-fold-hint{opacity:.35;}
-  #s1-embed{grid-row:2;} #s2-embed{grid-row:4;} #s3-embed{grid-row:6;}
+  #s3-embed{grid-row:2;} #s2-embed{grid-row:4;} #s1-embed{grid-row:6;}
   .stage-embed .s-valid--embed{padding:16px 0 8px;max-width:none;}
   .stage-embed .s-demo--embed{padding:16px 0 8px;max-width:none;}
   .stage-embed .k-bench{margin-top:10px;padding:0;max-width:none;}
@@ -1865,10 +1868,10 @@ document.querySelectorAll('.sd-deck[data-deck]').forEach(function(deck){
     .rmv-stage--now,.rmv-stage--next,.rmv-stage--future,.rmap-tree{grid-column:1;}
     /* the H1 tree's desktop rule uses :not():not() (higher specificity) — match it here so mobile actually wins */
     .rmap-tree:not(.rmap-tree--h2):not(.rmap-tree--h3){grid-column:1;}
-    .rmv-stage--now{grid-row:1;} .rmap-tree:not(.rmap-tree--h2):not(.rmap-tree--h3){grid-row:2;}
+    .rmv-stage--now{grid-row:7;} .rmap-tree:not(.rmap-tree--h2):not(.rmap-tree--h3){grid-row:8;}
     .rmv-stage--next{grid-row:4;} .rmap-tree--h2{grid-row:5;}
-    .rmv-stage--future{grid-row:7;} .rmap-tree--h3{grid-row:8;}
-    #s1-embed{grid-row:3;} #s2-embed{grid-row:6;} #s3-embed{grid-row:9;}
+    .rmv-stage--future{grid-row:1;} .rmap-tree--h3{grid-row:2;}
+    #s3-embed{grid-row:3;} #s2-embed{grid-row:6;} #s1-embed{grid-row:9;}
     .rmv-rail::before{display:none;}
   }
   @media(max-width:640px){
@@ -1883,8 +1886,8 @@ document.querySelectorAll('.sd-deck[data-deck]').forEach(function(deck){
   .rmv-rail{position:relative;display:flex;justify-content:center;align-items:center;}
   .rmv-rail::before{content:"";position:absolute;top:0;bottom:-54px;left:50%;transform:translateX(-50%);width:1px;
     background:linear-gradient(rgba(70,196,108,0.5),rgba(255,255,255,0.08));}
-  .rmv-stage--now .rmv-rail::before{top:50%;}
-  .rmv-stage--future .rmv-rail::before{top:0;bottom:50%;}
+  .rmv-stage--future .rmv-rail::before{top:50%;}
+  .rmv-stage--now .rmv-rail::before{top:0;bottom:50%;}
   .rmv-node{position:relative;z-index:1;width:13px;height:13px;border-radius:50%;margin:0;
     border:1.5px solid var(--accent);background:var(--accent);box-shadow:0 0 0 4px rgba(70,196,108,0.10);}
   .rmv-stage--next .rmv-node{background:var(--bg);border-color:var(--accent);box-shadow:none;}
