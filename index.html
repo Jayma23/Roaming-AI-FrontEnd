@@ -1200,7 +1200,7 @@ footer{
             <div class="rmt-leaf-head"><span class="rmt-leaf-k">Customers</span><span class="rmt-leaf-hint">who embed &amp; buy the OS</span></div>
             <div class="logostrip logostrip--cust">
               <div class="logotile logotile--brand logotile--dev"><span class="brand-apollo">apollo</span></div>
-              <div class="logotile logotile--brand logotile--dev" style="visibility:hidden" aria-hidden="true"></div>
+              <div class="logotile logotile--brand logotile--dev"><span class="brand-eli"><b>Eli</b><span>Electric<br>Vehicles</span></span></div>
               <div class="logotile logotile--brand logotile--dev"><span class="brand-lucid">LUCID</span></div>
               <div class="logotile logotile--brand logotile--dev"><span class="brand-upower"><b>U</b><i></i>POWER</span></div>
               <div class="logotile logotile--cust">
@@ -1816,6 +1816,9 @@ document.querySelectorAll('.sd-deck[data-deck]').forEach(function(deck){
   .logotile--brand.logotile--dev{border:1.5px dashed rgba(70,196,108,0.6);background:rgba(255,255,255,0.45);opacity:.55;filter:saturate(.6);justify-content:center;position:relative;}
   .logotile--brand.logotile--dev::after{content:"DEVELOPING";position:absolute;top:-7px;right:8px;font-family:var(--sans);font-size:7px;font-weight:700;letter-spacing:.12em;color:var(--accent);background:var(--bg);padding:1px 5px;border-radius:3px;}
   .brand-apollo{font-family:var(--sans);font-weight:800;font-size:14px;letter-spacing:-0.02em;color:#0B57FF;line-height:1;}
+  .brand-eli{display:inline-flex;align-items:center;gap:6px;line-height:1;}
+  .brand-eli b{font-family:var(--sans);font-weight:800;font-size:15px;color:#141414;}
+  .brand-eli span{font-family:var(--sans);font-size:7px;line-height:1.25;color:#141414;text-align:left;}
   .brand-lucid{font-family:var(--sans);font-weight:600;font-size:12px;letter-spacing:.42em;color:#141414;line-height:1;margin-right:-.42em;}
   .brand-upower{display:inline-flex;align-items:center;gap:3px;font-family:var(--sans);font-weight:800;font-size:11px;letter-spacing:.06em;color:#141414;line-height:1;}
   .brand-upower b{font-weight:800;font-size:14px;color:#4FB9A8;}
