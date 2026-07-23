@@ -1199,6 +1199,10 @@ footer{
           <div class="rmt-leaf rmt-leaf--cust">
             <div class="rmt-leaf-head"><span class="rmt-leaf-k">Customer discovery</span><span class="rmt-leaf-hint">interest &amp; needs collection</span></div>
             <div class="logostrip logostrip--cust">
+              <div class="logotile logotile--brand logotile--dev"><span class="brand-apollo">apollo</span></div>
+              <div class="logotile logotile--brand logotile--dev"><span class="brand-eli"><b>Eli</b><span>Electric<br>Vehicles</span></span></div>
+              <div class="logotile logotile--brand logotile--dev"><span class="brand-lucid">LUCID</span></div>
+              <div class="logotile logotile--brand logotile--dev"><span class="brand-upower"><b>U</b><i></i>POWER</span></div>
               <div class="logotile logotile--cust">
                 <svg class="sketch" viewBox="0 0 48 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="23" r="3"/><circle cx="33" cy="23" r="3"/><path d="M19 23 H30"/><path d="M13 23 H9 V17 L16 14 L21 9 H31 L36 15 L40 16 V23 H36"/></svg>
                 <span class="logotile-cap">OEMs / automakers</span>
@@ -1208,6 +1212,7 @@ footer{
                 <span class="logotile-cap">Mobility platforms</span>
               </div>
             </div>
+            <span class="dev-note">&#9675; customer interest &amp; needs collection</span>
           </div>
         </div>
 
@@ -1807,6 +1812,18 @@ document.querySelectorAll('.sd-deck[data-deck]').forEach(function(deck){
   .logostrip--cust{flex-direction:column;gap:9px;margin-top:11px;}
   .logotile--cust{flex:none;flex-direction:row;justify-content:flex-start;gap:12px;min-height:0;padding:11px 14px;border-color:rgba(70,196,108,0.22);}
   .logotile--cust .sketch{width:30px;color:var(--accent);opacity:.85;}
+  /* stage-3 customer discovery — interest and needs collection */
+  .logotile--brand.logotile--dev{border:1.5px dashed rgba(70,196,108,0.6);background:rgba(255,255,255,0.45);opacity:.55;filter:saturate(.6);justify-content:center;position:relative;}
+  .logotile--brand.logotile--dev::after{content:"INTEREST + NEEDS";position:absolute;top:-7px;right:8px;font-family:var(--sans);font-size:7px;font-weight:700;letter-spacing:.12em;color:var(--accent);background:var(--bg);padding:1px 5px;border-radius:3px;}
+  .brand-apollo{font-family:var(--sans);font-weight:800;font-size:14px;letter-spacing:-0.02em;color:#0B57FF;line-height:1;}
+  .brand-eli{display:inline-flex;align-items:center;gap:6px;line-height:1;}
+  .brand-eli b{font-family:var(--sans);font-weight:800;font-size:15px;color:#141414;}
+  .brand-eli span{font-family:var(--sans);font-size:7px;line-height:1.25;color:#141414;text-align:left;}
+  .brand-lucid{font-family:var(--sans);font-weight:600;font-size:12px;letter-spacing:.42em;color:#141414;line-height:1;margin-right:-.42em;}
+  .brand-upower{display:inline-flex;align-items:center;gap:3px;font-family:var(--sans);font-weight:800;font-size:11px;letter-spacing:.06em;color:#141414;line-height:1;}
+  .brand-upower b{font-weight:800;font-size:14px;color:#4FB9A8;}
+  .brand-upower i{width:5px;height:5px;border-radius:50%;background:#6CC79A;margin:-8px 2px 0 0;}
+  .dev-note{display:block;margin-top:9px;font-family:var(--sans);font-size:9.5px;font-style:italic;letter-spacing:.03em;color:var(--dim);}
   .logotile--cust .logotile-cap{font-size:10.5px;text-align:left;color:var(--dim);}
   /* real partner / customer logos (Nuro-style Alec wordmark; recreated amptrans mark) */
   .brand-alec{display:inline-flex;align-items:center;gap:5px;font-family:var(--sans);font-weight:800;font-size:15px;letter-spacing:-0.04em;color:#1b1b1b;line-height:1;}
