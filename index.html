@@ -21,8 +21,10 @@ ul { list-style: none; }
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
-html { scroll-snap-type: y mandatory; scroll-behavior: smooth; background: var(--paper); }
-body { font-family: var(--font-sans); color: var(--ink); background: var(--paper); -webkit-font-smoothing: antialiased; }
+html { scroll-behavior: smooth; background: var(--paper); }
+body { font-family: var(--font-sans); color: var(--ink); background: var(--paper); -webkit-font-smoothing: antialiased; overflow: hidden; }
+main { height: 100vh; overflow-y: auto; overflow-x: hidden; scroll-snap-type: y mandatory; scrollbar-width: none; }
+main::-webkit-scrollbar { display: none; }
 ::selection { background: #111417; color: #fff; }
 
 /* ---------- chrome ---------- */
@@ -36,16 +38,16 @@ body { font-family: var(--font-sans); color: var(--ink); background: var(--paper
 .counter { top: 32px; right: 44px; }
 .counter .cur { color: var(--ink); }
 .rail { right: 44px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 9px; align-items: flex-end; pointer-events: auto; }
-.rail button { width: 14px; height: 1px; background: currentColor; opacity: .3; border: 0; padding: 0; cursor: pointer; transition: width 260ms var(--ease), opacity 260ms var(--ease); position: relative; }
+.rail button { width: 2px; height: 16px; background: currentColor; opacity: .3; border: 0; padding: 0; cursor: pointer; transition: width 260ms var(--ease), opacity 260ms var(--ease); position: relative; }
 .rail button::after { content: ""; position: absolute; inset: -6px -4px; }
-.rail button[aria-current="true"] { width: 28px; opacity: 1; }
+.rail button[aria-current="true"] { height: 30px; opacity: 1; }
 
 /* ---------- screens ---------- */
 .screen {
-  min-height: 100vh;
+  width: 100%; height: 100vh;
   scroll-snap-align: start; scroll-snap-stop: always;
   display: flex; align-items: center;
-  padding: 96px 44px;
+  padding: 92px 44px; overflow: hidden;
   background: var(--paper);
 }
 .stage { width: 100%; max-width: 1180px; margin: 0 auto; }
@@ -78,45 +80,163 @@ h1 {
 .cols2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 36px; }
 .split { display: grid; grid-template-columns: 5fr 7fr; gap: 52px; align-items: center; }
 
-/* ---------- mind map (tree) ---------- */
-.tree { display: flex; align-items: center; }
-.node {
-  border: 1px solid var(--ink); border-radius: 8px;
-  padding: 8px 12px; background: var(--paper);
-  font-size: 12.5px; line-height: 1.4; letter-spacing: -0.005em;
-  max-width: 300px;
-}
-.node b { display: block; font-weight: 600; color: var(--ink); }
-.node small { display: block; margin-top: 2px; font-size: 11px; line-height: 1.45; color: var(--ink-2); }
-.node.root {
-  background: var(--ink); color: #fff; border-color: var(--ink);
-  font-size: 13.5px; padding: 12px 16px; border-radius: 10px; flex-shrink: 0;
-}
-.node.root b { color: #fff; }
-.node.root small { color: #B9BEC3; }
-.node.leaf { border-color: var(--line); color: #33383D; }
-.node.leaf b { font-weight: 500; }
-.node.hole { border-style: dashed; border-color: var(--ink-2); }
+/* ---------- annotated pyramid (02) ----------
+   All copy lives INSIDE the svg, so every line is anchored by a leader line to
+   the region it describes and scales with the figure. */
+.pyr { width: 100%; margin-top: 2px; }
+.pyr svg { width: 100%; height: auto; max-height: 52vh; display: block; margin: 0 auto; overflow: visible; }
+.pyr .edge    { fill: none; stroke: var(--line); stroke-width: 1.3; }
+.pyr .ghost   { fill: none; stroke: var(--line); stroke-width: 1; stroke-dasharray: 5 5; }
+.pyr .gapfill { fill: #F2F4F5; }
+.pyr .solid   { fill: var(--ink); }
+.pyr .lead    { stroke: var(--ink-3); stroke-width: 1; fill: none; }
+.pyr .dot     { fill: var(--ink); }
+.pyr .k { font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.12em; fill: var(--ink); }
+.pyr .v { font-size: 17px; font-weight: 600; letter-spacing: -0.01em; fill: var(--ink); }
+.pyr .n { font-size: 13px; fill: var(--ink-2); }
 
-.branches { display: flex; flex-direction: column; gap: 10px; }
-.branches > li { display: flex; align-items: center; position: relative; padding-left: 26px; }
-.branches > li::before {
-  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: var(--line);
-}
-.branches > li:first-child::before { top: 50%; }
-.branches > li:last-child::before { top: 0; bottom: 50%; }
-.branches > li:only-child::before { display: none; }
-.branches > li::after {
-  content: ""; position: absolute; left: 0; top: 50%; width: 26px; height: 1px; background: var(--line);
-}
-.branches .branches { margin-left: 0; padding-left: 0; }
-li > .branches { padding-left: 0; margin-left: 26px; }
-li > .branches > li { padding-left: 26px; }
+/* ---------- pain split: pyramid left, cards right ---------- */
+.pain .split { grid-template-columns: 6fr 5fr; gap: 44px; align-items: stretch; }
 
-/* mini strip on cover */
-.strip { display: flex; align-items: center; gap: 0; margin-top: 44px; }
-.strip .node { max-width: none; }
-.strip .link { width: 34px; height: 1px; background: var(--line); }
+/* ---------- industry cards ----------
+   Click-only navigation. Deliberately NO keyboard binding: the deck already
+   owns ArrowLeft / ArrowRight, so key handlers here would collide. */
+.cards { border: 1px solid var(--line); border-radius: 12px; padding: 22px 26px 18px; display: flex; flex-direction: column; }
+.cards-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+.cards-count { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; color: var(--ink-3); }
+.cards-count b { color: var(--ink); font-weight: 600; }
+.cards-nav { display: flex; align-items: center; gap: 12px; }
+.cards-dots { display: flex; gap: 6px; align-items: center; }
+.cards-dots button { width: 12px; height: 2px; background: currentColor; opacity: .25; border: 0; padding: 0; cursor: pointer; color: var(--ink); position: relative; transition: width 240ms var(--ease), opacity 240ms var(--ease); }
+.cards-dots button::after { content: ""; position: absolute; inset: -9px -3px; }
+.cards-dots button[aria-current="true"] { width: 22px; opacity: 1; }
+.cards-arrow { width: 26px; height: 26px; border: 1px solid var(--line); border-radius: 50%; background: var(--paper); color: var(--ink); cursor: pointer; padding: 0; display: grid; place-items: center; transition: border-color 200ms var(--ease), opacity 200ms var(--ease); }
+.cards-arrow:hover:not(:disabled) { border-color: var(--ink); }
+.cards-arrow:disabled { opacity: .28; cursor: default; }
+.cards-arrow svg { width: 9px; height: 9px; fill: none; stroke: currentColor; stroke-width: 1.7; }
+
+.card-stack { position: relative; flex: 1; min-height: 292px; }
+.card { position: absolute; inset: 0; display: flex; flex-direction: column; opacity: 0; visibility: hidden; transform: translateY(8px); transition: opacity 300ms var(--ease), transform 300ms var(--ease); }
+.card[data-on="1"] { opacity: 1; visibility: visible; transform: none; }
+.card .ind { font-size: clamp(21px, 2.3vw, 29px); font-weight: 600; letter-spacing: -0.022em; line-height: 1.1; color: var(--ink); margin-bottom: 18px; }
+.card .row { border-top: 1px solid var(--line-soft); padding-top: 9px; margin-bottom: 13px; }
+.card .row dt { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 6px; }
+.card .row dd { margin: 0; font-size: 12.5px; line-height: 1.58; color: var(--ink-2); }
+.card .row dd em { font-style: normal; font-weight: 500; color: var(--ink); }
+
+/* representative companies — three logos per card.
+   Files live in ./logos/ ; a missing file hides itself instead of showing a broken icon. */
+.logo-slot { margin-top: auto; padding-top: 13px; border-top: 1px solid var(--line-soft); display: flex; flex-direction: column; align-items: flex-start; gap: 9px; }
+.logo-slot .lbl { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); }
+.logo-box { display: grid; grid-template-columns: repeat(3, 1fr); align-items: center; width: 100%; min-height: 26px; }
+.logo-box img { max-height: 26px; max-width: 120px; width: auto; height: auto; object-fit: contain; display: block; }
+.logo-box img:nth-child(1) { justify-self: start; }
+.logo-box img:nth-child(2) { justify-self: center; }
+.logo-box img:nth-child(3) { justify-self: end; }
+
+/* ---------- cover (01), text only ----------
+   Same stage width, same h1 scale and left alignment as every other slide.
+   max-width:none so the three <br> breaks control the lines, not ch-wrapping. */
+.cover-only h1 { max-width: none; margin-bottom: 22px; }
+.cover-sub { font-size: 16px; line-height: 1.5; color: var(--ink-2); max-width: 44ch; }
+
+/* ---------- solution (03): three horizontal bands, each read left to right ---------- */
+.sol h1 { max-width: none; font-size: clamp(26px, 3vw, 42px); }
+.band { margin-top: 20px; }
+.band > .bh { display: flex; justify-content: space-between; align-items: baseline; gap: 20px;
+  font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-3); border-top: 1px solid var(--ink); padding-top: 9px; margin-bottom: 14px; }
+
+/* band 1 — two properties, side by side */
+.props { display: grid; grid-template-columns: 1fr 1fr; gap: 0 46px; }
+.prop h3 { font-size: 19px; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); margin: 0 0 6px; }
+.prop .why { font-size: 12px; line-height: 1.55; color: var(--ink-2); margin: 0 0 11px; }
+.prop .why em { font-style: normal; font-weight: 500; color: var(--ink); }
+.prop .say { font-size: 13px; line-height: 1.6; color: var(--ink); margin: 0 0 12px; }
+.prop .say b { font-weight: 600; }
+.prop .note { font-size: 10.5px; line-height: 1.5; color: var(--ink-3); margin: 10px 0 0; }
+
+
+
+/* band 2 — the build, four steps read left to right, the last one behind the line */
+.build { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0 26px; align-items: stretch; }
+.bstep { }
+.bstep.last { border-left: 1px dashed var(--ink-2); padding-left: 26px; }
+.bstep .n { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.14em; color: var(--ink-3); display: block; margin-bottom: 6px; }
+.bstep b { display: block; font-size: 13.5px; font-weight: 600; letter-spacing: -0.012em; line-height: 1.2; color: var(--ink); margin-bottom: 6px; }
+.bstep s { display: block; text-decoration: none; font-size: 10.5px; line-height: 1.5; color: var(--ink-3); margin-bottom: 11px; min-height: 47px; }
+.bstep { display: flex; flex-direction: column; }
+.carry { margin-top: auto; padding-top: 9px; border-top: 1px solid var(--line-soft); font-size: 11px; line-height: 1.45; color: var(--ink); }
+.carry i { display: block; font-family: var(--font-mono); font-style: normal; font-size: 8.5px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 5px; }
+
+/* band 3 — cost */
+.costs { display: grid; grid-template-columns: 1fr auto; gap: 0 40px; align-items: center; }
+.costs .rows { display: flex; flex-direction: column; gap: 6px; }
+.costs .row { display: grid; grid-template-columns: 1fr 84px 128px; gap: 14px; align-items: baseline; font-size: 12.5px; color: var(--ink-2); }
+.costs .row.ours { color: var(--ink); font-weight: 600; }
+.costs .ratio { text-align: right; }
+.costs .ratio b { display: block; font-size: clamp(24px, 2.7vw, 34px); font-weight: 600; letter-spacing: -0.03em; line-height: 1; color: var(--ink); }
+.costs .ratio span { display: block; margin-top: 5px; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); }
+
+/* ---------- partnership (04) ---------- */
+.pt h1 { max-width: none; }
+.pact { width: 100%; }
+.pact svg { width: 100%; height: auto; max-height: 40vh; display: block; overflow: visible; }
+.pact .box  { fill: none; stroke: var(--line); stroke-width: 1.2; }
+.pact .flow { stroke: var(--ink); stroke-width: 1.3; fill: none; }
+.pact .head { fill: var(--ink); }
+.pact .k { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.15em; fill: var(--ink-3); }
+.pact .v { font-size: 21px; font-weight: 600; letter-spacing: -0.02em; fill: var(--ink); }
+.pact .t { font-family: var(--font-mono); font-size: 11.5px; fill: var(--ink-2); }
+.pact .a { font-size: 18px; font-weight: 600; letter-spacing: -0.015em; fill: var(--ink); }
+.pact .b { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.17em; fill: var(--ink-3); }
+
+.worth { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 34px; }
+.wcell { border-top: 1px solid var(--ink); padding-top: 11px; }
+.wcell .n { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.14em; color: var(--ink-3); display: block; margin-bottom: 8px; }
+.wcell b { font-size: 15.5px; font-weight: 600; letter-spacing: -0.015em; line-height: 1.3; color: var(--ink); }
+
+/* ---------- business model (05) ---------- */
+.bm h1 { max-width: none; }
+.buy { display: grid; grid-template-columns: 1.22fr 1.78fr; gap: 0 40px; align-items: start; }
+.buy .lead { font-size: clamp(17px, 1.85vw, 23px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.3; color: var(--ink); }
+.buy .lead em { font-style: normal; color: var(--ink-3); }
+.props3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 28px; }
+.props3 .prop b { display: block; font-size: 13.5px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); margin-bottom: 5px; }
+.props3 .prop span { display: block; font-family: var(--font-mono); font-size: 10px; line-height: 1.5; color: var(--ink-3); }
+
+.access { display: grid; grid-template-columns: auto 1fr; gap: 0 36px; align-items: baseline; }
+.access .big { font-size: clamp(25px, 2.9vw, 38px); font-weight: 600; letter-spacing: -0.03em; color: var(--ink); white-space: nowrap; }
+.access p { font-size: 13px; line-height: 1.55; color: var(--ink-2); margin: 0; }
+
+.money { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 34px; }
+.mcell { border-top: 1px solid var(--ink); padding-top: 11px; }
+.mcell .n { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); display: block; margin-bottom: 8px; }
+.mcell .v { font-size: clamp(19px, 2.1vw, 26px); font-weight: 600; letter-spacing: -0.025em; line-height: 1.12; color: var(--ink); }
+.mcell p { font-size: 11.5px; line-height: 1.5; color: var(--ink-2); margin: 7px 0 0; }
+.mcell.mute .v { color: var(--ink-2); }
+
+/* ---------- use of funds (06) ---------- */
+.fund { display: grid; grid-template-columns: auto 1fr; gap: 0 40px; align-items: center; }
+.ring { position: relative; width: 198px; }
+.ring svg { width: 100%; height: auto; display: block; }
+.ring .ctr { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.ring .ctr b { font-size: 26px; font-weight: 600; letter-spacing: -0.03em; line-height: 1; color: var(--ink); }
+.ring .ctr span { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); margin-top: 5px; }
+.legend { display: flex; flex-direction: column; gap: 8px; }
+.legend li { display: grid; grid-template-columns: 11px auto 1fr; gap: 0 10px; align-items: baseline; font-size: 12px; color: var(--ink-2); }
+.legend .sw { width: 11px; height: 11px; border-radius: 2px; align-self: center; }
+.legend .pc { font-family: var(--font-mono); font-size: 11px; color: var(--ink); }
+.legend b { font-weight: 600; color: var(--ink); }
+.legend small { display: block; font-size: 10.5px; line-height: 1.4; color: var(--ink-3); margin-top: 1px; }
+
+.gates { display: grid; grid-template-columns: 1fr 1fr; gap: 0 34px; }
+.gate2 { border-top: 1px solid var(--ink); padding-top: 11px; }
+.gate2 .n { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 7px; }
+.gate2 ul { display: flex; flex-direction: column; gap: 6px; }
+.gate2 li { font-size: 11.5px; line-height: 1.42; color: var(--ink); padding-left: 13px; position: relative; }
+.gate2 li::before { content: ""; position: absolute; left: 0; top: 8px; width: 6px; height: 1px; background: var(--ink); }
+.gate2 li small { display: block; font-size: 10.5px; color: var(--ink-3); margin-top: 2px; }
 
 /* ---------- motion ---------- */
 .anim { opacity: 0; transform: translateY(10px); transition: opacity 480ms var(--ease), transform 480ms var(--ease); transition-delay: calc(var(--d, 0) * 70ms); }
@@ -128,333 +248,374 @@ li > .branches > li { padding-left: 26px; }
 
 /* ---------- responsive ---------- */
 @media (max-width: 900px) {
+  .card-grid { grid-template-columns: 1fr; gap: 14px; }
+  .card-stack { min-height: 380px; }
   html { scroll-snap-type: none; }
-  .screen { padding: 76px 20px; min-height: auto; }
+  main { scroll-snap-type: none; }
+  .screen { height: auto; min-height: 100vh; padding: 76px 20px; overflow: visible; align-items: flex-start; }
   .rail { display: none; }
   .wordmark { top: 18px; left: 20px; }
   .counter { top: 20px; right: 20px; }
-  .split { grid-template-columns: 1fr; gap: 28px; }
+  .split, .pain .split { grid-template-columns: 1fr; gap: 28px; }
   .cols2 { grid-template-columns: 1fr; }
-  .tree { flex-direction: column; align-items: flex-start; gap: 10px; }
-  .strip { flex-direction: column; align-items: stretch; margin-top: 32px; }
-  .strip .node { width: 100%; }
-  .strip .link { width: 1px; height: 12px; margin-left: 16px; }
-  .branches > li { padding-left: 14px; }
-  .branches > li::before, .branches > li::after { display: none; }
-  li > .branches { margin-left: 14px; }
-  .node { max-width: none; }
+  .pyr svg, .pact svg { max-height: none; }
+  .props, .costs, .buy, .access, .fund, .gates { grid-template-columns: 1fr; gap: 24px; }
+  .build { grid-template-columns: 1fr 1fr; gap: 22px; }
+  .worth, .props3, .money { grid-template-columns: 1fr; gap: 20px; }
+  .bstep.last { border-left: 0; padding-left: 0; }
+  .access .big { white-space: normal; }
 }
 
 /* ---------- print → 16:9 pdf ---------- */
 @page { size: 1320px 742px; margin: 0; }
 @media print {
-  html { scroll-snap-type: none; }
+  body { overflow: visible; }
+  main { display: block; height: auto; overflow: visible; }
+  .screen { flex: none; width: 100%; }
   .rail, .counter { display: none; }
   .screen { min-height: 742px; height: 742px; page-break-after: always; break-after: page; padding: 44px; overflow: hidden; }
   h1 { font-size: 30px; margin-bottom: 18px; }
   .eyebrow { margin-bottom: 16px; }
-  .node { font-size: 10.5px; padding: 6px 9px; }
-  .node small { font-size: 9px; }
-  .node.root { font-size: 11.5px; padding: 9px 12px; }
   .prose p { font-size: 10.5px; margin-bottom: 7px; }
   .prose.small p { font-size: 9px; }
-  .branches { gap: 7px; }
   .kicker { margin-top: 18px; }
   .anim { opacity: 1 !important; transform: none !important; }
+  .band { margin-top: 13px; } .band > .bh { font-size: 8.5px; margin-bottom: 10px; }
+  .pact svg { max-height: none; }
+  .pact .v { font-size: 17px; } .pact .a { font-size: 15px; } .pact .t { font-size: 10px; } .pact .k, .pact .b { font-size: 9.5px; }
+  .wcell b { font-size: 12.5px; }
+  .buy .lead { font-size: 15px; } .props3 .prop b { font-size: 11px; } .props3 .prop span { font-size: 9px; }
+  .access .big { font-size: 24px; } .access p { font-size: 10.5px; }
+  .mcell .v { font-size: 18px; } .mcell p { font-size: 9.5px; }
+  .ring { width: 168px; } .ring .ctr b { font-size: 22px; }
+  .legend li, .gate2 li { font-size: 9.5px; } .legend small, .gate2 li small { font-size: 8.5px; }
+  .role .no, .give li, .terms span { font-size: 8.5px; }
+  .prop h3 { font-size: 15px; } .prop .why { font-size: 9.5px; } .prop .note { font-size: 8.5px; }
+  .prop .say { font-size: 10.5px; }
+  .bstep b { font-size: 11px; } .bstep s { font-size: 9px; min-height: 34px; } .carry { font-size: 9px; } .carry i { font-size: 7.5px; }
+  .costs .row { font-size: 10px; } .costs .ratio b { font-size: 24px; }
+  .cover-sub { font-size: 12px; }
+  .cards-nav { display: none; }
+  .card-stack { min-height: 0; }
+  .card { position: relative !important; opacity: 1 !important; visibility: visible !important; transform: none !important; margin-bottom: 9px; }
+  .card h2 { font-size: 13.5px; margin-bottom: 0; max-width: none; }
+  .chip { margin-bottom: 5px; font-size: 9px; padding: 3px 9px; }
+  .card-grid { display: none; }
+  .pyr svg { max-height: none; }
+  .pyr .k { font-size: 10.5px; }
+  .pyr .v { font-size: 15px; }
+  .pyr .n { font-size: 11.5px; }
 }
 </style>
 </head>
 <body>
 
 <div class="chrome wordmark">Roaming<span class="os">OS</span></div>
-<div class="chrome counter"><span class="cur" id="cur">01</span> / 08</div>
+<div class="chrome counter"><span class="cur" id="cur">01</span> / 06</div>
 <nav class="chrome rail" id="rail" aria-label="Deck sections"></nav>
 
 <main>
 
 <!-- ============ 01 · POSITIONING ============ -->
-<section class="screen" data-title="Positioning">
+<section class="screen cover-only" data-title="Positioning">
   <div class="stage">
-    <div class="eyebrow anim" style="--d:0"><span class="bar"></span><span>Pre-seed · 2026</span></div>
-    <h1 class="anim" style="--d:1">Independent, high-fidelity evaluation environments<br>for AI decisions in transportation.</h1>
-    <p class="anim prose" style="--d:2"><span class="dim" style="font-size:17px; line-height:1.5; display:block; max-width:56ch">Every decision that moves real vehicles and commits real capital gets reality's answer — before it reaches the real world.</span></p>
-    <div class="strip anim" style="--d:3">
-      <div class="node root"><b>Reality's answer</b></div>
-      <div class="link"></div>
-      <div class="node"><b>Calibrated</b><small>fidelity, measured</small></div>
-      <div class="link"></div>
-      <div class="node"><b>At machine speed</b><small>keeps pace with generation</small></div>
-      <div class="link"></div>
-      <div class="node"><b>Admissible</b><small>evidence a third party can accept</small></div>
-    </div>
+    <div class="eyebrow anim" style="--d:0"><span class="bar"></span><span>Pre-seed &middot; 2026</span></div>
+    <h1 class="anim" style="--d:1">Independent, high-fidelity<br>evaluation environments<br>for AI decisions in transportation.</h1>
+    <p class="cover-sub anim" style="--d:2">Every decision that moves real vehicles and commits real capital gets reality&rsquo;s answer &mdash; before it reaches the real world.</p>
   </div>
 </section>
 
 <!-- ============ 02 · PAIN POINT ============ -->
-<section class="screen" data-title="Pain point">
+<section class="screen pain" data-title="Pain point">
   <div class="stage">
     <div class="eyebrow anim" style="--d:0"><span>02</span><span class="bar"></span><span>Pain point</span></div>
     <h1 class="anim" style="--d:1">Verification still moves<br><span class="dim">at expert speed.</span></h1>
+
     <div class="split">
-      <div class="prose anim" style="--d:2">
-        <p>Real-world deployment has someone accountable for the consequences and the cost. But the algorithms generating these plans live inside environments of their own abstraction — systematically blind to the mechanisms that decide success: queueing, degradation, policy constraints, the things omitted to make the problem tractable.</p>
-        <p>Today's only remedy is artisanal: consultants and engineering teams hand-building a simulation environment, case by case. Expensive and slow — so verification is rationed to the largest projects at their macro-approval moments. Academia, bearing no deployment responsibility, simply normalized comparing algorithms inside self-built environments.</p>
-        <p><strong>Responsibility hasn't shrunk. Machine-generated decisions are compounding. Verification still moves at expert speed. That gap is what we build for.</strong></p>
+
+      <div class="pyr anim" style="--d:2">
+        <!-- Schematic. No axes, no data points, no percentages. -->
+        <svg viewBox="0 0 520 360" role="img"
+             aria-label="A pyramid of decisions that commit capital. Only the small dark tip is verified today, because one check costs $620K to $5.5M and six months. The shaded body beneath is the gap. A dashed outline shows the base widening as machine-generated plans compound, while the tip stays the same size.">
+          <path    class="ghost"   d="M190,28 L12,286 L368,286 Z"/>
+          <polygon class="gapfill" points="168,76 212,76 308,286 72,286"/>
+          <path    class="edge"    d="M190,28 L72,286 L308,286 Z"/>
+          <polygon class="solid"   points="190,28 168,76 212,76"/>
+
+          <circle class="dot" cx="205" cy="50" r="2.4"/>
+          <path   class="lead" d="M205,50 L250,50"/>
+          <text class="k" x="258" y="46">WHAT ONE CHECK COSTS</text>
+          <text class="v" x="258" y="70">$620K&#8211;$5.5M &middot; 6 months</text>
+
+          <circle class="dot" cx="264" cy="190" r="2.4"/>
+          <path   class="lead" d="M264,190 L300,190"/>
+          <text class="k" x="308" y="186">THE GAP</text>
+          <text class="n" x="308" y="207">everything else &#8212; someone</text>
+          <text class="n" x="308" y="225">pays for it either way</text>
+
+          <path class="lead" d="M68,306 L30,306"/>
+          <polygon class="dot" points="20,306 30,302.4 30,309.6"/>
+          <path class="lead" d="M312,306 L350,306"/>
+          <polygon class="dot" points="360,306 350,302.4 350,309.6"/>
+          <text class="k" x="190" y="310" text-anchor="middle">COMPOUNDING</text>
+          <text class="n" x="190" y="336" text-anchor="middle">machine-generated, and blind by construction</text>
+          <text class="n" x="190" y="354" text-anchor="middle">to queueing &middot; degradation &middot; policy</text>
+        </svg>
       </div>
-      <div class="tree anim" style="--d:3">
-        <div class="node root"><b>Does the<br>plan hold?</b></div>
-        <ul class="branches">
-          <li>
-            <div class="node"><b>Accountability is real</b><small>someone pays — fleet capital · lender debt · public approval</small></div>
-          </li>
-          <li>
-            <div class="node"><b>Algorithms are blind by construction</b><small>self-built abstractions</small></div>
-            <ul class="branches">
-              <li><div class="node leaf"><b>queueing · degradation · policy omitted for tractability</b></div></li>
-              <li><div class="node leaf"><b>the optimum lands exactly on the seam</b></div></li>
-            </ul>
-          </li>
-          <li>
-            <div class="node"><b>The remedy is artisanal</b><small>experts, case by case</small></div>
-            <ul class="branches">
-              <li><div class="node leaf"><b>$620K–$5.5M · six months</b></div></li>
-              <li><div class="node leaf"><b>rationed to the largest projects</b></div></li>
-            </ul>
-          </li>
-          <li>
-            <div class="node"><b>Academia opts out</b><small>no deployment responsibility → self-built comparison became the norm</small></div>
-          </li>
-        </ul>
+
+      <div class="cards anim" id="ucCards" style="--d:3">
+        <div class="cards-head">
+          <div class="cards-count">WHO IS IN THE GAP &nbsp;<b>01</b> / 04</div>
+          <div class="cards-nav">
+            <div class="cards-dots">
+              <button type="button" aria-label="Industry 1"></button>
+              <button type="button" aria-label="Industry 2"></button>
+              <button type="button" aria-label="Industry 3"></button>
+              <button type="button" aria-label="Industry 4"></button>
+            </div>
+            <button class="cards-arrow" type="button" data-dir="-1" aria-label="Previous"><svg viewBox="0 0 12 12"><path d="M7.5 1.5 L3 6 L7.5 10.5"/></svg></button>
+            <button class="cards-arrow" type="button" data-dir="1" aria-label="Next"><svg viewBox="0 0 12 12"><path d="M4.5 1.5 L9 6 L4.5 10.5"/></svg></button>
+          </div>
+        </div>
+
+        <div class="card-stack">
+
+          <article class="card" data-on="1">
+            <div class="ind">Plan &amp; optimization vendors</div>
+            <dl class="row"><dt>They need</dt><dd>their own numbers checked by something other than the solver that produced them &mdash; <em>self-certification doesn&rsquo;t count</em></dd></dl>
+            <dl class="row"><dt>We provide</dt><dd>a sealed claims-vs-findings report on their own frozen plan, produced <em>outside the solver that made it</em></dd></dl>
+            <div class="logo-slot">
+              <span class="lbl">Target companies</span>
+              <div class="logo-box"><img src="logos/amptrans.png" alt="AmpTrans" onerror="this.style.display='none'"><img src="logos/ampcontrol.svg" alt="Ampcontrol" onerror="this.style.display='none'"><img src="logos/xendee.png" alt="Xendee" onerror="this.style.display='none'"></div>
+            </div>
+          </article>
+
+          <article class="card" data-on="0">
+            <div class="ind">Autonomous fleet operators</div>
+            <dl class="row"><dt>They need</dt><dd>before a new city goes live &mdash; does the fleet, depot and service-area plan hold? <em>Published third-party AV audits stop at the safety case.</em></dd></dl>
+            <dl class="row"><dt>We provide</dt><dd>completion, charge-queue and depot-throughput consequences under that city&rsquo;s own measured traffic</dd></dl>
+            <div class="logo-slot">
+              <span class="lbl">Target companies</span>
+              <div class="logo-box"><img src="logos/apollo.png" alt="Apollo" onerror="this.style.display='none'"><img src="logos/ponyai.png" alt="Pony.ai" onerror="this.style.display='none'"><img src="logos/weride.png" alt="WeRide" onerror="this.style.display='none'"></div>
+            </div>
+          </article>
+
+          <article class="card" data-on="0">
+            <div class="ind">Charging developers &amp; their lenders</div>
+            <dl class="row"><dt>They need</dt><dd>a utilization number a lender can underwrite &mdash; <em>not a point estimate</em></dd></dl>
+            <dl class="row"><dt>We provide</dt><dd>a band with the bias direction declared &mdash; <em>19.4% as simulated, ~16.6% corrected, 11.1&ndash;19.9%</em> against a ~20% viability line</dd></dl>
+            <div class="logo-slot">
+              <span class="lbl">Target companies</span>
+              <div class="logo-box"><img src="logos/forum-mobility.jpg" alt="Forum Mobility" onerror="this.style.display='none'"><img src="logos/terawatt.svg" alt="Terawatt Infrastructure" onerror="this.style.display='none'"><img src="logos/wattev.png" alt="WattEV" onerror="this.style.display='none'"></div>
+            </div>
+          </article>
+
+          <article class="card" data-on="0">
+            <div class="ind">Commercial fleet operators</div>
+            <dl class="row"><dt>They need</dt><dd>to know a deployment strategy holds <em>before</em> they commit vehicles, chargers and schedules to it</dd></dl>
+            <dl class="row"><dt>We provide</dt><dd>a fleet-day replay of the strategy as written &mdash; completion rate, queue wait P95, SOC-floor violations, $/day band</dd></dl>
+            <div class="logo-slot">
+              <span class="lbl">Target companies</span>
+              <div class="logo-box"><img src="logos/zum.png" alt="Zum" onerror="this.style.display='none'"><img src="logos/highland.png" alt="Highland Electric Fleets" onerror="this.style.display='none'"><img src="logos/einride.png" alt="Einride" onerror="this.style.display='none'"></div>
+            </div>
+          </article>
+
+        </div>
       </div>
     </div>
+
+    <p class="kicker anim" style="--d:4">The optimum lands exactly on the seam &mdash; and one check costs six months. <strong>The price is why the gap exists. Both are what we build for.</strong></p>
   </div>
 </section>
 
 <!-- ============ 03 · SOLUTION ============ -->
-<section class="screen" data-title="Solution">
+<section class="screen sol" data-title="Solution">
   <div class="stage">
     <div class="eyebrow anim" style="--d:0"><span>03</span><span class="bar"></span><span>Solution</span></div>
-    <h1 class="anim" style="--d:1">Mass-produce the environment,<br><span class="dim">not the report.</span></h1>
-    <div class="split">
-      <div class="prose anim small" style="--d:2">
-        <p>With AI, the work consultants and engineers did case by case can be industrialized for the first time — and what gets mass-produced is not the report, but the environment.</p>
-        <p>An expert's work decomposes into four parts, three of them text-shaped and exactly what AI collapses: crawling and extracting policy, tariffs, and permitting rules, every value with its citation; learning from prior cases and real deployment outcomes which dimensions a class of decisions actually turns on; selecting the right engine and acceptance standards per problem. The fourth — the physics inside the simulation, and the verdict — stays with first principles and cross-validation, never with a language model: <strong>we sell traceability, so every number we extract must itself be traceable.</strong></p>
-        <p>Environment cost falls from expert-months to days, and verification reaches every decision instead of the top one percent.</p>
+    <h1 class="anim" style="--d:1">Industrialize the evaluation environment, <span class="dim">not the report.</span></h1>
+
+    <div class="band anim" style="--d:2">
+      <div class="bh"><span>What an evaluation environment has to be</span><span>Two properties</span></div>
+      <div class="props">
+        <div class="prop">
+          <h3>Independent</h3>
+          <p class="why">An optimizer cannot falsify <em>&ldquo;feasible in my model.&rdquo;</em> The check has to run somewhere the plan was not written.</p>
+          <p class="say">Run inside its own model, a plan is always feasible. Run inside a model it did not build, it either <b>held</b> or it <b>did not hold</b>.</p>
+          <p class="note">The submitter pays, as they do for every audit &mdash; but may not scope it, tune it, preview it, or pay only if it passes.</p>
+        </div>
+        <div class="prop">
+          <h3>High-fidelity</h3>
+          <p class="why">Every plan is optimal inside the environment it was built in &mdash; and that environment is simpler than the depot.</p>
+          <p class="say">Ours carries what the plan&rsquo;s model leaves out: <b>queueing, charge taper, tariff time structure, day-to-day variation</b>.</p>
+          <p class="note">A solver absorbs uncertainty in the coefficients it has, never a mechanism it never contained. <em>When the policy is learned, you cannot read that environment at all.</em></p>
+        </div>
       </div>
-      <div class="tree anim" style="--d:3">
-        <div class="node root"><b>Industrialize<br>the environment</b></div>
-        <ul class="branches">
-          <li>
-            <div class="node"><b>AI collapses the text-shaped work</b></div>
-            <ul class="branches">
-              <li><div class="node leaf"><b>policy · tariffs · permits — every value cited</b></div></li>
-              <li><div class="node leaf"><b>metrics learned from prior cases &amp; outcomes</b></div></li>
-              <li><div class="node leaf"><b>engine &amp; standards selected per problem</b></div></li>
-            </ul>
-          </li>
-          <li>
-            <div class="node"><b>Physics &amp; verdict stay human</b><small>first principles · cross-validated · never a language model</small></div>
-          </li>
-          <li>
-            <div class="node"><b>Cost falls</b><small>expert-months → days · every decision, not the top 1%</small></div>
-          </li>
-          <li>
-            <div class="node"><b>Flywheel</b><small>each project deposits assets</small></div>
-            <ul class="branches">
-              <li><div class="node leaf"><b>data pipelines · metrics registry</b></div></li>
-              <li><div class="node leaf"><b>calibration records compound</b></div></li>
-              <li><div class="node leaf"><b>2nd corridor: 6 min 15 s, full pipeline</b></div></li>
-            </ul>
-          </li>
-        </ul>
+    </div>
+
+    <div class="band anim" style="--d:3">
+      <div class="bh"><span>Building one environment</span><span>What carries over</span></div>
+      <div class="build">
+        <div class="bstep"><span class="n">01</span><b>Read the text</b><s>policy &middot; tariffs &middot; permits &mdash; every value cited, and the corpus that trains the reader</s><span class="carry"><i>Carries over</i>the cited corpus that trains the reader</span></div>
+        <div class="bstep"><span class="n">02</span><b>Select the data</b><s>which sources, are they alive &mdash; connectors and calibration memory persist</s><span class="carry"><i>Carries over</i>connectors, provenance and calibration memory</span></div>
+        <div class="bstep"><span class="n">03</span><b>Build with the engine</b><s>assemble, calibrate, set thresholds &mdash; every correction ships back into the engine</s><span class="carry"><i>Carries over</i>every correction, back into the engine</span></div>
+        <div class="bstep last"><span class="n">The line &middot; 04</span><b>The physics, and the verdict</b><s>first principles, cross-validated, bias declared &mdash; never automated</s></div>
+      </div>
+    </div>
+
+    <div class="band anim" style="--d:4">
+      <div class="bh"><span>What one environment costs</span><span>Target</span></div>
+      <div class="costs">
+        <div class="rows">
+          <div class="row"><span>Hand-built, case by case</span><span>six months</span><span>$620K &ndash; $5.5M</span></div>
+          <div class="row ours"><span>Ours, once 01&ndash;03 stop being rebuilt</span><span>days</span><span>$75 &ndash; 150K / yr</span></div>
+        </div>
+        <div class="ratio"><b>4&times; &ndash; 73&times;</b><span>Lower, on the two ranges above</span></div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ============ 04 · AMPTRANS ============ -->
-<section class="screen" data-title="AmpTrans">
+<section class="screen pt" data-title="AmpTrans">
   <div class="stage">
-    <div class="eyebrow anim" style="--d:0"><span>04</span><span class="bar"></span><span>First instance</span></div>
-    <h1 class="anim" style="--d:1">AmpTrans.</h1>
-    <div class="tree anim" style="--d:2">
-      <div class="node root"><b>Verification environment<br>for their optimizer</b><small>fleet electrification plans — fleets · charging developers · agencies</small></div>
-      <ul class="branches">
-        <li>
-          <div class="node"><b>Targets</b><small>frozen plan vs three unmodeled realities</small></div>
-          <ul class="branches">
-            <li><div class="node leaf"><b>discrete plugs &amp; queues — not an aggregate power cap</b></div></li>
-            <li><div class="node leaf"><b>CPUC-filed tariff + demand-charge counterfactual</b></div></li>
-            <li><div class="node leaf"><b>real operating-day variation — not i.i.d. jitter</b></div></li>
-          </ul>
-        </li>
-        <li>
-          <div class="node"><b>Metrics</b><small>every claim vs a measured distribution</small></div>
-          <ul class="branches">
-            <li><div class="node leaf"><b>completion · queue P95 · SOC floor · $/day P10–P90 · peak kW</b></div></li>
-            <li><div class="node leaf"><b>verdicts: held / did not hold / insufficient evidence</b></div></li>
-          </ul>
-        </li>
-        <li>
-          <div class="node"><b>Fidelity — measured, not asserted</b></div>
-          <ul class="branches">
-            <li><div class="node leaf"><b>FASTSim cross-validation · one-signed +1.3–16.4% · decomposed to machine precision</b></div></li>
-            <li><div class="node leaf"><b>bias direction declared per decision · standing erratum</b></div></li>
-            <li><div class="node leaf"><b>noise floor median 6% · UNCALIBRATED until ±10% back-cast</b></div></li>
-          </ul>
-        </li>
-        <li>
-          <div class="node"><b>Traceability — structural</b></div>
-          <ul class="branches">
-            <li><div class="node leaf"><b>sha256-frozen submissions · provenance manifest</b></div></li>
-            <li><div class="node leaf"><b>four labels on every number · byte-identical reruns</b></div></li>
-            <li><div class="node leaf"><b>closed to tuning — both directions</b></div></li>
-          </ul>
-        </li>
-        <li>
-          <div class="node"><b>For them</b><small>their state grant names validation as a deliverable — self-certification doesn't count; customers and funders get a reviewable basis produced outside the solver</small></div>
-        </li>
-      </ul>
+    <div class="eyebrow anim" style="--d:0"><span>04</span><span class="bar"></span><span>First engagement</span></div>
+    <h1 class="anim" style="--d:1">AmpTrans plans the transition. <span class="dim">We tell them whether it holds.</span></h1>
+
+    <div class="band anim" style="--d:2">
+      <div class="bh"><span>The exchange</span><span>Two artifacts</span></div>
+      <div class="pact">
+        <svg viewBox="0 0 1000 300" role="img"
+             aria-label="AmpTrans builds the plan; we run it unchanged. The plan crosses to us frozen; the finding crosses back sealed. Nothing else crosses.">
+          <rect class="box" x="30"  y="60" width="300" height="190" rx="7"/>
+          <rect class="box" x="670" y="60" width="300" height="190" rx="7"/>
+
+          <text class="k" x="180" y="113" text-anchor="middle">AMPTRANS</text>
+          <text class="v" x="180" y="156" text-anchor="middle">Builds the plan</text>
+          <text class="t" x="180" y="196" text-anchor="middle">siting &middot; sizing &middot; schedule</text>
+
+          <text class="k" x="820" y="113" text-anchor="middle">ROAMINGOS</text>
+          <text class="v" x="820" y="156" text-anchor="middle">Runs it unchanged</text>
+          <text class="t" x="820" y="196" text-anchor="middle">queues &middot; SOC &middot; tariff &middot; variation</text>
+
+          <text class="a" x="500" y="126" text-anchor="middle">The plan, frozen</text>
+          <path class="flow" d="M350,142 L640,142"/>
+          <polygon class="head" points="650,142 638,137.5 638,146.5"/>
+
+          <text class="b" x="500" y="183" text-anchor="middle">NOTHING ELSE CROSSES</text>
+
+          <path class="flow" d="M650,208 L360,208"/>
+          <polygon class="head" points="350,208 362,203.5 362,212.5"/>
+          <text class="a" x="500" y="234" text-anchor="middle">The finding, sealed</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="band anim" style="--d:3">
+      <div class="bh"><span>What it is worth to them</span><span>Three registers</span></div>
+      <div class="worth">
+        <div class="wcell"><span class="n">01</span><b>Credibility they cannot self-issue</b></div>
+        <div class="wcell"><span class="n">02</span><b>Which constraint to add next</b></div>
+        <div class="wcell"><span class="n">03</span><b>Reach into rooms the platform does not enter</b></div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- ============ 05 · BUSINESS MODEL ============ -->
-<section class="screen" data-title="Business model">
+<section class="screen bm" data-title="Business model">
   <div class="stage">
     <div class="eyebrow anim" style="--d:0"><span>05</span><span class="bar"></span><span>Business model</span></div>
-    <h1 class="anim" style="--d:1">Per submission,<br><span class="dim">fixed price.</span></h1>
-    <div class="split">
-      <div class="prose anim" style="--d:2">
-        <p>A plan enters, an evidence package comes back, the fee is fixed at scoping. A revised plan is a new submission — the structural firewall against sliding into open-ended consulting.</p>
-        <p>Deliberately no subscription: the largest incentive programs reimburse one-time deliverables and exclude monthly fees. <strong>Our pricing is shaped by how our customers' money actually arrives.</strong></p>
-        <p>In this category gross margin is bimodal, and one variable decides it: does marginal labor grow with volume? Our cost lives in the environment, not the engagement — so cost per evaluation is a reported metric, not a promise.</p>
+    <h1 class="anim" style="--d:1">Pay for the environment. <span class="dim">Submit as often as you like.</span></h1>
+
+    <div class="band anim" style="--d:2">
+      <div class="bh"><span>What the customer buys</span><span>Access to one environment</span></div>
+      <div class="buy">
+        <div class="lead">One evaluation environment, scoped to the decision being made. <em>Everything it produces can be audited by a third party.</em></div>
+        <div class="props3">
+          <div class="prop"><b>Inputs are frozen</b><span>sha256-sealed at intake</span></div>
+          <div class="prop"><b>Every number is sourced</b><span>provenance down to the parameter</span></div>
+          <div class="prop"><b>Re-runs are byte-identical</b><span>re-checkable without us</span></div>
+        </div>
       </div>
-      <div class="tree anim" style="--d:3">
-        <div class="node root"><b>Evidence,<br>per submission</b></div>
-        <ul class="branches">
-          <li>
-            <div class="node"><b>The unit</b><small>a plan in → an evidence package out</small></div>
-            <ul class="branches">
-              <li><div class="node leaf"><b>$20–60K per submission</b></div></li>
-              <li><div class="node leaf"><b>$75–150K annual environment suites</b></div></li>
-            </ul>
-          </li>
-          <li>
-            <div class="node"><b>Revised plan = new submission</b><small>anti-consulting firewall</small></div>
-          </li>
-          <li>
-            <div class="node"><b>No subscriptions</b><small>grant money pays for deliverables, not seats</small></div>
-          </li>
-          <li>
-            <div class="node"><b>Margin thesis</b><small>cost lives in the environment</small></div>
-            <ul class="branches">
-              <li><div class="node leaf"><b>anchor: comparable studies $620K–$5.5M · 6 months</b></div></li>
-              <li><div class="node leaf"><b>cost per evaluation — reported, falling</b></div></li>
-            </ul>
-          </li>
+    </div>
+
+    <div class="band anim" style="--d:3">
+      <div class="bh"><span>What access means</span><span>No per-run fee</span></div>
+      <div class="access">
+        <div class="big">Unlimited submissions</div>
+        <p>Any plan, any revision, any number of times, at no additional cost. We do not propose changes to the plan. The customer decides what to change and submits again.</p>
+      </div>
+    </div>
+
+    <div class="band anim" style="--d:4">
+      <div class="bh"><span>What it costs</span><span>Target</span></div>
+      <div class="money">
+        <div class="mcell">
+          <span class="n">Access</span>
+          <div class="v">$75&ndash;150K / year</div>
+          <p>One environment, unlimited submissions.</p>
+        </div>
+        <div class="mcell">
+          <span class="n">Sized by</span>
+          <div class="v">1.5&ndash;3%</div>
+          <p>Of the savings at risk. 189 audited federal ESPC projects spent 1.85&ndash;2.00% of verified savings on measurement and verification.</p>
+        </div>
+        <div class="mcell mute">
+          <span class="n">Instead of</span>
+          <div class="v">$620K&ndash;$5.5M &middot; six months</div>
+          <p>To hire a team and build the equivalent environment in-house, for one decision.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 06 · MILESTONE & FUNDS ============ -->
+<section class="screen" data-title="Milestone &amp; funds">
+  <div class="stage">
+    <div class="eyebrow anim" style="--d:0"><span>06</span><span class="bar"></span><span>Milestone &amp; use of funds</span></div>
+    <h1 class="anim" style="--d:1">$2M pre-seed <span class="dim">to reach the seed gate.</span></h1>
+
+    <div class="band anim" style="--d:2">
+      <div class="bh"><span>Use of funds</span><span>Allocation of the round</span></div>
+      <div class="fund">
+        <div class="ring">
+          <svg viewBox="0 0 224 224" role="img" aria-label="Ring showing the $2M pre-seed split: team 45 percent, data 20 percent, compute 20 percent, legal, E and O and reserve 15 percent.">
+            <path d="M113.6,10.0 A102.0,102.0 0 0 1 145.0,208.5 L134.0,176.3 A68.0,68.0 0 0 0 113.1,44.0 Z" fill="#14181B"/>
+            <path d="M142.0,209.5 A102.0,102.0 0 0 1 30.4,173.2 L57.6,152.8 A68.0,68.0 0 0 0 132.0,177.0 Z" fill="#565D63"/>
+            <path d="M28.5,170.7 A102.0,102.0 0 0 1 28.5,53.3 L56.4,72.9 A68.0,68.0 0 0 0 56.4,151.1 Z" fill="#9AA1A7"/>
+            <path d="M30.4,50.8 A102.0,102.0 0 0 1 110.4,10.0 L110.9,44.0 A68.0,68.0 0 0 0 57.6,71.2 Z" fill="#CFD4D7"/>
+          </svg>
+          <div class="ctr"><b>$2M</b><span>Pre-seed</span></div>
+        </div>
+        <ul class="legend">
+          <li><span class="sw" style="background:#14181B"></span><span class="pc">45%</span><span><b>Team</b><small>founder and one calibration engineer</small></span></li>
+          <li><span class="sw" style="background:#565D63"></span><span class="pc">20%</span><span><b>Data</b><small>licensed telemetry, tariff schedules, standards documents</small></span></li>
+          <li><span class="sw" style="background:#9AA1A7"></span><span class="pc">20%</span><span><b>Compute</b><small>simulation runs, calibration sweeps, re-runs on every submission</small></span></li>
+          <li><span class="sw" style="background:#CFD4D7"></span><span class="pc">15%</span><span><b>Legal, E&amp;O &amp; reserve</b><small>entity and contracts, errors &amp; omissions cover, contingency</small></span></li>
         </ul>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- ============ 06 · CUSTOMERS ============ -->
-<section class="screen" data-title="Customers">
-  <div class="stage">
-    <div class="eyebrow anim" style="--d:0"><span>06</span><span class="bar"></span><span>Customers</span></div>
-    <h1 class="anim" style="--d:1">Selected by payer archetype,<br><span class="dim">not by industry.</span></h1>
-    <div class="tree anim" style="--d:2">
-      <div class="node root"><b>Who carries the risk<br>and faces a skeptic</b></div>
-      <ul class="branches">
-        <li>
-          <div class="node"><b>Incentive applicants</b><small>fleets &amp; carriers — feasibility annex for Port of LA's $75M round · closes Dec 2026</small></div>
-        </li>
-        <li>
-          <div class="node"><b>Lenders &amp; project finance</b><small>utilization screening — the Independent Engineer report, reproducible and uncertainty-bounded</small></div>
-        </li>
-        <li>
-          <div class="node"><b>Agencies</b><small>independent assessment already budgeted — SCAQMD 2026 Plan Update</small></div>
-        </li>
-        <li>
-          <div class="node"><b>Plan vendors</b><small>funded validation deliverables — AmpTrans engaged today; first counterparty and channel</small></div>
-        </li>
-        <li>
-          <div class="node"><b>Beyond electrification</b><small>early conversations — demand signals, not pipeline</small></div>
-          <ul class="branches">
-            <li><div class="node leaf"><b>Baidu Apollo — dispatch strategies at iteration speed</b></div></li>
-            <li><div class="node leaf"><b>U Power — EV chassis platform into Southeast Asia</b></div></li>
+    <div class="band anim" style="--d:3">
+      <div class="bh"><span>What this money has to buy</span><span>By the end of the round</span></div>
+      <div class="gates">
+        <div class="gate2">
+          <div class="n">The seed gate</div>
+          <ul>
+            <li>Three paid engagements, three separate counterparties<small>each one delivered as a sealed evidence bundle</small></li>
+            <li>Cost per evaluation lower than the first<small>measured across the three</small></li>
           </ul>
-        </li>
-      </ul>
+        </div>
+        <div class="gate2">
+          <div class="n">First proof point</div>
+          <ul>
+            <li>A paid evaluation filed as evidence in a live $75M funding round<small>December 2026</small></li>
+            <li>Full programme costs $1.4&ndash;2.0M bottom-up<small>team, data, compute, legal and reserve, costed line by line</small></li>
+          </ul>
+        </div>
+      </div>
     </div>
-  </div>
-</section>
-
-<!-- ============ 07 · MARKET ============ -->
-<section class="screen" data-title="Market">
-  <div class="stage">
-    <div class="eyebrow anim" style="--d:0"><span>07</span><span class="bar"></span><span>Market</span></div>
-    <h1 class="anim" style="--d:1">A precise wedge,<br><span class="dim">an earned layer.</span></h1>
-    <div class="tree anim" style="--d:2">
-      <div class="node root"><b>Wedge → layer</b></div>
-      <ul class="branches">
-        <li>
-          <div class="node"><b>The wedge — California heavy-duty, dated</b></div>
-          <ul class="branches">
-            <li><div class="node leaf"><b>Port of LA $75M · closes Dec 2026</b></div></li>
-            <li><div class="node leaf"><b>state grants naming validation as deliverables</b></div></li>
-            <li><div class="node leaf"><b>charging depots financed one at a time</b></div></li>
-          </ul>
-        </li>
-        <li>
-          <div class="node"><b>What we replace</b><small>studies at $620K–$5.5M, six months each — reaching only the top of the pyramid</small></div>
-        </li>
-        <li>
-          <div class="node"><b>Adjacent — same assets</b><small>transit bus electrification · depot DER · port &amp; airport fleets · last-mile</small></div>
-        </li>
-        <li>
-          <div class="node"><b>The layer</b><small>evidence for deployment · financing · compliance · audit — every transportation decision that commits capital</small></div>
-        </li>
-      </ul>
-    </div>
-    <p class="kicker anim" style="--d:3">We price the wedge precisely. <strong>The layer is earned by the format, not claimed on a slide.</strong></p>
-  </div>
-</section>
-
-<!-- ============ 08 · MILESTONE & FUNDS ============ -->
-<section class="screen" data-title="Milestone & funds">
-  <div class="stage">
-    <div class="eyebrow anim" style="--d:0"><span>08</span><span class="bar"></span><span>Milestone &amp; use of funds</span></div>
-    <h1 class="anim" style="--d:1">$2M pre-seed<br><span class="dim">to reach the seed gate.</span></h1>
-    <div class="tree anim" style="--d:2">
-      <div class="node root"><b>$2M → seed gate</b></div>
-      <ul class="branches">
-        <li>
-          <div class="node"><b>One milestone</b></div>
-          <ul class="branches">
-            <li><div class="node leaf"><b>$300–500K booked</b></div></li>
-            <li><div class="node leaf"><b>3+ counterparties</b></div></li>
-            <li><div class="node leaf"><b>cost per evaluation falling</b></div></li>
-          </ul>
-        </li>
-        <li>
-          <div class="node"><b>First proof point</b><small>a paid evaluation filed as evidence in a live $75M funding round · Dec 2026</small></div>
-        </li>
-        <li>
-          <div class="node"><b>Use of funds</b></div>
-          <ul class="branches">
-            <li><div class="node leaf"><b>Team 50% — founder + calibration engineer</b></div></li>
-            <li><div class="node leaf"><b>Data 20% · Compute 10%</b></div></li>
-            <li><div class="node leaf"><b>Legal, E&amp;O &amp; reserve 20%</b></div></li>
-          </ul>
-        </li>
-        <li>
-          <div class="node"><b>Bottom-up</b><small>full program $1.4–2.0M · people and data dominate, compute is small</small></div>
-        </li>
-      </ul>
-    </div>
-    <p class="kicker anim" style="--d:3"><strong>A plan enters as a claim. It leaves as evidence.</strong></p>
   </div>
 </section>
 
@@ -515,6 +676,39 @@ li > .branches > li { padding-left: 26px; }
     screens[q].classList.add('is-active');
     setActive(q);
   }
+})();
+</script>
+
+<script>
+(function () {
+  var main = document.querySelector('main');
+  if (!main) return;
+  var acc = 0, lock = 0;
+})();
+
+(function () {
+  var wrap = document.getElementById('ucCards'); if (!wrap) return;
+  var cards = Array.prototype.slice.call(wrap.querySelectorAll('.card'));
+  var dots  = Array.prototype.slice.call(wrap.querySelectorAll('.cards-dots button'));
+  var prev  = wrap.querySelector('[data-dir="-1"]');
+  var next  = wrap.querySelector('[data-dir="1"]');
+  var cur   = wrap.querySelector('.cards-count b');
+  var i = 0;
+  function show(n) {
+    i = Math.max(0, Math.min(cards.length - 1, n));
+    cards.forEach(function (c, k) {
+      c.setAttribute('data-on', k === i ? '1' : '0');
+      c.setAttribute('aria-hidden', k === i ? 'false' : 'true');
+    });
+    dots.forEach(function (d, k) { d.setAttribute('aria-current', k === i ? 'true' : 'false'); });
+    cur.textContent = String(i + 1).padStart(2, '0');
+    prev.disabled = (i === 0); next.disabled = (i === cards.length - 1);
+  }
+  dots.forEach(function (d, k) { d.addEventListener('click', function () { show(k); }); });
+  prev.addEventListener('click', function () { show(i - 1); });
+  next.addEventListener('click', function () { show(i + 1); });
+  show(0);
+  // no keyboard handler on purpose: the deck owns ArrowLeft / ArrowRight
 })();
 </script>
 </body>
